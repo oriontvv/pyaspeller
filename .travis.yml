@@ -1,0 +1,21 @@
+language: python
+python:
+  - 3.3
+  - 3.4
+
+
+install:
+  - pip install --upgrade setuptools
+  - pip install coverage
+  - pip install -r requirements.txt
+  - python setup.py develop
+
+
+script:
+  - flake8 pyaspeller tests
+  - coverage run --source=pyaspeller setup.py test
+  - python setup.py check -rm
+
+
+after_success:
+    coveralls
