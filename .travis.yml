@@ -12,7 +12,7 @@ install:
 
 
 script:
-  - flake8 pyaspeller tests
+  #- flake8 pyaspeller tests
   - coverage run --source=pyaspeller setup.py test
   - python setup.py check -rm
 

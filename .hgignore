@@ -6,3 +6,5 @@ syntax: glob
 .directory
 .idea/*
 pyaspeller.egg-info/*
+.coverage
+htmlcov/*
