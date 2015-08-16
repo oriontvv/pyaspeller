@@ -3,6 +3,7 @@ import unittest
 
 import pyaspeller
 
+
 class TestCLI(unittest.TestCase):
 
     def setUp(self):
