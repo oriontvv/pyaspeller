@@ -1,0 +1,8 @@
+syntax: glob
+*.pyc
+*.orig
+*.kate-swp
+.DS_Store
+.directory
+.idea/*
+pyaspeller.egg-info/*

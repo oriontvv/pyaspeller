@@ -17,6 +17,8 @@ def read(f):
     return open(os.path.join(BASE_PATH, f)).read().strip()
 
 
+class BuildFailed(Exception):
+    pass
 
 args = dict(
     name='pyaspeller',
@@ -41,18 +43,7 @@ args = dict(
     # tests_require=tests_require,
     test_suite='tests',
     include_package_data=True,
-    # ext_modules=extensions,
-    # cmdclass=dict(build_ext=ve_build_ext)
 )
 
 
-try:
-    setup(**args)
-except Extension as e:
-    raise e
-    print("************************************************************")
-    print("Cannot compile C accelerator module, use pure python version")
-    print("************************************************************")
-    del args['ext_modules']
-    del args['cmdclass']
-    setup(**args)
+setup(**args)
