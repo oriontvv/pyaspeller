@@ -2,8 +2,11 @@ Python text speller
 ==============================
 
 .. image:: https://secure.travis-ci.org/oriontvv/pyaspeller.png
-  :target:  https://secure.travis-ci.org/oriontvv/pyaspeller
-  :align: left
+    :target:  https://secure.travis-ci.org/oriontvv/pyaspeller
+
+.. image:: https://img.shields.io/coveralls/oriontvv/pyaspeller.svg
+    :target: https://coveralls.io/r/oriontvv/pyaspeller
+
 
 Features
 --------
@@ -13,4 +16,4 @@ Features
 Requirements
 ------------
 
-- Python >= 3.3
+- nothing yet again
