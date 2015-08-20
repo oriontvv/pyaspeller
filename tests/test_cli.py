@@ -7,14 +7,13 @@ import pyaspeller
 class TestCLI(unittest.TestCase):
 
     def setUp(self):
-        self._var = pyaspeller.test_var
         print("setUp")
 
     def tearDown(self):
         print("tearDown")
 
     def test_simple(self):
-        self.assertTrue(2 * self._var == 4, "simple")
+        self.assertTrue(2 * 2 == 4, "simple")
 
     def test_simple2(self):
         self.assertFalse(2 * 2 == 5, "simple2")

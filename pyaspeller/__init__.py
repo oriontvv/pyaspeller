@@ -1,7 +1,7 @@
 
 __version__ = '0.0.1'
 
-test_var = 2
+__all__ = ['main']
 
 
 def sum_func(arg):
@@ -10,3 +10,7 @@ def sum_func(arg):
 
 def len_func(arg):
     return len(arg)
+
+
+def main():
+    print("I running")

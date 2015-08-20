@@ -1,8 +1,12 @@
 language: python
 python:
+  - 2.6
   - 2.7
+  - 3.2
   - 3.3
   - 3.4
+
+sudo: false
 
 
 install:
@@ -14,7 +18,7 @@ install:
 
 
 script:
-  #- flake8 pyaspeller tests
+  - flake8 pyaspeller tests
   - coverage run --source=pyaspeller setup.py test
   - python setup.py check -rm
 
