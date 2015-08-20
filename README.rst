@@ -1,7 +1,9 @@
 Python text speller
 ==============================
 
-|Build Status| |Coverage Status| |PyPI badge| |Installs badge| |License badge| |Wheel badge|
+|Build Status| |Coverage Status| |Code Climate|
+
+|PyPI badge| |Installs badge| |Wheel badge| |License badge|
 
 
 License
