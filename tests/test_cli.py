@@ -8,6 +8,7 @@ class TestCLI(unittest.TestCase):
 
     def setUp(self):
         print("setUp")
+        pyaspeller.main()
 
     def tearDown(self):
         print("tearDown")
