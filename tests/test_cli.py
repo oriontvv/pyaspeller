@@ -12,6 +12,10 @@ class TestCLI(unittest.TestCase):
 
     def tearDown(self):
         print("tearDown")
+        
+    def test_pyaspeller_has_version(self):
+        self.assertTrue(hasattr(pyaspeller, '__version__'), 
+                        "Module pyaspeller must have version")
 
     def test_simple(self):
         self.assertTrue(2 * 2 == 4, "simple")
