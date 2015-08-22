@@ -1,24 +1,29 @@
 from __future__ import print_function
 import unittest
+import sys
 
 import pyaspeller
 
 
-class TestCLI(unittest.TestCase):
+class CommandLineTestCase(unittest.TestCase):
+    """
+    Base TestCase class, sets up a CLI parser
+    """
+    @classmethod
+    def setUpClass(cls):
+        cls.args_parser = pyaspeller.create_args_parser()
 
-    def setUp(self):
-        print("setUp")
-        pyaspeller.main()
 
-    def tearDown(self):
-        print("tearDown")
+class TestCLI(CommandLineTestCase):
 
     def test_pyaspeller_has_version(self):
         self.assertTrue(hasattr(pyaspeller, '__version__'),
                         "Module pyaspeller must have version")
 
-    def test_simple(self):
-        self.assertTrue(2 * 2 == 4, "simple")
+    def test_min_version(self):
+        sys.version_info = (2, 7)
+        pyaspeller.check_version()
 
-    def test_simple2(self):
-        self.assertFalse(2 * 2 == 5, "simple2")
+        sys.version_info = (2, 6)
+        with self.assertRaises(SystemExit):
+            pyaspeller.check_version()
