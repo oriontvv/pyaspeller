@@ -9,7 +9,7 @@ __all__ = ['main']
 
 def check_version():
     if sys.version_info < (2, 7):
-        raise SystemExit('ERROR: Python %s detected. Python 2.7 or greater required.',
+        raise SystemExit('Python %s detected. Python 2.7 or greater required.',
                          sys.exc_info()[1])
 
 

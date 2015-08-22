@@ -16,7 +16,8 @@ test: flake develop
 vtest: flake develop
 	nosetests -s -v $(FLAGS) ./tests/
 
-cov cover coverage:
+
+cov cover coverage: flake
 	coverage run --source=pyaspeller setup.py test && coverage report
 
 cov-dev: flake develop
