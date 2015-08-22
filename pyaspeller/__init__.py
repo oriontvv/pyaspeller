@@ -17,7 +17,9 @@ def create_args_parser():
     from argparse import ArgumentParser
 
     description = "Python text speller"
-    parser = ArgumentParser(description=description, version=__version__)
+    parser = ArgumentParser(description=description, prog='pyaspeller')
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s ' + __version__)
 
     parser.add_argument('text_or_path_or_url', nargs='?', default='')
 

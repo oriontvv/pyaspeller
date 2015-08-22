@@ -58,3 +58,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+
+# pyenv
+py3/
+py2/
