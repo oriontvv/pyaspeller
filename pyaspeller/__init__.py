@@ -1,9 +1,10 @@
 # coding=utf-8
 import logging
+from pprint import pprint
 import sys
-from pyaspeller.speller import Speller
+from pyaspeller.speller import YandexSpeller
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __all__ = ['main']
 
 
@@ -16,7 +17,7 @@ def check_version():
 def create_args_parser():
     from argparse import ArgumentParser
 
-    description = "Python text speller"
+    description = "Search tool typos in the text, files and websites."
     parser = ArgumentParser(description=description, prog='pyaspeller')
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s ' + __version__)
@@ -34,10 +35,11 @@ def create_args_parser():
                         default=logging.WARNING)
 
     parser.add_argument('-f', '--format', default='auto',
-                        choices=('plain', 'html', 'markdown', 'auto'))
+                        choices=('plain', 'html', 'markdown', 'auto'),
+                        help="formats")
 
-    parser.add_argument('-l', '--lang', default=('en', 'ru'),
-                        choices=('en', 'ru', 'uk', 'kk'))
+    parser.add_argument('-l', '--lang', default=('en', 'ru'), nargs='+',
+                        choices=('en', 'ru', 'uk', 'kk'), help="languages")
 
     parser.add_argument('-c', '--config', default=None,
                         help="config path")
@@ -52,6 +54,17 @@ def create_args_parser():
     parser.add_argument('--check-yo', default=False, action='store_true',
                         help="Check the correctness of using the " +
                              "letter “Ё” (Yo) in Russian texts")
+
+    parser.add_argument('--ignore_uppercase', action='store_true',
+                        help="ignore words written in capital letters")
+
+    parser.add_argument('--ignore_digits', action='store_true',
+                        help="ignore words with numbers, such as avp17h4534")
+
+    parser.add_argument('--ignore_url', action='store_true',
+                        help="ignore Internet addresses, email "
+                             "addresses and filenames")
+
     return parser
 
 
@@ -61,5 +74,8 @@ def main():
     args = create_args_parser().parse_args()
     logging.basicConfig(level=args.log_level)
 
-    speller = Speller(args)
-    speller.spell(args.text_or_path_or_url)
+    speller = YandexSpeller(args)
+    result = speller.spell(args.text_or_path_or_url)
+    for generator in result:
+        for item in generator:
+            pprint(item)

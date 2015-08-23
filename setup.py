@@ -23,7 +23,7 @@ class BuildFailed(Exception):
 args = dict(
     name='pyaspeller',
     version=version,
-    description=('Python text speller'),
+    description=("Search tool typos in the text, files and websites."),
     long_description='\n\n'.join((read('README.rst'), read('CHANGES.txt'))),
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
