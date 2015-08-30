@@ -3,7 +3,11 @@ import sys
 import logging
 
 import pyaspeller
-from unittest.mock import Mock
+
+if sys.version_info >= (3, 3):
+    from unittest import mock
+else:
+    import mock
 
 
 class CommandLineTestCase(unittest.TestCase):
@@ -109,7 +113,7 @@ class TestCLI(CommandLineTestCase):
     def test_main_checks_python_version(self):
         old_check_version = pyaspeller.check_version
 
-        pyaspeller.check_version = Mock()
+        pyaspeller.check_version = mock.Mock()
 
         pyaspeller.main()
 
