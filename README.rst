@@ -1,21 +1,37 @@
 Python text speller
-==============================
+===================
 
 |Build Status| |Coverage Status| |Code Climate|
 
-|PyPI badge| |Installs badge| |Wheel badge| |License badge|
+|PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
 
 
 License
 -------
 
-This project is open sourced under `Apache 2.0 License`_.
+This project is open sourced under `Apache 2.0 License`.
 
 
 Features
 --------
 
-- nothing yet :)
+.. code-block:: bash
+
+    $ ./bin/pyaspeller "testt reques"
+    {u'code': 1,
+     u'col': 0,
+     u'len': 5,
+     u'pos': 0,
+     u'row': 0,
+     u's': [u'test'],
+     u'word': u'testt'}
+    {u'code': 1,
+     u'col': 6,
+     u'len': 6,
+     u'pos': 6,
+     u'row': 0,
+     u's': [u'request'],
+     u'word': u'reques'}
 
 
 Installation
@@ -27,12 +43,6 @@ To install **pyaspeller**, simply do:
 
     $ pip install pyaspeller
     $ pyaspeller --help
-
-
-Requirements
-------------
-
-- nothing yet again
 
 
 .. |Build Status| image:: https://secure.travis-ci.org/oriontvv/pyaspeller.png
@@ -60,3 +70,7 @@ Requirements
 
 .. |License badge| image:: http://img.shields.io/badge/license-Apache%202.0-green.svg?style=flat
     :alt: license
+
+.. |Doc badge| image:: https://readthedocs.org/projects/pyaspeller/badge/?version=latest
+    :target: https://readthedocs.org/projects/pyaspeller/?badge=latest
+    :alt: Documentation Status
