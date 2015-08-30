@@ -274,7 +274,6 @@ class YandexSpeller(Speller):
     def _spell_text(self, text):
 
         words = '+'.join(re.findall(r'\w+', text))
-        print (self._lang)
         lang = ','.join(self._lang)
         query = self._api_query.format(text=quote(words), lang=lang,
                                        options=self.api_options)
