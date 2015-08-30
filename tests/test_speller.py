@@ -2,6 +2,7 @@ import unittest
 import json
 # from testfixtures import LogCapture
 
+# import pyaspeller
 import pyaspeller.speller as speller
 
 
@@ -34,6 +35,9 @@ class BaseSpellerUnitText(unittest.TestCase):
 
 
 class TextSpellingUnitTest(BaseSpellerUnitText):
+
+    # def test_call_main(self):
+    #     pyaspeller.main()
 
     def test_reading_url(self):
         speller.read_url = mock_speller_responce
