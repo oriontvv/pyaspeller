@@ -1,0 +1,6 @@
+include LICENSE.txt
+include CHANGES.txt
+include README.rst
+include CONTRIBUTORS.txt
+include Makefile
+global-exclude *.pyc

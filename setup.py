@@ -1,11 +1,12 @@
 import codecs
 import os
 import re
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, find_packages
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(BASE_PATH, 'pyaspeller', '__init__.py'), 'r', 'latin1') as fp:
+with codecs.open(os.path.join(BASE_PATH, 'pyaspeller', '__init__.py'), 'r',
+                 'latin1') as fp:
     try:
         version = re.findall(r"^__version__ = '([^']+)'\r?$",
                              fp.read(), re.M)[0]
@@ -19,13 +20,15 @@ def read(f):
 
 install_requires = ['six']
 
+
 class BuildFailed(Exception):
     pass
+
 
 args = dict(
     name='pyaspeller',
     version=version,
-    description=("Search tool typos in the text, files and websites."),
+    description="Search tool typos in the text, files and websites.",
     long_description='\n\n'.join((read('README.rst'), read('CHANGES.txt'))),
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
@@ -47,6 +50,5 @@ args = dict(
     test_suite='tests',
     include_package_data=True,
 )
-
 
 setup(**args)

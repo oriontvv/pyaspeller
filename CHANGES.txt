@@ -2,11 +2,13 @@ CHANGES
 =======
 
 
-0.0.2 (23-09-2015)
----------------------
+0.0.3 (31-09-2015)
+------------------
 
-* testing automated
+* uploaded to pypi.
 
-* coverage setup
+* test coverage increased.
 
-* basic functionality. spell checking string
+* Pretty YndexSpeller API
+
+* Spell checking of strings with parameters.
