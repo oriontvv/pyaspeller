@@ -69,6 +69,9 @@ class TestCLI(CommandLineTestCase):
         self.assertEqual(args.log_level, logging.WARNING,
                          "Bad logging level")
 
+        self.assertEqual(args.lang, ['en', 'ru'],
+                         "Bad lang")
+
     def test_debug_option(self):
         args = self.args_parser.parse_args(["--debug"])
         self.assertEqual(args.log_level, logging.DEBUG, "Bad logging level")

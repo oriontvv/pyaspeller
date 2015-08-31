@@ -43,6 +43,59 @@ class TextSpellingUnitTest(BaseSpellerUnitText):
         speller.read_url = mock_speller_responce
         self.assertIsNotNone(speller.read_url('fake'))
 
+    def test_bad_single_lang_property(self):
+        self.assertRaises(AssertionError, speller.YandexSpeller, lang='qwe')
+
+    def test_correct_lang_property(self):
+        sp = speller.YandexSpeller(lang=('ru', 'en'))
+        self.assertEqual(sp.lang, ['ru', 'en'], 'Bad language')
+
+    def test_correct_single_lang_property(self):
+        sp = speller.YandexSpeller(lang=('en',))
+        self.assertEqual(sp.lang, ['en'], 'Bad language')
+
+    def test_correct_single_lang_str_property(self):
+        sp = speller.YandexSpeller(lang='uk')
+        self.assertEqual(sp.lang, ['uk'], 'Bad language')
+
+    def test_check_lang_property(self):
+        sp = speller.YandexSpeller()
+        sp.lang = 'en'
+        self.assertEqual(sp.lang, ['en'], 'Bad language')
+
+    def test_check_ignore_uppercase_option(self):
+        sp = speller.YandexSpeller()
+
+        self.assertFalse(sp.api_options & 1, 'Bad ignore_uppercase option')
+        self.assertFalse(sp.api_options & 2, 'Bad ignore_digits option')
+        self.assertFalse(sp.api_options & 4, 'Bad ignore_urls option')
+        self.assertTrue(sp.api_options & 8, 'Bad find_repeat_words option')
+        self.assertFalse(sp.api_options & 16, 'Bad ignore_latin option')
+        self.assertTrue(sp.api_options & 128, 'Bad flag_latin option')
+        self.assertFalse(sp.api_options & 512, 'Bad ignore_capitalization '
+                                               'option')
+        sp.ignore_uppercase = True
+        self.assertTrue(sp.api_options & 1, 'Bad ignore_uppercase option')
+
+        sp.ignore_digits = True
+        self.assertTrue(sp.api_options & 2, 'Bad ignore_digits option')
+
+        sp.ignore_urls = True
+        self.assertTrue(sp.api_options & 4, 'Bad ignore_urls option')
+
+        sp.find_repeat_words = False
+        self.assertFalse(sp.api_options & 8, 'Bad find_repeat_words option')
+
+        sp.ignore_latin = True
+        self.assertTrue(sp.api_options & 16, 'Bad ignore_latin option')
+
+        sp.flag_latin = False
+        self.assertFalse(sp.api_options & 128, 'Bad flag_latin option')
+
+        sp.ignore_capitalization = True
+        self.assertTrue(sp.api_options & 512, 'Bad ignore_capitalization '
+                                              'option')
+
 
 class UrlSpellingUnitTest(BaseSpellerUnitText):
     pass

@@ -1,9 +1,11 @@
 from __future__ import print_function
+import collections
 import os
 import logging
 import re
 import six
 from six.moves.urllib.parse import quote
+from six import string_types
 
 import json
 
@@ -67,6 +69,7 @@ class Speller(object):
 
 
 class YandexSpeller(Speller):
+    _supported_langs = {'en', 'ru', 'uk'}
 
     def __init__(self, format='auto', lang=None, config_path=None,
                  dictionary=None, report_type=None, max_requests=2,
@@ -76,10 +79,9 @@ class YandexSpeller(Speller):
                  ignore_roman_numerals=False, ignore_uppercase=False,
                  find_repeat_words=True, flag_latin=True):
 
+        self._lang = ['en', 'ru']
+        self.lang = lang
         self._format = format
-        self._lang = lang or ['en', 'ru']
-        if not isinstance(self._lang, (list, tuple)):
-            self._lang = [self._lang]
         self._config_path = config_path or ''
         self._dictionary = dictionary or {}
         self._report_type = report_type or 'console'
@@ -117,9 +119,15 @@ class YandexSpeller(Speller):
         return self._lang
 
     @lang.setter
-    def lang(self, value):
+    def lang(self, language):
         """Set lang"""
-        self._lang = value
+        if isinstance(language, string_types):
+            self._lang = [language]
+        elif isinstance(language, collections.Iterable):
+            self._lang = list(language)
+
+        assert all(lang in self._supported_langs for lang in self._lang), \
+            "Unsupported language"
 
     @property
     def config_path(self):
@@ -292,17 +300,17 @@ class YandexSpeller(Speller):
     def api_options(self):
         options = 0
         if self._ignore_uppercase:
-            options += 1
+            options |= 1
         if self._ignore_digits:
-            options += 2
+            options |= 2
         if self._ignore_urls:
-            options += 4
+            options |= 4
         if self._find_repeat_words:
-            options += 8
+            options |= 8
         if self._ignore_latin:
-            options += 16
+            options |= 16
         if self._flag_latin:
-            options += 128
+            options |= 128
         if self._ignore_capitalization:
-            options += 512
+            options |= 512
         return options

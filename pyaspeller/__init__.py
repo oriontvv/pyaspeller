@@ -41,7 +41,7 @@ def create_args_parser():
                         choices=('plain', 'html', 'markdown', 'auto'),
                         help="formats")
 
-    parser.add_argument('-l', '--lang', default=('en', 'ru'), nargs='+',
+    parser.add_argument('-l', '--lang', default=['en', 'ru'], nargs='+',
                         choices=('en', 'ru', 'uk', 'kk'), help="languages")
 
     parser.add_argument('-c', '--config', default=None,
