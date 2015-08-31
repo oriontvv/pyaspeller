@@ -17,6 +17,8 @@ def read(f):
     return open(os.path.join(BASE_PATH, f)).read().strip()
 
 
+install_requires = ['six']
+
 class BuildFailed(Exception):
     pass
 
@@ -40,7 +42,7 @@ args = dict(
     url='https://github.com/oriontvv/pyaspeller',
     license='Apache 2',
     packages=find_packages(),
-    # install_requires=install_requires,
+    install_requires=install_requires,
     # tests_require=tests_require,
     test_suite='tests',
     include_package_data=True,
