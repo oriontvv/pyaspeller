@@ -47,6 +47,15 @@ class TestCLI(CommandLineTestCase):
         self.assertFalse(speller.is_debug, "Can't be debuggable")
         self.assertTrue(speller.check_yo,
                         "Bad check_yo option")
+        self.assertEqual(args.log_level, logging.WARNING,
+                         "Bad logging level")
+        self.assertEqual(args.lang, ['en', 'ru'],
+                         "Bad lang")
+
+    def test_default_ignore_args(self):
+        args = self.args_parser.parse_args("")
+        speller = pyaspeller.create_speller(args)
+
         self.assertFalse(speller.ignore_urls,
                          "Bad ignore_urls option")
         self.assertFalse(speller.ignore_tags,
@@ -66,12 +75,6 @@ class TestCLI(CommandLineTestCase):
         self.assertFalse(speller.flag_latin,
                          "Bad flag_latin option")
 
-        self.assertEqual(args.log_level, logging.WARNING,
-                         "Bad logging level")
-
-        self.assertEqual(args.lang, ['en', 'ru'],
-                         "Bad lang")
-
     def test_debug_option(self):
         args = self.args_parser.parse_args(["--debug"])
         self.assertEqual(args.log_level, logging.DEBUG, "Bad logging level")
@@ -84,11 +87,6 @@ class TestCLI(CommandLineTestCase):
     def test_verbose_and_debug_option(self):
         args = self.args_parser.parse_args(["--verbose", "--debug"])
         self.assertEqual(args.log_level, logging.DEBUG,
-                         "Bad logging level")
-
-    def test_debug_and_verbose_option(self):
-        args = self.args_parser.parse_args(["--debug", "--verbose"])
-        self.assertEqual(args.log_level, logging.INFO,
                          "Bad logging level")
 
     def test_config_option(self):
