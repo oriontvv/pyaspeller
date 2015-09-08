@@ -2,13 +2,13 @@ CHANGES
 =======
 
 
-0.0.3 (31-09-2015)
+0.0.4 (08-10-2015)
 ------------------
 
-* uploaded to pypi.
+* system script *pyaspeller* added
 
-* test coverage increased.
+* packet classifiers updated
 
-* Pretty YndexSpeller API
+* alpha status specified
 
-* Spell checking of strings with parameters.
+* contributors files added

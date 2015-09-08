@@ -31,22 +31,28 @@ args = dict(
     description="Search tool typos in the text, files and websites.",
     long_description='\n\n'.join((read('README.rst'), read('CHANGES.txt'))),
     classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: Apache Software License',
         'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Topic :: Internet :: WWW/HTTP'],
+        'Topic :: Text Processing :: Linguistic'],
     author='Vassiliy Taranov',
     author_email='taranov.vv@gmail.com',
     url='https://github.com/oriontvv/pyaspeller',
     license='Apache 2',
     packages=find_packages(),
     install_requires=install_requires,
-    # tests_require=tests_require,
+    entry_points={
+        'console_scripts': [
+            'pyaspeller = pyaspeller.__init__:main'
+        ]
+    },
     test_suite='tests',
     include_package_data=True,
 )

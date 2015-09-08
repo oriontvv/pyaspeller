@@ -17,7 +17,7 @@ Features
 
 .. code-block:: bash
 
-    $ ./bin/pyaspeller "testt reques"
+    $ pyaspeller "testt reques"
     {u'code': 1,
      u'col': 0,
      u'len': 5,
