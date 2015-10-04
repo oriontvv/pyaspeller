@@ -25,9 +25,13 @@ def read_url(url):
 
 class Speller(object):
     """
-    Spell class.
+    Base spell class. Implements spelling logic for files
     """
+
     def spell(self, target):
+        """
+        spell anything
+        """
         if target.startswith(('http://', 'https://')):
             yield self._spell_url(target)
 
@@ -69,6 +73,9 @@ class Speller(object):
 
 
 class YandexSpeller(Speller):
+    """
+    Yandex speller implementation
+    """
     _supported_langs = {'en', 'ru', 'uk'}
 
     def __init__(self, format='auto', lang=None, config_path=None,
@@ -298,6 +305,10 @@ class YandexSpeller(Speller):
 
     @property
     def api_options(self):
+        """
+        current spelling settings
+        :return: api options as number
+        """
         options = 0
         if self._ignore_uppercase:
             options |= 1
