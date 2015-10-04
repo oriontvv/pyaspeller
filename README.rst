@@ -1,11 +1,7 @@
 Python text speller
 ===================
 
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/oriontvv/pyaspeller
-   :target: https://gitter.im/oriontvv/pyaspeller?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
-|Build Status| |Coverage Status| |Code Climate|
+|Build Status| |Coverage Status| |Code Climate| |Gitter Chat|
 
 |PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
 
@@ -17,8 +13,6 @@ License
 
 .. _pyaspeller: https://github.com/oriontvv/pyaspeller
 .. _Apache 2.0 License: http://www.apache.org/licenses/LICENSE-2.0
-
-
 
 Features (under development)
 ----------------------------
@@ -53,6 +47,10 @@ To install ``pyaspeller``, simply do:
     $ pyaspeller --help
 
 
+.. |Gitter Chat| image:: https://badges.gitter.im/Join%20Chat.svg
+    :target: https://gitter.im/oriontvv/pyaspeller?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+    :alt: Join the chat at https://gitter.im/oriontvv/pyaspeller
+
 .. |Build Status| image:: https://secure.travis-ci.org/oriontvv/pyaspeller.png
     :target:  https://secure.travis-ci.org/oriontvv/pyaspeller
     :alt: Build Status
@@ -73,7 +71,7 @@ To install ``pyaspeller``, simply do:
     :target: https://crate.io/packages/pyaspeller/
     :alt: Installs
 
-.. |Wheel badge| image:: http://img.shields.io/badge/wheel-no-red.svg?style=flat
+.. |Wheel badge| image:: http://img.shields.io/badge/wheel-yes-green.svg?style=flat
     :alt: Whell support
 
 .. |License badge| image:: http://img.shields.io/badge/license-Apache%202.0-green.svg?style=flat
