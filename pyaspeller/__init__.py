@@ -4,7 +4,7 @@ from pprint import pprint
 import sys
 from pyaspeller.speller import YandexSpeller
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 __all__ = ['main']
 
 

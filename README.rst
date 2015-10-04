@@ -9,11 +9,15 @@ Python text speller
 License
 -------
 
-This project is open sourced under `Apache 2.0 License`.
+`pyaspeller`_ is open sourced under the `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_
+
+.. _pyaspeller: https://github.com/oriontvv/pyaspeller
+.. _Apache 2.0 License: http://www.apache.org/licenses/LICENSE-2.0
 
 
-Features
---------
+
+Features (under development)
+----------------------------
 
 .. code-block:: bash
 
@@ -37,7 +41,7 @@ Features
 Installation
 ------------
 
-To install **pyaspeller**, simply do:
+To install ``pyaspeller``, simply do:
 
 .. code-block:: bash
 

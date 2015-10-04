@@ -20,6 +20,12 @@ vtest: flake develop
 cov cover coverage: flake
 	coverage run --source=pyaspeller setup.py test && coverage report
 
+package: cov
+	python setup.py sdist bdist_wheel
+
+publish: package
+	python setup.py sdist bdist_wheel upload
+
 cov-dev: flake develop
 	@coverage erase
 	@coverage run -m nose -s $(FLAGS) tests

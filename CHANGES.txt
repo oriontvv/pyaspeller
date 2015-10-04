@@ -2,13 +2,7 @@ CHANGES
 =======
 
 
-0.0.4 (08-10-2015)
+0.0.5 (04-10-2015)
 ------------------
 
-* system script *pyaspeller* added
-
-* packet classifiers updated
-
-* alpha status specified
-
-* contributors files added
+* wheel packaging
