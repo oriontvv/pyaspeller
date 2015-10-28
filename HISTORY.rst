@@ -1,40 +1,40 @@
 
 
-0.0.5 (04-10-2015)
+0.0.5 (2015-10-04)
 ------------------
 
-- wheel packaging
+* wheel packaging
 
 
-0.0.4 (08-10-2015)
+0.0.4 (2015-10-08)
 ------------------
 
-- system script *pyaspeller* added
+* system script *pyaspeller* added
 
-- packet classifiers updated
+* packet classifiers updated
 
-- alpha status specified
+* alpha status specified
 
-- contributors files added
+* contributors files added
 
 
-0.0.3 (31-09-2015)
+0.0.3 (2015-09-31)
 ------------------
 
-- uploaded to pypi.
+* uploaded to pypi.
 
-- test coverage increased.
+* test coverage increased.
 
-- Pretty YandexSpeller API
+* Pretty YandexSpeller API
 
-- Spell checking of strings with parameters.
+* Spell checking of strings with parameters.
 
 
-0.0.2 (23-09-2015)
+0.0.2 (2015-09-23)
 ------------------
 
-- testing automated
+* testing automated
 
-- coverage setup
+* coverage setup
 
-- basic functionality. spell checking string
+* basic functionality. spell checking string

@@ -15,10 +15,12 @@ def read_url(url):
 
     if six.PY2:
         import urllib2
+
         return urllib2.urlopen(url).read()
 
     if six.PY3:
         import urllib.request
+
         with urllib.request.urlopen(url) as response:
             return response.read()
 
@@ -28,19 +30,21 @@ class Speller(object):
     Base spell class. Implements spelling logic for files
     """
 
-    def spell(self, target):
-        """
-        spell anything
-        """
-        if target.startswith(('http://', 'https://')):
-            yield self._spell_url(target)
+    def spell(self, text):
+        if isinstance(text, (list, tuple)):
+            text = ','.join(text)
 
-        elif os.path.exists(target):
-            for res in self._spell_path(target):
+        text = self._prepare_text(text)
+
+        if text.startswith(('http://', 'https://')):
+            yield self._spell_url(text)
+
+        elif os.path.exists(text):
+            for res in self._spell_path(text):
                 yield res
 
-        elif target:
-            yield self._spell_text(target)
+        elif text:
+            yield self._spell_text(text)
 
         else:
             raise NotImplementedError()
@@ -71,6 +75,21 @@ class Speller(object):
                     for res in self._spell_file(fullpath):
                         yield res
 
+    def _prepare_text(self, text):
+        subs = {
+            '\r\n': '\n',   # Fix Windows
+            '\r': '\n',     # Fix MacOS
+            '\s+\n': '\n',  # Trailing spaces
+            '\s+': ' ',     # Repeat spaces
+            '\n+': '\n',    # Repeat line ends
+        }
+        for src, dst in subs.items():
+            text = text.replace(src, dst)
+        return text.strip()
+
+    def _strip_tags(self, text):
+        return re.sub('<[^<]+?>', '', text)
+
 
 class YandexSpeller(Speller):
     """
@@ -84,7 +103,7 @@ class YandexSpeller(Speller):
                  ignore_tags=False, ignore_capitalization=False,
                  ignore_digits=False, ignore_latin=False,
                  ignore_roman_numerals=False, ignore_uppercase=False,
-                 find_repeat_words=True, flag_latin=True):
+                 find_repeat_words=True, flag_latin=True, by_words=True):
 
         self._lang = ['en', 'ru']
         self.lang = lang
@@ -103,12 +122,14 @@ class YandexSpeller(Speller):
         self._ignore_uppercase = ignore_uppercase
         self._find_repeat_words = find_repeat_words
         self._flag_latin = flag_latin
+        self._by_words = by_words
 
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = 'http://speller.yandex.net/services/spellservice.json/' + \
-                          'checkText?text={text}&lang={lang}&options={options}'
+        self._api_query = 'http://speller.yandex.net/services/' \
+                          'spellservice.json/checkText?text={text}&' \
+                          'lang={lang}&options={options}'
 
     @property
     def format(self):
@@ -267,6 +288,16 @@ class YandexSpeller(Speller):
         self._flag_latin = value
 
     @property
+    def by_words(self):
+        """Get by_words"""
+        return self._by_words
+
+    @by_words.setter
+    def by_words(self, value):
+        """Set by_words"""
+        self._by_words = value
+
+    @property
     def max_requests(self):
         """Get max_requests"""
         return self._max_requests
@@ -322,6 +353,10 @@ class YandexSpeller(Speller):
             options |= 16
         if self._flag_latin:
             options |= 128
+        if self._by_words:
+            options |= 256
         if self._ignore_capitalization:
             options |= 512
+        if self._ignore_roman_numerals:
+            options |= 2048
         return options

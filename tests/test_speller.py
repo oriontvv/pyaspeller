@@ -72,8 +72,11 @@ class TextSpellingUnitTest(BaseSpellerUnitText):
         self.assertTrue(sp.api_options & 8, 'Bad find_repeat_words option')
         self.assertFalse(sp.api_options & 16, 'Bad ignore_latin option')
         self.assertTrue(sp.api_options & 128, 'Bad flag_latin option')
+        self.assertTrue(sp.api_options & 256, 'Bad by_words option')
         self.assertFalse(sp.api_options & 512, 'Bad ignore_capitalization '
                                                'option')
+        self.assertFalse(sp.api_options & 2048, 'Bad ignore_roman_numerals '
+                                                'option')
 
     def test_check_ignore_uppercase_option_inverse(self):
         sp = speller.YandexSpeller(ignore_uppercase=True,
@@ -82,7 +85,9 @@ class TextSpellingUnitTest(BaseSpellerUnitText):
                                    find_repeat_words=False,
                                    ignore_latin=True,
                                    flag_latin=False,
-                                   ignore_capitalization=True)
+                                   ignore_capitalization=True,
+                                   by_words=False,
+                                   ignore_roman_numerals=True)
 
         self.assertTrue(sp.api_options & 1, 'Bad ignore_uppercase option')
         self.assertTrue(sp.api_options & 2, 'Bad ignore_digits option')
@@ -90,8 +95,11 @@ class TextSpellingUnitTest(BaseSpellerUnitText):
         self.assertFalse(sp.api_options & 8, 'Bad find_repeat_words option')
         self.assertTrue(sp.api_options & 16, 'Bad ignore_latin option')
         self.assertFalse(sp.api_options & 128, 'Bad flag_latin option')
+        self.assertFalse(sp.api_options & 256, 'Bad by_words option')
         self.assertTrue(sp.api_options & 512, 'Bad ignore_capitalization '
                                               'option')
+        self.assertTrue(sp.api_options & 2048, 'Bad ignore_roman_numerals '
+                                               'option')
 
 
 class UrlSpellingUnitTest(BaseSpellerUnitText):
