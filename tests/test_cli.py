@@ -1,15 +1,11 @@
-import unittest
-import sys
-import logging
-
-import pyaspeller
-
+"""
 if sys.version_info >= (3, 3):
     from unittest import mock
 else:
     import mock
+"""
 
-
+'''
 class CommandLineTestCase(unittest.TestCase):
     """
     Base TestCase class, sets up a CLI parser
@@ -122,3 +118,5 @@ class TestCLI(CommandLineTestCase):
                         "main must check version")
 
         pyaspeller.check_version = old_check_version
+
+'''

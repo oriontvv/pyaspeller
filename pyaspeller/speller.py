@@ -165,7 +165,9 @@ class YandexSpeller(Speller):
     @config_path.setter
     def config_path(self, value):
         """Set config_path"""
-        self._config_path = value
+        self._config_path = value or ''
+        assert isinstance(self._config_path, str), \
+            "config_path must be string: " + str(self._config_path)
 
     @property
     def dictionary(self):
@@ -175,7 +177,9 @@ class YandexSpeller(Speller):
     @dictionary.setter
     def dictionary(self, value):
         """Set dictionary"""
-        self._dictionary = value
+        self._dictionary = value or {}
+        assert isinstance(self._dictionary, dict), \
+            "dictionary must be dict: " + str(self._dictionary)
 
     @property
     def report_type(self):
@@ -185,7 +189,7 @@ class YandexSpeller(Speller):
     @report_type.setter
     def report_type(self, value):
         """Set report_type"""
-        self._report_type = value
+        self._report_type = value or 'console'
 
     @property
     def check_yo(self):

@@ -11,10 +11,10 @@ develop:
 	python setup.py develop
 
 test: flake develop
-	nosetests -s $(FLAGS) ./tests/
+	py.test ./tests/
 
 vtest: flake develop
-	nosetests -s -v $(FLAGS) ./tests/
+	py.test ./tests/ -v
 
 
 cov cover coverage: flake
