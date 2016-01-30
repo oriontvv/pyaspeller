@@ -1,5 +1,5 @@
 six
-coverage
+coveralls
 pytest
 pytest-cov
 flake8

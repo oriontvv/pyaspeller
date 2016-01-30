@@ -18,17 +18,14 @@ before_cache:
 
 
 install:
-  - pip install --upgrade pip wheel
-  - pip install --upgrade setuptools
+  - pip install --upgrade pip wheel setuptools
   - pip install -r requirements-dev.txt
-  - pip install coveralls
   - python setup.py develop
 
 
 script:
   - flake8 pyaspeller
   - py.test --cov=pyaspeller tests
-  - coverage run --source=pyaspeller setup.py test
   - python setup.py check -rm
 
 
