@@ -63,3 +63,5 @@ target/
 # pyenv
 py3/
 py2/
+
+.idea

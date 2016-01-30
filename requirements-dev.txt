@@ -1,3 +1,5 @@
 six
 coverage
 pytest
+pytest-cov
+flake8

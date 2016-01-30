@@ -11,14 +11,14 @@ develop:
 	python setup.py develop
 
 test: flake develop
-	py.test ./tests/
+	py.test tests
 
 vtest: flake develop
-	py.test ./tests/ -v
+	py.test tests -v
 
 
 cov cover coverage: flake
-	coverage run --source=pyaspeller setup.py test && coverage report
+	py.test tests --cov
 
 package: cov
 	python setup.py sdist bdist_wheel
