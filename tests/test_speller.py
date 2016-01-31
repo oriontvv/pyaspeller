@@ -5,14 +5,6 @@ from pyaspeller.errors import BadArgumentError
 from pyaspeller.speller import read_url
 
 
-# def mock_speller_responce(url):
-#     data = [{"code": 1, "pos": 0, "row": 0, "col": 0, "len": 4,
-#               "word": "faqe",
-#              "s": ["faq", "face", "fate", "fame", "fake"]},
-#             {"code": 1, "pos": 5, "row": 0, "col": 5,
-#              "len": 4, "word": "qake", "s": ["quake"]}]
-#     return json.dumps(data)
-
 @pytest.fixture
 def speller():
     return YandexSpeller()
@@ -57,6 +49,18 @@ def test_check_lang_property(speller):
     assert speller.lang == ['en'], 'Bad language'
 
 
+def test_param_max_requests(speller):
+    assert speller.max_requests == 2, 'Bad default max_requests'
+    speller.max_requests = 4
+    assert speller.max_requests == 4, 'Bad max_requests'
+
+
+def test_param_is_debug(speller):
+    assert not speller.is_debug, 'Bad default is_debug'
+    speller.max_requests = True
+    assert speller.max_requests, 'Bad is_debug'
+
+
 def test_param_format(speller):
     assert speller.format == 'auto', \
         'Bad default format: ' + str(speller.format)
@@ -83,7 +87,7 @@ def test_param_dictionary(speller):
                                                  str(speller.dictionary)
 
     with pytest.raises(BadArgumentError):
-        speller.config_path = ["/path"]
+        speller.dictionary = ["/path"]
 
 
 def test_param_report_type(speller):
