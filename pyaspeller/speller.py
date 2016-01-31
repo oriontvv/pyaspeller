@@ -3,26 +3,17 @@ import collections
 import os
 import logging
 import re
-import six
-from six.moves.urllib.parse import quote
-from six import string_types
+import urllib
+from urllib.parse import quote
 
 import json
+
+from pyaspeller.errors import BadArgumentError
 
 
 def read_url(url):
     assert url, "Empty url"
-
-    if six.PY2:
-        import urllib2
-
-        return urllib2.urlopen(url).read()
-
-    if six.PY3:
-        import urllib.request
-
-        with urllib.request.urlopen(url) as response:
-            return response.read()
+    return urllib.request.urlopen(url).read()
 
 
 class Speller(object):
@@ -77,11 +68,11 @@ class Speller(object):
 
     def _prepare_text(self, text):
         subs = {
-            '\r\n': '\n',   # Fix Windows
-            '\r': '\n',     # Fix MacOS
+            '\r\n': '\n',  # Fix Windows
+            '\r': '\n',  # Fix MacOS
             '\s+\n': '\n',  # Trailing spaces
-            '\s+': ' ',     # Repeat spaces
-            '\n+': '\n',    # Repeat line ends
+            '\s+': ' ',  # Repeat spaces
+            '\n+': '\n',  # Repeat line ends
         }
         for src, dst in subs.items():
             text = text.replace(src, dst)
@@ -149,13 +140,13 @@ class YandexSpeller(Speller):
     @lang.setter
     def lang(self, language):
         """Set lang"""
-        if isinstance(language, string_types):
+        if isinstance(language, str):
             self._lang = [language]
         elif isinstance(language, collections.Iterable):
             self._lang = list(language)
 
-        assert all(lang in self._supported_langs for lang in self._lang), \
-            "Unsupported language"
+        if any(lang not in self._supported_langs for lang in self._lang):
+            raise BadArgumentError("Unsupported language")
 
     @property
     def config_path(self):
@@ -166,8 +157,9 @@ class YandexSpeller(Speller):
     def config_path(self, value):
         """Set config_path"""
         self._config_path = value or ''
-        assert isinstance(self._config_path, str), \
-            "config_path must be string: " + str(self._config_path)
+        if not isinstance(self._config_path, str):
+            raise BadArgumentError("config_path must be string: {}".format(
+                self._config_path))
 
     @property
     def dictionary(self):
@@ -178,8 +170,9 @@ class YandexSpeller(Speller):
     def dictionary(self, value):
         """Set dictionary"""
         self._dictionary = value or {}
-        assert isinstance(self._dictionary, dict), \
-            "dictionary must be dict: " + str(self._dictionary)
+        if not isinstance(self._dictionary, dict):
+            raise BadArgumentError("dictionary must be dict: {}".format(
+                self._dictionary))
 
     @property
     def report_type(self):

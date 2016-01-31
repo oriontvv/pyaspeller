@@ -9,7 +9,12 @@ Python text speller
 License
 -------
 
-`pyaspeller`_ is open sourced under the `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_
+`pyaspeller`_ is a search tool typos in the text, files and websites.
+It's open sourced under the
+`Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_
+
+Used API `Yandex.Speller.<https://tech.yandex
+.ru/speller/doc/dg/concepts/About-docpage/>`_
 
 .. _pyaspeller: https://github.com/oriontvv/pyaspeller
 .. _Apache 2.0 License: http://www.apache.org/licenses/LICENSE-2.0
@@ -45,6 +50,11 @@ To install ``pyaspeller``, simply do:
 
     $ pip install pyaspeller
     $ pyaspeller --help
+
+
+Restrictions API Yandex.Speller
+-------------------------------
+    speller has some `restrictions <https://yandex.ru/legal/speller_api/>`
 
 
 .. |Gitter Chat| image:: https://badges.gitter.im/Join%20Chat.svg

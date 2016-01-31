@@ -1,6 +1,7 @@
+from unittest import mock
 import pytest
-from _pytest.python import raises
 from pyaspeller import YandexSpeller
+from pyaspeller.errors import BadArgumentError
 from pyaspeller.speller import read_url
 
 
@@ -17,18 +18,22 @@ def speller():
     return YandexSpeller()
 
 
-def test_read_none_url(speller):
-    with raises(AssertionError):
-        read_url(None)
-
-
-def test_read_empty_url(speller):
-    with raises(AssertionError):
+def test_read_empty_url():
+    with pytest.raises(AssertionError):
         read_url('')
 
 
-def test_bad_single_lang_property(speller):
-    with raises(AssertionError):
+@mock.patch('urllib.request.urlopen')
+def test_read_good_url(mock_urlopen):
+    resp = mock.Mock()
+    resp.read.side_effect = ['resp1', 'resp2']
+    mock_urlopen.return_value = resp
+
+    assert read_url('http://python.org') == "resp1", "Bad response"
+
+
+def test_bad_single_lang_property():
+    with pytest.raises(BadArgumentError):
         YandexSpeller(lang='qwe')
 
 
@@ -66,7 +71,7 @@ def test_param_config_path(speller):
     assert speller.config_path == '/path/to/config', 'Bad config_path: ' + \
                                                      str(speller.config_path)
 
-    with raises(AssertionError):
+    with pytest.raises(BadArgumentError):
         speller.config_path = ["/path"]
 
 
@@ -77,7 +82,7 @@ def test_param_dictionary(speller):
     assert speller.dictionary == {'answer': 42}, 'Bad dictionary: ' + \
                                                  str(speller.dictionary)
 
-    with raises(AssertionError):
+    with pytest.raises(BadArgumentError):
         speller.config_path = ["/path"]
 
 
@@ -163,20 +168,7 @@ def test_param_ignore_capitalization(speller):
 
 def test_param_ignore_roman_numerals(speller):
     assert not speller.api_options & 2048, 'Bad ignore_roman_numerals option'
-    assert not speller.ignore_roman_numerals,\
+    assert not speller.ignore_roman_numerals, \
         'Bad default ignore_capitalization'
     speller.ignore_roman_numerals = True
     assert speller.api_options & 2048, 'Bad ignore_roman_numerals option'
-
-
-"""
-class TextSpellingUnitTest(object):
-
-    # def test_call_main(self):
-    #     pyaspeller.main()
-
-    def test_reading_url(self):
-        speller.read_url = mock_speller_responce
-        self.assertIsNotNone(speller.read_url('fake'))
-
-"""
