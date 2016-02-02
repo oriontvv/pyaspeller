@@ -1,9 +1,20 @@
-"""
-if sys.version_info >= (3, 3):
-    from unittest import mock
-else:
-    import mock
-"""
+from unittest import mock
+
+import sys
+
+import pytest
+from pyaspeller import check_version
+
+
+# # @mock.patch('sys.version_info', return_value=(2, 7))
+# def test_check_old_python_version():
+#     sys.version_info = (2, 6)
+#
+#     with pytest.raises(RuntimeError):
+#         check_version()
+#
+
+
 
 '''
 class CommandLineTestCase(unittest.TestCase):

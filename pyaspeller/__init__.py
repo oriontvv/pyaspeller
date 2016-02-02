@@ -10,8 +10,8 @@ __all__ = ['main']
 
 def check_version():
     if sys.version_info < (2, 7):
-        raise SystemExit('Python %s detected. Python 2.7 or greater '
-                         'required.' % str(sys.version_info))
+        raise RuntimeError('Python %s detected. Python 2.7 or greater '
+                           'required.' % str(sys.version_info))
 
 
 def create_args_parser():

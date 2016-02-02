@@ -22,6 +22,7 @@ def test_read_good_url(mock_urlopen):
     mock_urlopen.return_value = resp
 
     assert read_url('http://python.org') == "resp1", "Bad response"
+    assert read_url('http://python.org') == "resp2", "Bad response"
 
 
 def test_bad_single_lang_property():
