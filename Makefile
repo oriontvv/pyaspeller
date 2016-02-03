@@ -11,14 +11,14 @@ develop:
 	python setup.py develop
 
 test: flake develop
-	py.test tests
+	py.test tests/*.py
 
 vtest: flake develop
-	py.test tests -v
+	py.test tests/*.py -v
 
 
 cov cover coverage: flake
-	py.test tests --cov
+	py.test tests/*.py --cov
 
 package: cov
 	python setup.py sdist bdist_wheel
