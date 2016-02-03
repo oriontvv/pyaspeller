@@ -1,8 +1,9 @@
 from __future__ import print_function
+
 from unittest import mock
-import sys
+
 import pytest
-from pyaspeller import check_version, create_args_parser, __version__
+from pyaspeller import create_args_parser, main, create_speller
 
 
 # # @mock.patch('sys.version_info', return_value=(2, 7))
@@ -19,10 +20,23 @@ def argparser():
     return create_args_parser()
 
 
-def test_args_parser_version(argparser):
+@pytest.fixture()
+def speller(argparser):
     args = argparser.parse_args([""])
-    # assert __version__ in args, "Bad version"
+    return create_speller(args)
 
+
+def test_args_parser_version(capsys):
+    version = '7.7.7'
+    with mock.patch('pyaspeller.__version__', version):
+        with pytest.raises(SystemExit):
+            main()
+            out, err = capsys.readouterr()
+            assert version in out, "Bad version: " + out
+
+
+def test_default_speller(speller):
+    assert speller.format == 'auto', 'Bad default format: ' + speller.format
 
 '''
 class CommandLineTestCase(unittest.TestCase):
