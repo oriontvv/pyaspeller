@@ -1,9 +1,8 @@
+from __future__ import print_function
 from unittest import mock
-
 import sys
-
 import pytest
-from pyaspeller import check_version
+from pyaspeller import check_version, create_args_parser, __version__
 
 
 # # @mock.patch('sys.version_info', return_value=(2, 7))
@@ -14,6 +13,15 @@ from pyaspeller import check_version
 #         check_version()
 #
 
+
+@pytest.fixture()
+def argparser():
+    return create_args_parser()
+
+
+def test_args_parser_version(argparser):
+    args = argparser.parse_args([""])
+    # assert __version__ in args, "Bad version"
 
 
 '''
