@@ -1,7 +1,7 @@
 Python text speller
 ===================
 
-|Build Status| |Coverage Status| |Code Climate| |Gitter Chat|
+|Build Status| |Coverage Status| |Code Health| |Code Climate| |Gitter Chat|
 
 |PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
 
@@ -13,7 +13,7 @@ License
 It's open sourced under the
 `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_.
 
-Used API `Yandex.Speller<https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/>`_.
+Used API `Yandex.Speller <https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/>`_.
 
 .. _pyaspeller: https://github.com/oriontvv/pyaspeller
 .. _Apache 2.0 License: http://www.apache.org/licenses/LICENSE-2.0
@@ -71,6 +71,10 @@ Restrictions API Yandex.Speller
 .. |Code Climate| image:: https://codeclimate.com/github/oriontvv/pyaspeller/badges/gpa.svg
     :target:  https://codeclimate.com/github/oriontvv/pyaspeller
     :alt: Code Climate
+
+.. |Code Health| image:: https://landscape.io/github/oriontvv/pyaspeller/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/oriontvv/pyaspeller/master
+    :alt: Code Health
 
 .. |PyPI badge| image:: http://img.shields.io/pypi/v/pyaspeller.svg?style=flat
     :target: http://badge.fury.io/py/pyaspeller
