@@ -4,4 +4,6 @@ CHANGES
 
 0.1.0 (XXXX-XX-XX)
 ------------------
-* test pytests
+* testing and coverage with pytest
+* project health by landscape.io
+* restrictions link in readme
