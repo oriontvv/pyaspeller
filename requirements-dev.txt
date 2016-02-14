@@ -4,3 +4,4 @@ pytest-cov
 flake8
 sphinx
 alabaster>=0.6.2
+tox

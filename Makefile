@@ -11,31 +11,20 @@ develop:
 	python setup.py develop
 
 test: flake develop
-	py.test tests/*.py
+	py.test tests --ignore=.DS_Store
 
 vtest: flake develop
-	py.test tests/*.py -v
+	py.test tests -v --ignore=.DS_Store
 
 
 cov cover coverage: flake
-	py.test tests/*.py --cov
+	py.test tests --cov=pyaspeller --ignore=.DS_Store
 
 package: cov
 	python setup.py sdist bdist_wheel
 
 publish: package
 	python setup.py sdist bdist_wheel upload
-
-cov-dev: flake develop
-	@coverage erase
-	@coverage run -m nose -s $(FLAGS) tests
-	@mv .coverage .coverage.accel
-	@pyaspeller_NO_EXTENSIONS=1 coverage run -m nose -s $(FLAGS) tests
-	@mv .coverage .coverage.pure
-	@coverage combine
-	@coverage report
-	@coverage html
-	@echo "open file://`pwd`/coverage/index.html"
 
 clean:
 	rm -rf `find . -name __pycache__`
@@ -61,4 +50,8 @@ doc:
 doc-spelling:
 	make -C docs spelling
 
-.PHONY: all build venv flake test vtest testloop cov clean doc
+env:
+	$(source ./py3/bin/activate)
+
+
+.PHONY: all build env flake test vtest cov clean doc
