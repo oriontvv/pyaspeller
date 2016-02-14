@@ -6,15 +6,6 @@ import pytest
 from pyaspeller import create_args_parser, main, create_speller
 
 
-# # @mock.patch('sys.version_info', return_value=(2, 7))
-# def test_check_old_python_version():
-#     sys.version_info = (2, 6)
-#
-#     with pytest.raises(RuntimeError):
-#         check_version()
-#
-
-
 @pytest.fixture()
 def argparser():
     return create_args_parser()
@@ -53,19 +44,6 @@ class TestCLI(CommandLineTestCase):
     def test_pyaspeller_has_version(self):
         self.assertTrue(hasattr(pyaspeller, '__version__'),
                         "Module pyaspeller must have version")
-
-    def test_correct_version(self):
-        old = sys.version_info
-        sys.version_info = (2, 7)
-        pyaspeller.check_version()
-        sys.version_info = old
-
-    def test_min_version(self):
-        old = sys.version_info
-        sys.version_info = (2, 6)
-        with self.assertRaises(SystemExit):
-            pyaspeller.check_version()
-        sys.version_info = old
 
     def test_default_args(self):
         args = self.args_parser.parse_args("")
