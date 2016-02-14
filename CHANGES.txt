@@ -7,3 +7,5 @@ CHANGES
 * testing and coverage with pytest
 * project health by landscape.io
 * restrictions link in readme
+* add tox
+# add requirements status

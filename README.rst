@@ -5,6 +5,7 @@ Python text speller
 
 |PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
 
+|Requirements Status|
 
 License
 -------
@@ -93,3 +94,7 @@ Restrictions API Yandex.Speller
 .. |Doc badge| image:: https://readthedocs.org/projects/pyaspeller/badge/?version=latest
     :target: https://readthedocs.org/projects/pyaspeller/?badge=latest
     :alt: Documentation Status
+
+.. |Requirements Status| image:: https://requires.io/github/oriontvv/pyaspeller/requirements.svg?branch=master
+    :target: https://requires.io/github/oriontvv/pyaspeller/requirements/?branch=master
+    :alt: Requirements Status
