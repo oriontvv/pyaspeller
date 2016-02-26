@@ -323,13 +323,13 @@ class YandexSpeller(Speller):
                                        options=self.api_options)
         logging.debug("query: " + query)
 
-        responce = read_url(query).decode('utf-8')
+        response = read_url(query).decode('utf-8')
 
-        assert responce, "Bad responce for url: " + query
-        logging.debug("responce: " + responce)
+        assert response, "Bad response for url: " + query
+        logging.debug("response: " + response)
 
-        responce = json.loads(responce)
-        for item in responce:
+        response = json.loads(response)
+        for item in response:
             yield item
 
     @property
