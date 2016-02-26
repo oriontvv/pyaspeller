@@ -3,7 +3,6 @@ import collections
 import os
 import logging
 import re
-import urllib
 import requests
 
 import json
