@@ -3,18 +3,11 @@ import collections
 import os
 import logging
 import re
-import urllib
-import urllib.request
-from urllib.parse import quote
+import requests
 
 import json
 
 from pyaspeller.errors import BadArgumentError
-
-
-def read_url(url):
-    assert url, "Empty url"
-    return urllib.request.urlopen(url).read()
 
 
 class Speller(object):
@@ -23,6 +16,8 @@ class Speller(object):
     """
 
     def spell(self, text):
+        print(type(text))
+        print(text)
         if isinstance(text, (list, tuple)):
             text = ','.join(text)
 
@@ -47,7 +42,7 @@ class Speller(object):
 
     def _spell_url(self, url):
         logging.info("spelling url: " + url)
-        content = read_url(url)
+        content = requests.get(url)
         yield self._spell_text(content)
 
     def _spell_file(self, path):
@@ -316,20 +311,22 @@ class YandexSpeller(Speller):
         self._is_debug = value
 
     def _spell_text(self, text):
-
         words = '+'.join(re.findall(r'\w+', text))
         lang = ','.join(self._lang)
-        query = self._api_query.format(text=quote(words), lang=lang,
-                                       options=self.api_options)
+        query = self._api_query.format(
+            text=requests.compat.quote_plus(words),
+            lang=lang,
+            options=self.api_options
+        )
         logging.debug("query: " + query)
 
-        responce = read_url(query).decode('utf-8')
+        response = requests.get(query).text
 
-        assert responce, "Bad responce for url: " + query
-        logging.debug("responce: " + responce)
+        assert response, "Bad response for url: " + query
+        logging.debug("response: " + response)
 
-        responce = json.loads(responce)
-        for item in responce:
+        response = json.loads(response)
+        for item in response:
             yield item
 
     @property
