@@ -1,28 +1,16 @@
-from unittest import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
 import pytest
 from pyaspeller import YandexSpeller
 from pyaspeller.errors import BadArgumentError
-from pyaspeller.speller import read_url
 
 
 @pytest.fixture
 def speller():
     return YandexSpeller()
-
-
-def test_read_empty_url():
-    with pytest.raises(AssertionError):
-        read_url('')
-
-
-@mock.patch('urllib.request.urlopen')
-def test_read_good_url(mock_urlopen):
-    resp = mock.Mock()
-    resp.read.side_effect = ['resp1', 'resp2']
-    mock_urlopen.return_value = resp
-
-    assert read_url('http://python.org') == "resp1", "Bad response"
-    assert read_url('http://python.org') == "resp2", "Bad response"
 
 
 def test_bad_single_lang_property():
