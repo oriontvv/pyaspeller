@@ -25,7 +25,7 @@ install:
 
 
 script:
-  - flake8 pyaspeller
+  - flake8 pyaspeller --exclude=__init__.py
   - py.test --cov=pyaspeller tests
   - python setup.py check -rm
 

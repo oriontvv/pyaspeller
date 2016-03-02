@@ -4,6 +4,7 @@ import logging
 from pprint import pprint
 import sys
 from pyaspeller.speller import YandexSpeller
+from pyaspeller.speller import Word
 
 __version__ = '0.0.5'
 __all__ = ['main']
@@ -98,7 +99,7 @@ def create_args_parser():
 
 
 def create_speller(args):
-    speller = YandexSpeller(format=args.format,
+    speller = YandexSpeller(format_text=args.format,
                             lang=args.lang,
                             config_path=args.config_path,
                             dictionary=args.dictionary,

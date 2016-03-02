@@ -1,8 +1,3 @@
-try:
-    from unittest import mock
-except ImportError:
-    import mock
-
 import pytest
 from pyaspeller import YandexSpeller
 from pyaspeller.errors import BadArgumentError
@@ -51,7 +46,7 @@ def test_param_is_debug(speller):
 
 
 def test_param_format(speller):
-    assert speller.format == 'auto', \
+    assert not speller.format, \
         'Bad default format: ' + str(speller.format)
     speller.format = 'html'
     assert speller.format == 'html', 'Bad format: ' + str(speller.format)
@@ -124,10 +119,10 @@ def test_param_ignore_urls(speller):
 
 
 def test_param_find_repeat_words(speller):
-    assert speller.api_options & 8, 'Bad find_repeat_words option'
-    assert speller.find_repeat_words, 'Bad default find_repeat_words'
-    speller.find_repeat_words = False
     assert not speller.api_options & 8, 'Bad find_repeat_words option'
+    assert not speller.find_repeat_words, 'Bad default find_repeat_words'
+    speller.find_repeat_words = True
+    assert speller.api_options & 8, 'Bad find_repeat_words option'
 
 
 def test_param_ignore_latin(speller):
@@ -138,17 +133,17 @@ def test_param_ignore_latin(speller):
 
 
 def test_param_flag_latin(speller):
-    assert speller.api_options & 128, 'Bad flag_latin option'
-    assert speller.flag_latin, 'Bad default flag_latin'
-    speller.flag_latin = False
     assert not speller.api_options & 128, 'Bad flag_latin option'
+    assert not speller.flag_latin, 'Bad default flag_latin'
+    speller.flag_latin = True
+    assert speller.api_options & 128, 'Bad flag_latin option'
 
 
 def test_param_by_words(speller):
-    assert speller.api_options & 256, 'Bad by_words option'
-    assert speller.by_words, 'Bad default by_words'
-    speller.by_words = False
     assert not speller.api_options & 256, 'Bad by_words option'
+    assert not speller.by_words, 'Bad default by_words'
+    speller.by_words = True
+    assert speller.api_options & 256, 'Bad by_words option'
 
 
 def test_param_ignore_capitalization(speller):
