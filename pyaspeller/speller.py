@@ -6,7 +6,7 @@ import logging
 import re
 import requests
 
-from pyaspeller.errors import BadArgumentError
+from .errors import BadArgumentError
 
 
 class Speller(object):
@@ -358,7 +358,6 @@ class Word(object):
     """
 
     def __init__(self, *args, **kwargs):
-        # http://stackoverflow.com/questions/2215923/avoid-specifying-all-arguments-in-a-subclass
         if 'text' in kwargs:
             text = kwargs.pop('text')
         else:

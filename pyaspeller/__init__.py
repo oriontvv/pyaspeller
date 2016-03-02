@@ -2,18 +2,10 @@
 
 import logging
 from pprint import pprint
-import sys
-from pyaspeller.speller import YandexSpeller
-from pyaspeller.speller import Word
+from .speller import YandexSpeller, Word  # noqa
 
 __version__ = '0.0.5'
 __all__ = ['main']
-
-
-def check_version():
-    if sys.version_info < (2, 7):
-        raise RuntimeError('Python %s detected. Python 2.7 or greater '
-                           'required.' % str(sys.version_info))
 
 
 def create_args_parser():
@@ -120,8 +112,6 @@ def create_speller(args):
 
 
 def main():
-    check_version()
-
     args = create_args_parser().parse_args()
     logging.basicConfig(level=args.log_level)
 

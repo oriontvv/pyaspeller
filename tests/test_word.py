@@ -19,4 +19,4 @@ class WordTest(unittest.TestCase):
 
     def test_several_words(self):
         with self.assertRaises(BadArgumentError):
-            w = Word('some text')
+            Word('some text')
