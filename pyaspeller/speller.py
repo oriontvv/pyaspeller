@@ -1,23 +1,21 @@
 from __future__ import print_function
+
 import collections
 import os
 import logging
 import re
-import requests
-
 import json
+import requests
 
 from pyaspeller.errors import BadArgumentError
 
 
 class Speller(object):
     """
-    Base spell class. Implements spelling logic for files
+    Base spell class. Implements spelling logic for files.
     """
 
     def spell(self, text):
-        print(type(text))
-        print(text)
         if isinstance(text, (list, tuple)):
             text = ','.join(text)
 
@@ -27,11 +25,12 @@ class Speller(object):
             yield self._spell_url(text)
 
         elif os.path.exists(text):
-            for res in self._spell_path(text):
-                yield res
+            for item in self._spell_path(text):
+                yield item
 
         elif text:
-            yield self._spell_text(text)
+            for item in self._spell_text(text):
+                yield item
 
         else:
             raise NotImplementedError()
@@ -43,12 +42,14 @@ class Speller(object):
     def _spell_url(self, url):
         logging.info("spelling url: " + url)
         content = requests.get(url)
-        yield self._spell_text(content)
+        for item in self._spell_text(content):
+            yield item
 
     def _spell_file(self, path):
         with open(path) as f:
             content = f.read()
-            yield self._spell_text(content)
+            for item in self._spell_text(content):
+                yield item
 
     def _spell_path(self, path):
         logging.info("spelling path: " + path)
@@ -80,21 +81,21 @@ class Speller(object):
 
 class YandexSpeller(Speller):
     """
-    Yandex speller implementation
+    Yandex speller implementation.
     """
     _supported_langs = {'en', 'ru', 'uk'}
 
-    def __init__(self, format='auto', lang=None, config_path=None,
+    def __init__(self, format_text=None, lang=None, config_path=None,
                  dictionary=None, report_type=None, max_requests=2,
                  is_debug=False, check_yo=False, ignore_urls=False,
                  ignore_tags=False, ignore_capitalization=False,
                  ignore_digits=False, ignore_latin=False,
                  ignore_roman_numerals=False, ignore_uppercase=False,
-                 find_repeat_words=True, flag_latin=True, by_words=True):
+                 find_repeat_words=False, flag_latin=False, by_words=False):
 
         self._lang = ['en', 'ru']
         self.lang = lang
-        self._format = format
+        self._format = format_text
         self._config_path = config_path or ''
         self._dictionary = dictionary or {}
         self._report_type = report_type or 'console'
@@ -114,9 +115,7 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = 'http://speller.yandex.net/services/' \
-                          'spellservice.json/checkText?text={text}&' \
-                          'lang={lang}&options={options}'
+        self._api_query = 'http://speller.yandex.net/services/spellservice.json/checkText'
 
     @property
     def format(self):
@@ -311,23 +310,19 @@ class YandexSpeller(Speller):
         self._is_debug = value
 
     def _spell_text(self, text):
-        words = '+'.join(re.findall(r'\w+', text))
         lang = ','.join(self._lang)
-        query = self._api_query.format(
-            text=requests.compat.quote_plus(words),
-            lang=lang,
-            options=self.api_options
-        )
-        logging.debug("query: " + query)
-
-        response = requests.get(query).text
-
-        assert response, "Bad response for url: " + query
-        logging.debug("response: " + response)
-
-        response = json.loads(response)
-        for item in response:
-            yield item
+        data = {
+            'text': text,
+            'options': self.api_options,
+            'lang': lang,
+        }
+        if self.format:
+            data['format'] = self.format
+        response = requests.post(url=self._api_query, data=data).json()
+        logging.debug('{}?{}'.format(
+            self._api_query, requests.compat.urlencode(data)))
+        logging.debug("response: " + str(response))
+        return response
 
     @property
     def api_options(self):
@@ -355,3 +350,49 @@ class YandexSpeller(Speller):
         if self._ignore_roman_numerals:
             options |= 2048
         return options
+
+
+class Word(YandexSpeller):
+    """
+    Class for quick spelling of single word.
+    """
+
+    def __init__(self, *args, **kwargs):
+        # http://stackoverflow.com/questions/2215923/avoid-specifying-all-arguments-in-a-subclass
+        if 'text' in kwargs:
+            text = kwargs.pop('text')
+        else:
+            text = args[0]
+        super(Word, self).__init__(*args[1:], **kwargs)
+
+        if len(text.split()) > 1:
+            raise BadArgumentError('Bad argument. Several words detected.')
+
+        self.text = text
+        self._answer = None
+
+    @property
+    def answer(self):
+        if self._answer is None:
+            self._answer = self._spell_text(self.text)
+        return self._answer
+
+    @property
+    def correct(self):
+        return not self.answer
+
+    @property
+    def variants(self):
+        if self.correct:
+            return
+        return self.answer[0]['s']
+
+    @property
+    def spellsafe(self):
+        if self.correct:
+            return self.text
+        try:
+            return self.variants[0]
+        except IndexError:
+            raise BadArgumentError(
+                "Please check arguments. Probably you are trying to get spellsafe value with enabled flag_latin.")
