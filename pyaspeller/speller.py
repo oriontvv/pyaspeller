@@ -4,7 +4,6 @@ import collections
 import os
 import logging
 import re
-import json
 import requests
 
 from pyaspeller.errors import BadArgumentError
@@ -115,7 +114,8 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = 'http://speller.yandex.net/services/spellservice.json/checkText'
+        self._api_query = 'http://speller.yandex.net/services/' \
+                          'spellservice.json/checkText'
 
     @property
     def format(self):
@@ -395,4 +395,6 @@ class Word(YandexSpeller):
             return self.variants[0]
         except IndexError:
             raise BadArgumentError(
-                "Please check arguments. Probably you are trying to get spellsafe value with enabled flag_latin.")
+                'Please check arguments.'
+                'Probably you are trying to get spellsafe value'
+                'with enabled flag_latin.')
