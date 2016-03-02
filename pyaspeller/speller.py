@@ -352,7 +352,7 @@ class YandexSpeller(Speller):
         return options
 
 
-class Word(YandexSpeller):
+class Word(object):
     """
     Class for quick spelling of single word.
     """
@@ -368,6 +368,7 @@ class Word(YandexSpeller):
         if len(text.split()) > 1:
             raise BadArgumentError('Bad argument. Several words detected.')
 
+        self._spell_text = YandexSpeller(*args[1:], **kwargs)._spell_text
         self.text = text
         self._answer = None
 
@@ -390,11 +391,8 @@ class Word(YandexSpeller):
     @property
     def spellsafe(self):
         if self.correct:
-            return self.text
+            return
         try:
             return self.variants[0]
         except IndexError:
-            raise BadArgumentError(
-                'Please check arguments.'
-                'Probably you are trying to get spellsafe value'
-                'with enabled flag_latin.')
+            return
