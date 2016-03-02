@@ -4,7 +4,7 @@ import logging
 from pprint import pprint
 from .speller import YandexSpeller, Word  # noqa
 
-__version__ = '0.0.5'
+__version__ = '0.1.0'
 __all__ = ['main']
 
 

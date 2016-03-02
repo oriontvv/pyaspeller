@@ -2,10 +2,6 @@ CHANGES
 =======
 
 
-0.1.0 (XXXX-XX-XX)
+0.1.1 (XXXX-XX-XX)
 ------------------
-* testing and coverage with pytest
-* project health by landscape.io
-* restrictions link in readme
-* add tox
-# add requirements status
+* todo

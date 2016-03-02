@@ -1,16 +1,16 @@
 Python text speller
 ===================
 
-|Build Status| |Coverage Status| |Code Health| |Code Climate| |Gitter Chat|
+|Build Status| |Coverage Status| |Code Health| |Gitter Chat|
 
 |PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
 
-|Requirements Status|
+|Requirements Status| |Python versions|
 
 License
 -------
 
-`pyaspeller`_ is a search tool typos in the text, files and websites.
+`pyaspeller`_ (Python Yandex Speller) is a search tool typos in the text, files and websites.
 It's open sourced under the
 `Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_.
 
@@ -43,16 +43,16 @@ Features (under development)
 
 You could use class ``Word`` for single word queries:
 
-.. code-block:: bash
->>> from pyaspeller import Word
->>> check = Word('tesst')
->>> check.correct
-False
->>> check.variants
-[u'test']
->>> check.spellsafe
-u'test'
+.. code-block:: python
 
+    >>> from pyaspeller import Word
+    >>> check = Word('tesst')
+    >>> check.correct
+    False
+    >>> check.variants
+    [u'test']
+    >>> check.spellsafe
+    u'test'
 
 Installation
 ------------
@@ -111,3 +111,7 @@ Restrictions API Yandex.Speller
 .. |Requirements Status| image:: https://requires.io/github/oriontvv/pyaspeller/requirements.svg?branch=master
     :target: https://requires.io/github/oriontvv/pyaspeller/requirements/?branch=master
     :alt: Requirements Status
+
+.. |Python versions| image:: https://img.shields.io/pypi/pyversions/pyaspeller.svg
+    :target: https://img.shields.io/pypi/pyversions/pyaspeller.svg
+    :alt: Python versions

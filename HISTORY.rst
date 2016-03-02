@@ -1,4 +1,14 @@
 
+0.1.0 (2016-03-03)
+------------------
+* add python2.7 support
+* add Word quick spell class
+* testing and coverage with pytest
+* testing with tox
+* project health by landscape.io
+* add requirements status, python versions badges in readme
+* add restrictions link in readme
+* add tests, increase coverage
 
 0.0.5 (2015-10-04)
 ------------------
