@@ -25,6 +25,8 @@ install:
 
 
 script:
+  - flake8 . --filename=__init__.py --ignore=F401
+  - flake8 . --exclude=__init__.py
   - flake8 pyaspeller
   - py.test --cov=pyaspeller tests
   - python setup.py check -rm
