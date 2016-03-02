@@ -9,7 +9,7 @@ class WordTest(unittest.TestCase):
         w = Word('test')
         self.assertTrue(w.correct)
         self.assertFalse(w.variants)
-        self.assertEqual(w.spellsafe, 'test')
+        self.assertFalse(w.spellsafe)
 
     def test_incorrect_word(self):
         w = Word('texx')

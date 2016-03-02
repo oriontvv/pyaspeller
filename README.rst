@@ -41,6 +41,19 @@ Features (under development)
      u'word': u'reques'}
 
 
+You could use class ``Word`` for single word queries:
+
+.. code-block:: bash
+>>> from pyaspeller import Word
+>>> check = Word('tesst')
+>>> check.correct
+False
+>>> check.variants
+[u'test']
+>>> check.spellsafe
+u'test'
+
+
 Installation
 ------------
 
