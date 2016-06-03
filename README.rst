@@ -115,3 +115,9 @@ Restrictions API Yandex.Speller
 .. |Python versions| image:: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :target: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :alt: Python versions
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/oriontvv/pyaspeller/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
