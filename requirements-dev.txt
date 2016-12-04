@@ -5,4 +5,4 @@ flake8
 sphinx
 alabaster>=0.6.2
 tox
-mock
+mock==2.0.0
