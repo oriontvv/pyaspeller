@@ -4,5 +4,5 @@ pytest-cov==2.4.0
 flake8==3.2.1
 sphinx==1.4.9
 alabaster>=0.6.2
-tox
+tox==2.5.0
 mock==2.0.0
