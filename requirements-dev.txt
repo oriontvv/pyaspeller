@@ -1,7 +1,7 @@
 coveralls
 pytest
 pytest-cov
-flake8
+flake8==3.2.1
 sphinx
 alabaster>=0.6.2
 tox
