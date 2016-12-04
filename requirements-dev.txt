@@ -1,6 +1,6 @@
 coveralls
 pytest
-pytest-cov
+pytest-cov==2.4.0
 flake8==3.2.1
 sphinx
 alabaster>=0.6.2
