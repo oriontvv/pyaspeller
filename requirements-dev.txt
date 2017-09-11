@@ -1,7 +1,7 @@
 coveralls==1.2.0
 pytest==3.2.2
 pytest-cov==2.5.0
-flake8==3.3.0
+flake8==3.4.1
 sphinx==1.6.3
 alabaster>=0.6.2
 tox==2.8.2
