@@ -1,5 +1,5 @@
 coveralls==1.2.0
-pytest==3.2.2
+pytest==3.5.0
 pytest-cov==2.5.0
 flake8==3.4.1
 sphinx==1.6.3
