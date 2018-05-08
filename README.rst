@@ -3,7 +3,7 @@ Python text speller
 
 |Build Status| |Coverage Status| |Code Health| |Gitter Chat|
 
-|PyPI badge| |Installs badge| |Wheel badge| |License badge| |Doc badge|
+|PyPI badge| |Installs badge| |License badge| |Doc badge|
 
 |Requirements Status| |Python versions|
 
@@ -11,9 +11,6 @@ License
 -------
 
 `pyaspeller`_ (Python Yandex Speller) is a search tool typos in the text, files and websites.
-It's open sourced under the
-`Apache 2.0 License <http://www.apache.org/licenses/LICENSE-2.0>`_.
-
 Used API `Yandex.Speller <https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/>`_.
 
 .. _pyaspeller: https://github.com/oriontvv/pyaspeller
@@ -98,9 +95,6 @@ Restrictions API Yandex.Speller
     :target: https://crate.io/packages/pyaspeller/
     :alt: Installs
 
-.. |Wheel badge| image:: http://img.shields.io/badge/wheel-yes-green.svg?style=flat
-    :alt: Whell support
-
 .. |License badge| image:: http://img.shields.io/badge/license-Apache%202.0-green.svg?style=flat
     :alt: license
 
@@ -115,9 +109,3 @@ Restrictions API Yandex.Speller
 .. |Python versions| image:: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :target: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :alt: Python versions
-
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/oriontvv/pyaspeller/trend.png
-   :alt: Bitdeli badge
-   :target: https://bitdeli.com/free
-
