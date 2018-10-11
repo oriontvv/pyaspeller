@@ -51,6 +51,20 @@ You could use class ``Word`` for single word queries:
     >>> check.spellsafe
     u'test'
 
+
+For whole text you could use:
+
+.. code-block:: python
+
+    >>> from pyaspeller import YandexSpeller
+    >>> speller = YandexSpeller()
+    >>> text = 'В суббботу утромь.'
+    >>> changes = {change['word']: change['s'][0] for change in speller.spell(text)}
+    >>> for word, suggestion in changes.items():
+    ...     text = text.replace(word, suggestion)
+    >>> text
+    'В субботу утром.'
+
 Installation
 ------------
 
