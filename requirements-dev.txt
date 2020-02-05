@@ -5,4 +5,4 @@ flake8==3.5.0
 sphinx==1.8.1
 alabaster>=0.6.2
 tox==3.5.2
-mock==2.0.0
+mock==4.0.0
