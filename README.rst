@@ -80,7 +80,8 @@ Restrictions API Yandex.Speller
 -------------------------------
     speller has some `restrictions <https://yandex.ru/legal/speller_api/>`_
 
-
+ [ ~ Dependencies scanned by `PyUp.io <https://pyup.io/>`_ ~ ]
+ 
 .. |Gitter Chat| image:: https://badges.gitter.im/Join%20Chat.svg
     :target: https://gitter.im/oriontvv/pyaspeller?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
     :alt: Join the chat at https://gitter.im/oriontvv/pyaspeller
@@ -123,3 +124,5 @@ Restrictions API Yandex.Speller
 .. |Python versions| image:: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :target: https://img.shields.io/pypi/pyversions/pyaspeller.svg
     :alt: Python versions
+    
+
