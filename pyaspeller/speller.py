@@ -2,11 +2,9 @@
 Contains definitions of spellers
 """
 
-import collections
 import os
 import logging
-import re
-from typing import Iterable, Optional
+from typing import Iterable
 
 import requests
 
@@ -18,10 +16,28 @@ _subs = {
     '\r': '\n',  # Fix MacOS
     '\n+': '\n',  # Repeat line ends
 }
+
+
 def _prepare_text(text):
     for src, dst in _subs.items():
         text = text.replace(src, dst)
     return text.strip()
+
+
+def _get_content(text: str) -> str:
+    if isinstance(text, (list, tuple)):
+        content = ','.join(text)
+
+    elif text.startswith(('http://', 'https://')):
+        content = requests.get(text)
+
+    elif isinstance(text, str):
+        content = text
+
+    else:
+        raise BadArgumentError(f"Unsupported type for {text}")
+
+    return _prepare_text(content)
 
 
 class Speller:
@@ -31,33 +47,39 @@ class Speller:
 
     def spell(self, text: str) -> Iterable[object]:
         """
-            Runs spelling for text or URI and yields suggestions for changes
+        Runs spell checking for text or URI and yields suggestions for changes
 
-            >>> spelled = speller.spell("42 is a cool maagic namber")
-            >>> for p in spelled: print(p)
-            {'code': 1, 'pos': 12, 'row': 0, 'col': 12, 'len': 6, 'word': 'maagic', 's': ['magic']}
-            {'code': 1, 'pos': 19, 'row': 0, 'col': 19, 'len': 6, 'word': 'namber', 's': ['number']}
+        >>> spelled = speller.spell("42 is a cool maagic namber")
+        >>> for p in spelled: print(p)
+        {'code': 1, 'pos': 12, 'row': 0, 'col': 12, 'len': 6,
+            'word': 'maagic', 's': ['magic']}
+        {'code': 1, 'pos': 19, 'row': 0, 'col': 19, 'len': 6,
+            'word': 'namber', 's': ['number']}
 
         """
-        content = self._get_content(text)
+        content = _get_content(text)
         for change in self._spell_text(content):
             yield change
 
     def spelled(self, text: str) -> str:
         """
-            Runs spelling for text and returns result as string
-            
-            >>> result = speller.spelled("tesst message")
-            >>> assert result == 'test message'
+        Runs spell checking for text and returns result as string
+
+        >>> result = speller.spelled("tesst message")
+        >>> assert result == 'test message'
         """
-        changes = {change['word']: change['s'][0] for change in self.spell(text)}
+        changes = {change['word']: change['s'][0]
+                   for change in self.spell(text)}
         for word, suggestion in changes.items():
             text = text.replace(word, suggestion)
         return text
 
     def spell_path(self, path: str) -> None:
+        """
+            Traverse through path and apply spelling
+        """
         if not os.path.exists(path):
-            logging.warning(f"Path not found: '{path}'")
+            logging.warning("Path not found: '%s'", path)
             return
 
         if os.path.isfile(path):
@@ -70,7 +92,6 @@ class Speller:
                 self._spell_file(fullpath)
 
     def _spell_text(self, text: str) -> Iterable[dict]:
-        logging.info(f"spelling text: {text}")
         raise NotImplementedError()
 
     def _spell_file(self, path: str) -> None:
@@ -80,346 +101,3 @@ class Speller:
 
         with open(path, 'w') as outfile:
             outfile.write(updated)
-
-    def _get_content(self, text: str) -> str:
-        if isinstance(text, (list, tuple)):
-            content = ','.join(text)
-
-        elif text.startswith(('http://', 'https://')):
-            content = requests.get(text)
-
-        elif isinstance(text, str):
-            content = text
-
-        else:
-            raise BadArgumentError(f"Unsupported type for {text}")
-
-        return _prepare_text(content)
-
-    def _strip_tags(self, text):
-        return re.sub('<[^<]+?>', '', text)
-
-
-class YandexSpeller(Speller):
-    """
-    Yandex speller implementation.
-    """
-    _supported_langs = {'en', 'ru', 'uk'}
-
-    def __init__(self, format_text=None, lang=None, config_path=None,
-                 dictionary=None, report_type=None, max_requests=2,
-                 is_debug=False, check_yo=False, ignore_urls=False,
-                 ignore_tags=False, ignore_capitalization=False,
-                 ignore_digits=False, ignore_latin=False,
-                 ignore_roman_numerals=False, ignore_uppercase=False,
-                 find_repeat_words=False, flag_latin=False, by_words=False):
-
-        self._lang = ['en', 'ru']
-        self.lang = lang
-
-        if format_text == 'auto' or not format_text:
-            self._format = 'plain'
-        else:
-            self._format = format_text
-        self._config_path = config_path or ''
-        self._dictionary = dictionary or {}
-        self._report_type = report_type or 'console'
-
-        self._check_yo = check_yo
-        self._ignore_urls = ignore_urls
-        self._ignore_tags = ignore_tags
-        self._ignore_capitalization = ignore_capitalization
-        self._ignore_digits = ignore_digits
-        self._ignore_latin = ignore_latin
-        self._ignore_roman_numerals = ignore_roman_numerals
-        self._ignore_uppercase = ignore_uppercase
-        self._find_repeat_words = find_repeat_words
-        self._flag_latin = flag_latin
-        self._by_words = by_words
-
-        self._max_requests = max_requests
-        self._is_debug = is_debug
-
-        self._api_query = 'http://speller.yandex.net/services/' \
-                          'spellservice.json/checkText'
-
-    @property
-    def format(self):
-        """Get format"""
-        return self._format
-
-    @format.setter
-    def format(self, value):
-        """Set format"""
-        self._format = value
-
-    @property
-    def lang(self):
-        """Get lang"""
-        return self._lang
-
-    @lang.setter
-    def lang(self, language):
-        """Set lang"""
-        if isinstance(language, str):
-            self._lang = [language]
-        elif isinstance(language, collections.Iterable):
-            self._lang = list(language)
-
-        if any(lang not in self._supported_langs for lang in self._lang):
-            raise BadArgumentError("Unsupported language")
-
-    @property
-    def config_path(self):
-        """Get config_path"""
-        return self._config_path
-
-    @config_path.setter
-    def config_path(self, value):
-        """Set config_path"""
-        self._config_path = value or ''
-        if not isinstance(self._config_path, str):
-            msg = f"config_path must be a string: {self._config_path}"
-            raise BadArgumentError(msg)
-
-    @property
-    def dictionary(self):
-        """Get dictionary"""
-        return self._dictionary
-
-    @dictionary.setter
-    def dictionary(self, value):
-        """Set dictionary"""
-        self._dictionary = value or {}
-        if not isinstance(self._dictionary, dict):
-            msg = f"dictionary must be a dict: {self._dictionary}"
-            raise BadArgumentError(msg)
-
-    @property
-    def report_type(self):
-        """Get report_type"""
-        return self._report_type
-
-    @report_type.setter
-    def report_type(self, value):
-        """Set report_type"""
-        self._report_type = value or 'console'
-
-    @property
-    def check_yo(self):
-        """Get check_yo"""
-        return self._check_yo
-
-    @check_yo.setter
-    def check_yo(self, value):
-        """Set check_yo"""
-        self._check_yo = value
-
-    @property
-    def ignore_urls(self):
-        """Get ignore_urls"""
-        return self._ignore_urls
-
-    @ignore_urls.setter
-    def ignore_urls(self, value):
-        """Set ignore_urls"""
-        self._ignore_urls = value
-
-    @property
-    def ignore_tags(self):
-        """Get ignore_tags"""
-        return self._ignore_tags
-
-    @ignore_tags.setter
-    def ignore_tags(self, value):
-        """Set ignore_tags"""
-        self._ignore_tags = value
-
-    @property
-    def ignore_capitalization(self):
-        """Get ignore_capitalization"""
-        return self._ignore_capitalization
-
-    @ignore_capitalization.setter
-    def ignore_capitalization(self, value):
-        """Set ignore_capitalization"""
-        self._ignore_capitalization = value
-
-    @property
-    def ignore_digits(self):
-        """Get ignore_digits"""
-        return self._ignore_digits
-
-    @ignore_digits.setter
-    def ignore_digits(self, value):
-        """Set ignore_digits"""
-        self._ignore_digits = value
-
-    @property
-    def ignore_latin(self):
-        """Get ignore_latin"""
-        return self._ignore_latin
-
-    @ignore_latin.setter
-    def ignore_latin(self, value):
-        """Set ignore_latin"""
-        self._ignore_latin = value
-
-    @property
-    def ignore_roman_numerals(self):
-        """Get ignore_roman_numerals"""
-        return self._ignore_roman_numerals
-
-    @ignore_roman_numerals.setter
-    def ignore_roman_numerals(self, value):
-        """Set ignore_roman_numerals"""
-        self._ignore_roman_numerals = value
-
-    @property
-    def ignore_uppercase(self):
-        """Get ignore_uppercase"""
-        return self._ignore_uppercase
-
-    @ignore_uppercase.setter
-    def ignore_uppercase(self, value):
-        """Set ignore_uppercase"""
-        self._ignore_uppercase = value
-
-    @property
-    def find_repeat_words(self):
-        """Get find_repeat_words"""
-        return self._find_repeat_words
-
-    @find_repeat_words.setter
-    def find_repeat_words(self, value):
-        """Set find_repeat_words"""
-        self._find_repeat_words = value
-
-    @property
-    def flag_latin(self):
-        """Get flag_latin"""
-        return self._flag_latin
-
-    @flag_latin.setter
-    def flag_latin(self, value):
-        """Set flag_latin"""
-        self._flag_latin = value
-
-    @property
-    def by_words(self):
-        """Get by_words"""
-        return self._by_words
-
-    @by_words.setter
-    def by_words(self, value):
-        """Set by_words"""
-        self._by_words = value
-
-    @property
-    def max_requests(self):
-        """Get max_requests"""
-        return self._max_requests
-
-    @max_requests.setter
-    def max_requests(self, value):
-        """Set max_requests"""
-        self._max_requests = value
-
-    @property
-    def is_debug(self):
-        """Get is_debug"""
-        return self._is_debug
-
-    @is_debug.setter
-    def is_debug(self, value):
-        """Set is_debug"""
-        self._is_debug = value
-
-    def _spell_text(self, text):
-        lang = ','.join(self._lang)
-        data = {
-            'text': text,
-            'options': self.api_options,
-            'lang': lang,
-            'format': self.format
-        }
-        response = requests.post(url=self._api_query, data=data).json()
-
-        args = requests.compat.urlencode(data)
-        logging.debug(f"{self._api_query}?{args}")
-        logging.debug(f"response: {response}")
-        return response
-
-    @property
-    def api_options(self):
-        """
-        current spelling settings
-        :return: api options as number
-        """
-        options = 0
-        if self._ignore_uppercase:
-            options |= 1
-        if self._ignore_digits:
-            options |= 2
-        if self._ignore_urls:
-            options |= 4
-        if self._find_repeat_words:
-            options |= 8
-        if self._ignore_latin:
-            options |= 16
-        if self._flag_latin:
-            options |= 128
-        if self._by_words:
-            options |= 256
-        if self._ignore_capitalization:
-            options |= 512
-        if self._ignore_roman_numerals:
-            options |= 2048
-        return options
-
-
-class Word:
-    """
-    Class for quick spelling of single word.
-    """
-
-    def __init__(self, *args, **kwargs):
-        if 'text' in kwargs:
-            text = kwargs.pop('text')
-        else:
-            text = args[0]
-        super().__init__(*args[1:], **kwargs)
-
-        if len(text.split()) > 1:
-            msg = 'Bad argument. Multiple words were detected.'
-            raise BadArgumentError(msg)
-
-        # todo: refactor
-        self._spell_text = YandexSpeller(*args[1:], **kwargs)._spell_text
-        self.text = text
-        self._answer = None
-
-    @property
-    def answer(self):
-        if self._answer is None:
-            self._answer = self._spell_text(self.text)
-        return self._answer
-
-    @property
-    def correct(self):
-        return not self.answer
-
-    @property
-    def variants(self) -> Optional[str]:
-        if self.correct:
-            return None
-        return self.answer[0]['s']
-
-    @property
-    def spellsafe(self) -> Optional[str]:
-        if self.correct:
-            return None
-        try:
-            return self.variants[0]
-        except IndexError:
-            return None

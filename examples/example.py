@@ -1,15 +1,15 @@
-from pyaspeller import YandexSpeller
 from pprint import pprint
 
+from pyaspeller import YandexSpeller
 
-speller = YandexSpeller(lang='en', find_repeat_words=False,
-                                    ignore_digits=True)
+
+speller = YandexSpeller(lang='en', ignore_digits=True)
 spelled = speller.spelled("42 is a cUl maagic namber")
 assert spelled == '42 is a cool magic number'
 
 
 changes = speller.spell("42 is a cUl maagic namber")
-for change in changes: 
+for change in changes:
     pprint(change)
 
 """

@@ -1,10 +1,5 @@
-try:
-    from unittest import mock
-except ImportError:
-    import mock
-
 import pytest
-from pyaspeller import _create_args_parser, main, _create_speller
+from pyaspeller import _create_args_parser, _create_speller
 
 
 @pytest.fixture()

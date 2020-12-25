@@ -162,7 +162,6 @@ def test_param_ignore_roman_numerals(speller):
     assert speller.api_options & 2048, 'Bad ignore_roman_numerals option'
 
 
-
 def test_spelled(speller):
     result = speller.spelled("tesst message")
     assert result == 'test message'
@@ -175,4 +174,3 @@ def test_spell_path(speller, tmpdir):
     speller.spell_path(str(tmpdir))
 
     assert p.read() == 'test message'
-

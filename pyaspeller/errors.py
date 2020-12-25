@@ -2,9 +2,14 @@
 Contains all custom Exceptions
 """
 
+
 class BaseSpellerError(Exception):
-    pass
+    """
+        Basic error wrapper
+    """
 
 
 class BadArgumentError(BaseSpellerError):
-    pass
+    """
+        Invalid argument was given
+    """

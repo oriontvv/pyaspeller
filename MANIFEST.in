@@ -1,5 +1,4 @@
 include LICENSE.txt
 include README.md
-include CONTRIBUTORS.txt
 include Makefile
 global-exclude *.pyc

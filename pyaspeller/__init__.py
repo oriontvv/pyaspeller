@@ -6,7 +6,9 @@ import logging
 from pprint import pprint
 from argparse import ArgumentParser
 
-from .speller import YandexSpeller, Word  # noqa
+from .speller import Speller  # noqa
+from .yandex_speller import YandexSpeller  # noqa
+from .word import Word  # noqa
 
 __version__ = '0.2.0'
 __all__ = ['main']
@@ -51,11 +53,11 @@ def _create_args_parser():
                         help="type of report")
 
     parser.add_argument('--check_yo', default=True, action='store_true',
-                        help="check the correctness of using the " +
+                        help="check the correctness of using the "
                              "letter “Ё” (Yo) in Russian texts")
 
     parser.add_argument('--find-repeat-words', action='store_true',
-                        help="highlight repetitions of words, consecutive. " +
+                        help="highlight repetitions of words, consecutive. "
                              "For example, I flew to to to Cyprus")
 
     parser.add_argument('--flag-latin', action='store_true',

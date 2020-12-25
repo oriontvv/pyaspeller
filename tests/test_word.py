@@ -10,11 +10,13 @@ def test_correct_word():
     assert not w.variants
     assert not w.spellsafe
 
+
 def test_incorrect_word():
     w = Word('texx')
     assert not w.correct
     assert w.variants == [u'tax', u'text', u'tux']
     assert w.spellsafe == 'tax'
+
 
 def test_several_words():
     with pytest.raises(BadArgumentError):
