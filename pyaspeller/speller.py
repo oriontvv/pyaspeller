@@ -1,78 +1,100 @@
-from __future__ import print_function
+"""
+Contains definitions of spellers
+"""
 
 import collections
 import os
 import logging
 import re
+from typing import Iterable, Optional
+
 import requests
 
 from .errors import BadArgumentError
 
 
-class Speller(object):
+_subs = {
+    '\r\n': '\n',  # Fix Windows
+    '\r': '\n',  # Fix MacOS
+    '\n+': '\n',  # Repeat line ends
+}
+def _prepare_text(text):
+    for src, dst in _subs.items():
+        text = text.replace(src, dst)
+    return text.strip()
+
+
+class Speller:
     """
     Base spell class. Implements spelling logic for files.
     """
 
-    def spell(self, text):
-        if isinstance(text, (list, tuple)):
-            text = ','.join(text)
+    def spell(self, text: str) -> Iterable[object]:
+        """
+            Runs spelling for text or URI and yields suggestions for changes
 
-        text = self._prepare_text(text)
+            >>> spelled = speller.spell("42 is a cool maagic namber")
+            >>> for p in spelled: print(p)
+            {'code': 1, 'pos': 12, 'row': 0, 'col': 12, 'len': 6, 'word': 'maagic', 's': ['magic']}
+            {'code': 1, 'pos': 19, 'row': 0, 'col': 19, 'len': 6, 'word': 'namber', 's': ['number']}
 
-        if text.startswith(('http://', 'https://')):
-            yield self._spell_url(text)
+        """
+        content = self._get_content(text)
+        for change in self._spell_text(content):
+            yield change
 
-        elif os.path.exists(text):
-            for item in self._spell_path(text):
-                yield item
+    def spelled(self, text: str) -> str:
+        """
+            Runs spelling for text and returns result as string
+            
+            >>> result = speller.spelled("tesst message")
+            >>> assert result == 'test message'
+        """
+        changes = {change['word']: change['s'][0] for change in self.spell(text)}
+        for word, suggestion in changes.items():
+            text = text.replace(word, suggestion)
+        return text
 
-        elif text:
-            for item in self._spell_text(text):
-                yield item
+    def spell_path(self, path: str) -> None:
+        if not os.path.exists(path):
+            logging.warning(f"Path not found: '{path}'")
+            return
 
-        else:
-            raise NotImplementedError()
-
-    def _spell_text(self, text):
-        logging.info("spelling text: " + text)
-        return NotImplemented
-
-    def _spell_url(self, url):
-        logging.info("spelling url: " + url)
-        content = requests.get(url)
-        for item in self._spell_text(content):
-            yield item
-
-    def _spell_file(self, path):
-        with open(path) as f:
-            content = f.read()
-            for item in self._spell_text(content):
-                yield item
-
-    def _spell_path(self, path):
-        logging.info("spelling path: " + path)
         if os.path.isfile(path):
-            yield self._spell_file(path)
-        else:
-            for root, dirs, fnames in os.walk(path):
-                for fname in fnames:
-                    fullpath = os.path.join(root, fname)
-                    print(fullpath, end=': ')
-                    for res in self._spell_file(fullpath):
-                        yield res
+            self._spell_file(path)
+            return
 
-    def _prepare_text(self, text):
-        subs = {
-            '\r\n': '\n',  # Fix Windows
-            '\r': '\n',  # Fix MacOS
-            '\s+\n': '\n',  # Trailing spaces
-            '\s+': ' ',  # Repeat spaces
-            '\n+': '\n',  # Repeat line ends
-        }
-        for src, dst in subs.items():
-            text = text.replace(src, dst)
-        return text.strip()
+        for root, _, fnames in os.walk(path):
+            for fname in fnames:
+                fullpath = os.path.join(root, fname)
+                self._spell_file(fullpath)
+
+    def _spell_text(self, text: str) -> Iterable[dict]:
+        logging.info(f"spelling text: {text}")
+        raise NotImplementedError()
+
+    def _spell_file(self, path: str) -> None:
+        with open(path) as infile:
+            content = infile.read()
+            updated = self.spelled(content)
+
+        with open(path, 'w') as outfile:
+            outfile.write(updated)
+
+    def _get_content(self, text: str) -> str:
+        if isinstance(text, (list, tuple)):
+            content = ','.join(text)
+
+        elif text.startswith(('http://', 'https://')):
+            content = requests.get(text)
+
+        elif isinstance(text, str):
+            content = text
+
+        else:
+            raise BadArgumentError(f"Unsupported type for {text}")
+
+        return _prepare_text(content)
 
     def _strip_tags(self, text):
         return re.sub('<[^<]+?>', '', text)
@@ -94,7 +116,11 @@ class YandexSpeller(Speller):
 
         self._lang = ['en', 'ru']
         self.lang = lang
-        self._format = format_text
+
+        if format_text == 'auto' or not format_text:
+            self._format = 'plain'
+        else:
+            self._format = format_text
         self._config_path = config_path or ''
         self._dictionary = dictionary or {}
         self._report_type = report_type or 'console'
@@ -153,8 +179,8 @@ class YandexSpeller(Speller):
         """Set config_path"""
         self._config_path = value or ''
         if not isinstance(self._config_path, str):
-            raise BadArgumentError("config_path must be string: {}".format(
-                self._config_path))
+            msg = f"config_path must be a string: {self._config_path}"
+            raise BadArgumentError(msg)
 
     @property
     def dictionary(self):
@@ -166,8 +192,8 @@ class YandexSpeller(Speller):
         """Set dictionary"""
         self._dictionary = value or {}
         if not isinstance(self._dictionary, dict):
-            raise BadArgumentError("dictionary must be dict: {}".format(
-                self._dictionary))
+            msg = f"dictionary must be a dict: {self._dictionary}"
+            raise BadArgumentError(msg)
 
     @property
     def report_type(self):
@@ -315,13 +341,13 @@ class YandexSpeller(Speller):
             'text': text,
             'options': self.api_options,
             'lang': lang,
+            'format': self.format
         }
-        if self.format:
-            data['format'] = self.format
         response = requests.post(url=self._api_query, data=data).json()
-        logging.debug('{}?{}'.format(
-            self._api_query, requests.compat.urlencode(data)))
-        logging.debug("response: " + str(response))
+
+        args = requests.compat.urlencode(data)
+        logging.debug(f"{self._api_query}?{args}")
+        logging.debug(f"response: {response}")
         return response
 
     @property
@@ -352,7 +378,7 @@ class YandexSpeller(Speller):
         return options
 
 
-class Word(object):
+class Word:
     """
     Class for quick spelling of single word.
     """
@@ -362,11 +388,13 @@ class Word(object):
             text = kwargs.pop('text')
         else:
             text = args[0]
-        super(Word, self).__init__(*args[1:], **kwargs)
+        super().__init__(*args[1:], **kwargs)
 
         if len(text.split()) > 1:
-            raise BadArgumentError('Bad argument. Several words detected.')
+            msg = 'Bad argument. Multiple words were detected.'
+            raise BadArgumentError(msg)
 
+        # todo: refactor
         self._spell_text = YandexSpeller(*args[1:], **kwargs)._spell_text
         self.text = text
         self._answer = None
@@ -382,16 +410,16 @@ class Word(object):
         return not self.answer
 
     @property
-    def variants(self):
+    def variants(self) -> Optional[str]:
         if self.correct:
-            return
+            return None
         return self.answer[0]['s']
 
     @property
-    def spellsafe(self):
+    def spellsafe(self) -> Optional[str]:
         if self.correct:
-            return
+            return None
         try:
             return self.variants[0]
         except IndexError:
-            return
+            return None

@@ -10,10 +10,10 @@ flake:
 develop:
 	python setup.py develop
 
-test: flake develop
+test: develop
 	py.test tests --ignore=.DS_Store
 
-vtest: flake develop
+vtest: develop
 	py.test tests -v --ignore=.DS_Store
 
 

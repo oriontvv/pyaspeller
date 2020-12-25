@@ -18,7 +18,7 @@ def read(f):
     return open(os.path.join(BASE_PATH, f)).read().strip()
 
 
-install_requires = ['six']
+install_requires = ['requests']
 
 
 class BuildFailed(Exception):
@@ -29,18 +29,18 @@ args = dict(
     name='pyaspeller',
     version=version,
     description="Search tool typos in the text, files and websites.",
-    long_description='\n\n'.join((read('README.rst'), read('CHANGES.txt'))),
+    long_description=read('README.rst'),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: Apache Software License',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Text Processing :: Linguistic'],
     author='Vassiliy Taranov',
     author_email='taranov.vv@gmail.com',

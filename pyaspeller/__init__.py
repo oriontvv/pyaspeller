@@ -1,16 +1,18 @@
-# coding=utf-8
+"""
+Init module of pyaspeller package
+"""
 
 import logging
 from pprint import pprint
+from argparse import ArgumentParser
+
 from .speller import YandexSpeller, Word  # noqa
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __all__ = ['main']
 
 
-def create_args_parser():
-    from argparse import ArgumentParser
-
+def _create_args_parser():
     description = "Search tool typos in the text, files and websites."
     parser = ArgumentParser(description=description, prog='pyaspeller')
     parser.add_argument('-v', '--version', action='version',
@@ -90,7 +92,7 @@ def create_args_parser():
     return parser
 
 
-def create_speller(args):
+def _create_speller(args):
     speller = YandexSpeller(format_text=args.format,
                             lang=args.lang,
                             config_path=args.config_path,
@@ -112,12 +114,13 @@ def create_speller(args):
 
 
 def main():
-    args = create_args_parser().parse_args()
+    """
+    Main function. Uses as cli launcher
+    """
+    args = _create_args_parser().parse_args()
     logging.basicConfig(level=args.log_level)
 
-    speller = create_speller(args)
+    speller = _create_speller(args)
 
-    result = speller.spell(args.text_or_path_or_url)
-    for generator in result:
-        for item in generator:
-            pprint(item)
+    for change in speller.spell(args.text_or_path_or_url):
+        pprint(change)

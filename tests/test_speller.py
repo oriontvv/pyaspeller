@@ -46,7 +46,7 @@ def test_param_is_debug(speller):
 
 
 def test_param_format(speller):
-    assert not speller.format, \
+    assert speller.format == 'plain', \
         'Bad default format: ' + str(speller.format)
     speller.format = 'html'
     assert speller.format == 'html', 'Bad format: ' + str(speller.format)
@@ -160,3 +160,19 @@ def test_param_ignore_roman_numerals(speller):
         'Bad default ignore_capitalization'
     speller.ignore_roman_numerals = True
     assert speller.api_options & 2048, 'Bad ignore_roman_numerals option'
+
+
+
+def test_spelled(speller):
+    result = speller.spelled("tesst message")
+    assert result == 'test message'
+
+
+def test_spell_path(speller, tmpdir):
+    p = tmpdir.join('file.txt')
+    p.write('tesst message')
+
+    speller.spell_path(str(tmpdir))
+
+    assert p.read() == 'test message'
+

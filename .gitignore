@@ -60,8 +60,11 @@ docs/_build/
 target/
 
 
-# pyenv
+# env
 py3/
 py2/
+venv
+env
 
 .idea
+.vscode

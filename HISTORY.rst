@@ -1,4 +1,13 @@
 
+0.2.0 (2020-12-24)
+------------------
+* added methods spelled, spell_path to Speller class
+* use default format `plain`
+* rewrite unittests to pytest
+* drop python2 support
+* updated example
+
+
 0.1.0 (2016-03-03)
 ------------------
 * add python2.7 support
@@ -20,11 +29,8 @@
 ------------------
 
 * system script *pyaspeller* added
-
 * packet classifiers updated
-
 * alpha status specified
-
 * contributors files added
 
 
@@ -32,11 +38,8 @@
 ------------------
 
 * uploaded to pypi.
-
 * test coverage increased.
-
 * Pretty YandexSpeller API
-
 * Spell checking of strings with parameters.
 
 
@@ -44,7 +47,5 @@
 ------------------
 
 * testing automated
-
 * coverage setup
-
 * basic functionality. spell checking string

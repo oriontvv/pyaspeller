@@ -1,3 +1,6 @@
+"""
+Contains all custom Exceptions
+"""
 
 class BaseSpellerError(Exception):
     pass
