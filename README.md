@@ -56,5 +56,10 @@ $ python3 -m pip install pyaspeller
 $ pyaspeller --help
 ```
 
+If you're stil using version for python2 you can use outdated version:
+```bash
+pip install pyaspeller==0.1.0
+```
+
 ## Thanks to
 * Dependencies scanned by [PyUp.io](https://pyup.io/)

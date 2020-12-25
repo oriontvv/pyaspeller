@@ -31,7 +31,7 @@ args = dict(
     description="Search tool typos in the text, files and websites.",
     long_description=read('README.md'),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: Apache Software License',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
