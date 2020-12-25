@@ -15,7 +15,7 @@ Used [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-d
 
 You can correct your local files
 
-``` bash 
+```bash 
 $ pyaspeller ./doc
 $ pyaspeller "в суббботу утромъ"
 в субботу утром
@@ -24,7 +24,6 @@ $ pyaspeller "в суббботу утромъ"
 If you want to check a text you can use:
 
 ```python
-
 >>> from pyaspeller import YandexSpeller
 >>> speller = YandexSpeller()
 >>> fixed = speller.spelled('В суббботу утромь.')
@@ -33,8 +32,8 @@ If you want to check a text you can use:
 ```
 
 You can use class `Word` for single word queries:
-```python
 
+```python
 >>> from pyaspeller import Word
 >>> check = Word('tesst')
 >>> check.correct
@@ -51,7 +50,7 @@ u'test'
 
 To install `pyaspeller`, simply do:
 
-``` bash
+```bash
 $ python3 -m pip install pyaspeller
 $ pyaspeller --help
 ```
