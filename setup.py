@@ -25,11 +25,12 @@ class BuildFailed(Exception):
     pass
 
 
-args = dict(
+setup(
     name='pyaspeller',
     version=version,
     description="Search tool typos in the text, files and websites.",
     long_description=read('README.md'),
+    long_description_content_type="text/markdown",
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: Apache Software License',
@@ -42,6 +43,7 @@ args = dict(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Topic :: Text Processing :: Linguistic'],
+    python_requires='>=3.6',
     author='Vassiliy Taranov',
     author_email='taranov.vv@gmail.com',
     url='https://github.com/oriontvv/pyaspeller',
@@ -56,5 +58,3 @@ args = dict(
     test_suite='tests',
     include_package_data=True,
 )
-
-setup(**args)
