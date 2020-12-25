@@ -48,7 +48,7 @@ jobs:
         flag-name: run-${{ matrix.python-version }}
         parallel: true
 
- coveralls_finish:
+  coveralls_finish:
     needs: build
     runs-on: ubuntu-latest
     steps:
