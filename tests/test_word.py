@@ -12,9 +12,9 @@ def test_correct_word():
 
 
 def test_incorrect_word():
-    w = Word('texx')
+    w = Word('taxx')
     assert not w.correct
-    assert w.variants == [u'tax', u'text', u'tux']
+    assert w.variants == [u'tax', u'texx', u'tixx']
     assert w.spellsafe == 'tax'
 
 
