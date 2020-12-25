@@ -11,7 +11,7 @@
 Used [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
 
 
-## Features (under development)
+## Features
 
 You can correct your local files
 
