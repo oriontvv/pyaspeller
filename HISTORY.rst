@@ -1,5 +1,5 @@
 
-0.2.0 (2020-12-24)
+0.2.0 (2020-XX-XX)
 ------------------
 * added methods spelled, spell_path to Speller class
 * use default format `plain`
