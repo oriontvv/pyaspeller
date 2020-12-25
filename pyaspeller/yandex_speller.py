@@ -52,7 +52,7 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = 'http://speller.yandex.net/services/' \
+        self._api_query = 'https://speller.yandex.net/services/' \
                           'spellservice.json/checkText'
 
     @property
