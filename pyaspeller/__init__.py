@@ -3,7 +3,6 @@ Init module of pyaspeller package
 """
 
 import logging
-from pprint import pprint
 from argparse import ArgumentParser
 
 from .speller import Speller  # noqa
@@ -115,7 +114,7 @@ def _create_speller(args):
     return speller
 
 
-def main():
+def main():  
     """
     Main function. Uses as cli launcher
     """
@@ -124,5 +123,6 @@ def main():
 
     speller = _create_speller(args)
 
-    for change in speller.spell(args.text_or_path_or_url):
-        pprint(change)
+    result = speller.spelled(args.text_or_path_or_url)
+    if result:
+        print(result)

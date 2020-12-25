@@ -17,6 +17,8 @@ You can correct your local files
 
 ``` bash 
 $ pyaspeller ./doc
+$ pyaspeller "в суббботу утромъ"
+в субботу утром
 ```
 
 If you want to check a text you can use:
@@ -25,7 +27,7 @@ If you want to check a text you can use:
 
 >>> from pyaspeller import YandexSpeller
 >>> speller = YandexSpeller()
->>> fixed = speller.spell_text('В суббботу утромь.')
+>>> fixed = speller.spelled('В суббботу утромь.')
 >>> fixed
 'В субботу утром.'
 ```

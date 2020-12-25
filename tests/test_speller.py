@@ -167,10 +167,42 @@ def test_spelled(speller):
     assert result == 'test message'
 
 
+@pytest.mark.parametrize('bad_argument', [
+    0,
+    True,
+    None,
+    ["tesst "],
+    {'bad': 'arg'}
+])
+def test_spelled_list_of_strings(speller, bad_argument):
+    with pytest.raises(BadArgumentError):
+        result = speller.spelled(bad_argument)
+
+
 def test_spell_path(speller, tmpdir):
     p = tmpdir.join('file.txt')
     p.write('tesst message')
 
-    speller.spell_path(str(tmpdir))
+    speller.spell_path(str(tmpdir), apply=True)
+
+    assert p.read() == 'test message'
+
+    speller.spell_path('./bad_path_doesnt_raise_error', apply=False)
+
+
+def test_spell_path(speller, tmpdir):
+    p = tmpdir.join('file.txt')
+    p.write('tesst message')
+
+    speller.spell_path(str(tmpdir), apply=False)
+
+    assert p.read() == 'tesst message'
+
+
+def test_spell_path_file(speller, tmpdir):
+    p = tmpdir.join('file.txt')
+    p.write('tesst message')
+
+    speller.spell_path(p, apply=True)
 
     assert p.read() == 'test message'

@@ -1,5 +1,5 @@
 import pytest
-from pyaspeller import _create_args_parser, _create_speller
+from pyaspeller import _create_args_parser, main, _create_speller
 
 
 @pytest.fixture()
@@ -15,3 +15,8 @@ def speller(argparser):
 
 def test_default_speller(speller):
     assert speller.format == 'plain', 'Bad default format: ' + speller.format
+
+
+def test_call_cli_requires_argument():
+    with pytest.raises(SystemExit):
+        main()
