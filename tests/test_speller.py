@@ -176,7 +176,7 @@ def test_spelled(speller):
 ])
 def test_spelled_list_of_strings(speller, bad_argument):
     with pytest.raises(BadArgumentError):
-        result = speller.spelled(bad_argument)
+        speller.spelled(bad_argument)
 
 
 def test_spell_path(speller, tmpdir):
@@ -190,7 +190,7 @@ def test_spell_path(speller, tmpdir):
     speller.spell_path('./bad_path_doesnt_raise_error', apply=False)
 
 
-def test_spell_path(speller, tmpdir):
+def test_spell_path_without_applying(speller, tmpdir):
     p = tmpdir.join('file.txt')
     p.write('tesst message')
 

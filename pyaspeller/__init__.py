@@ -114,7 +114,7 @@ def _create_speller(args):
     return speller
 
 
-def main():  
+def main():
     """
     Main function. Uses as cli launcher
     """
