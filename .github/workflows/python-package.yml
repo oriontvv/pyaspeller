@@ -43,6 +43,17 @@ jobs:
         python setup.py check -rm
 
     - name: Coveralls
-      uses: coverallsapp/github-action@master
+      uses: AndreMiras/coveralls-python-action@develop
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run-${{ matrix.python-version }}
+        parallel: true
+
+ coveralls_finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: AndreMiras/coveralls-python-action@develop
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
