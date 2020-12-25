@@ -29,7 +29,7 @@ args = dict(
     name='pyaspeller',
     version=version,
     description="Search tool typos in the text, files and websites.",
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'License :: OSI Approved :: Apache Software License',
