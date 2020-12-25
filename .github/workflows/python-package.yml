@@ -35,15 +35,13 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=__init__.py
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: Test with pytest and coverage
       run: |
-        pytest tests
+        pytest tests --cov=pyaspeller
+        coverage report -m
     - name: Check setup
       run: |
         python setup.py check -rm
-    - name: Run coverage
-      run: |
-        coverage report -m
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop
       with:
