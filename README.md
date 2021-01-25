@@ -1,9 +1,9 @@
 # Python text speller
 
-[![Python package](https://github.com/oriontvv/pyaspeller/workflows/Python%20package/badge.svg)](https://github.com/oriontvv/pyaspeller/actions)       [![Coverage Status](https://img.shields.io/coveralls/oriontvv/pyaspeller.svg)](https://coveralls.io/r/oriontvv/pyaspeller)         [![CodeQuality](https://codeclimate.com/github/oriontvv/pyaspeller/badges/gpa.svg)](https://codeclimate.com/github/oriontvv/pyaspeller)          [![Requirements Status](https://requires.io/github/oriontvv/pyaspeller/requirements.svg?branch=master)](https://requires.io/github/oriontvv/pyaspeller/requirements/?branch=master)
+[![CI](https://github.com/oriontvv/pyaspeller/workflows/Python%20package/badge.svg)](https://github.com/oriontvv/pyaspeller/actions)       [![Coverage Status](https://img.shields.io/coveralls/oriontvv/pyaspeller.svg)](https://coveralls.io/r/oriontvv/pyaspeller)         [![CodeQuality](https://codeclimate.com/github/oriontvv/pyaspeller/badges/gpa.svg)](https://codeclimate.com/github/oriontvv/pyaspeller)          [![Requirements Status](https://requires.io/github/oriontvv/pyaspeller/requirements.svg?branch=master)](https://requires.io/github/oriontvv/pyaspeller/requirements/?branch=master)
 
 
-[![Pypi](http://img.shields.io/pypi/v/pyaspeller.svg?style=flat)](http://badge.fury.io/py/pyaspeller)     [![PyVersions](https://img.shields.io/pypi/pyversions/pyaspeller.svg)](https://img.shields.io/pypi/pyversions/pyaspeller.svg)
+[![Pypi](http://img.shields.io/pypi/v/pyaspeller.svg?style=flat)](https://pypi.org/project/pyaspeller)     [![PyVersions](https://img.shields.io/pypi/pyversions/pyaspeller.svg)](https://img.shields.io/pypi/pyversions/pyaspeller.svg)
 
 
 [pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a search tool typos in the text, files and websites.
