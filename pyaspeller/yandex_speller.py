@@ -26,6 +26,7 @@ class YandexSpeller(Speller):
                  ignore_roman_numerals=False, ignore_uppercase=False,
                  find_repeat_words=False, flag_latin=False, by_words=False):
 
+        self._lang = None
         self.lang = lang
 
         if format_text == 'auto' or not format_text:
