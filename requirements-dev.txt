@@ -2,4 +2,4 @@
 coveralls==3.1.0
 pytest==6.2.3
 pytest-cov==2.12.1
-flake8==3.9.1
+flake8==3.9.2
