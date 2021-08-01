@@ -6,7 +6,7 @@
 [![Pypi](http://img.shields.io/pypi/v/pyaspeller.svg?style=flat)](https://pypi.org/project/pyaspeller)     [![PyVersions](https://img.shields.io/pypi/pyversions/pyaspeller.svg)](https://img.shields.io/pypi/pyversions/pyaspeller.svg)
 
 
-[pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a search tool typos in the text, files and websites.
+[pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a tool for searching typos in texts, files and websites.
 
 Used [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
 
@@ -55,10 +55,9 @@ $ python3 -m pip install pyaspeller
 $ pyaspeller --help
 ```
 
-If you're stil using version for python2 you can use outdated version:
+If you use python2 you can use outdated version:
 ```bash
 pip install pyaspeller==0.1.0
 ```
 
-## Thanks to
-* Dependencies scanned by [PyUp.io](https://pyup.io/)
+Also there is a [rust version](https://github.com/oriontvv/ryaspeller) of this speller
