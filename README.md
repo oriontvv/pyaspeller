@@ -6,29 +6,34 @@
 [![Pypi](http://img.shields.io/pypi/v/pyaspeller.svg?style=flat)](https://pypi.org/project/pyaspeller)     [![PyVersions](https://img.shields.io/pypi/pyversions/pyaspeller.svg)](https://img.shields.io/pypi/pyversions/pyaspeller.svg)
 
 
-[pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a tool for searching typos in texts, files and websites.
+[pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a cli tool and pure python library for searching typos in texts, files and websites.
 
-Used [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
+Spell checking use [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
 
 
 ## Features
 
-You can correct your local files
+* Command line tool
+
+You can correct your local files or web pages
 
 ```bash 
 $ pyaspeller ./doc
+$ pyaspeller https://team-tricky.github.io
 $ pyaspeller "в суббботу утромъ"
 в субботу утром
 ```
 
-If you want to check a text you can use:
+* Library 
+
+Use speller for your code
 
 ```python
 >>> from pyaspeller import YandexSpeller
 >>> speller = YandexSpeller()
->>> fixed = speller.spelled('В суббботу утромь.')
+>>> fixed = speller.spelled('Triky Custle is a great puzzle game.')
 >>> fixed
-'В субботу утром.'
+'Tricky Castle is a great puzzle game.'
 ```
 
 You can use class `Word` for single word queries:
@@ -47,17 +52,17 @@ u'test'
 
 ## Installation
 
-
-To install `pyaspeller`, simply do:
+Use yor favourite package manager:
 
 ```bash
 $ python3 -m pip install pyaspeller
 $ pyaspeller --help
 ```
 
-If you use python2 you can use outdated version:
+For python2 you can use outdated version:
+
 ```bash
-pip install pyaspeller==0.1.0
+$ pip install pyaspeller==0.1.0
 ```
 
-Also there is a [rust version](https://github.com/oriontvv/ryaspeller) of this speller
+Also there are available [rust](https://github.com/oriontvv/ryaspeller/) and [javascript](https://github.com/hcodes/yaspeller) versions of this speller.

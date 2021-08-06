@@ -29,7 +29,7 @@ def _get_content(text: str) -> str:
         raise BadArgumentError(f"Unsupported type for {text}")
 
     if text.startswith(('http://', 'https://')):
-        content = requests.get(text)
+        content = requests.get(text).text
     else:
         content = text
 
