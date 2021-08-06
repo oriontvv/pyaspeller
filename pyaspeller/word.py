@@ -14,7 +14,7 @@ class Word:
     """
 
     def __init__(self, *args, **kwargs):
-        warnings.warn("Class Word is deprecated. Use Speller().spelled(text)")
+        warnings.warn("Class Word is deprecated. Use Speller().spelled(text) instead")
         if 'text' in kwargs:
             text = kwargs.pop('text')
         else:

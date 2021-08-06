@@ -9,7 +9,7 @@ from .speller import Speller  # noqa
 from .yandex_speller import YandexSpeller  # noqa
 from .word import Word  # noqa
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __all__ = ['main']
 
 
@@ -19,7 +19,7 @@ def _create_args_parser():
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s ' + __version__)
 
-    parser.add_argument('text_or_path_or_url', nargs='?', default='')
+    parser.add_argument('text_or_path_or_url', help="text or path or url")
 
     parser.add_argument('--config_path', default=None,
                         help="Configuration file path")

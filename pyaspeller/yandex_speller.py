@@ -75,7 +75,7 @@ class YandexSpeller(Speller):
         """Set lang"""
         if isinstance(language, str):
             self._lang = [language]
-        elif isinstance(language, collections.Iterable):
+        elif isinstance(language, collections.abc.Iterable):
             self._lang = list(language)
 
         if any(lang not in self._supported_langs for lang in self._lang):
@@ -261,6 +261,14 @@ class YandexSpeller(Speller):
         logging.debug("%s?%s", self._api_query, args)
         logging.debug("response: %s", response)
         return response
+
+    def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:
+        for change in changes:
+            if change['s']:
+                word = change['word']
+                suggestion = change['s'][0]
+                text = text.replace(word, suggestion)
+        return text
 
     @property
     def api_options(self) -> int:

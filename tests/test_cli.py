@@ -15,8 +15,3 @@ def speller(argparser):
 
 def test_default_speller(speller):
     assert speller.format == 'plain', 'Bad default format: ' + speller.format
-
-
-def test_call_cli_requires_argument():
-    with pytest.raises(SystemExit):
-        main()
