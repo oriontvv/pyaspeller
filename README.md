@@ -8,7 +8,7 @@
 
 [pyaspeller](https://github.com/oriontvv/pyaspeller) (Python Yandex Speller) is a cli tool and pure python library for searching typos in texts, files and websites.
 
-Spell checking use [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
+Spell checking uses [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
 
 
 ## Features
@@ -52,11 +52,10 @@ u'test'
 
 ## Installation
 
-Use yor favourite package manager:
+Use your favourite package manager:
 
 ```bash
 $ python3 -m pip install pyaspeller
-$ pyaspeller --help
 ```
 
 For python2 you can use outdated version:
