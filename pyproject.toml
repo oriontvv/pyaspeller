@@ -1,0 +1,88 @@
+[metadata]
+name = "pyaspeller"
+version = "0.2.0"
+description = "Search tool typos in the text, files and websites."
+authors = [
+    { name = "Vassiliy Taranov", email = "<taranov.vv@gmail.com>" },
+]
+license = "Apache 2"
+readme = "README.md"
+python = "^3.6"
+homepage = "https://github.com/oriontvv/pyaspeller"
+repository = "https://github.com/oriontvv/pyaspeller"
+documentation = "https://github.com/oriontvv/pyaspeller"
+keywords = [
+    "spell",
+    "spelling",
+    "spellcheck",
+    "api",
+    "yandex",
+    "text",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Topic :: Text Processing :: Linguistic"
+]
+
+[dependencies]
+requests = "2.27.1"
+
+[dev-dependencies]
+coveralls = "3.3.1"
+pytest = "6.2.5"
+pytest-cov = "3.0.0"
+flake8 = "4.0.1"
+
+[scripts]
+pyaspeller = "src.__init__:main"
+
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.flake8]
+ignore = [
+    "N801",
+    "N802",
+    "N803",
+    "E226",
+]
+
+[tool.pytest]
+addopts = "--ignore=py3 --ignore=build"
+
+[options.packages.find]
+where = "src"
+
+[tool.black]
+line-length = 119
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+)/
+'''
+
+[tool.isort]
+# make it compatible with black
+profile = "black"
+# Make sure this matches `*.py` in .editorconfig
+ensure_newline_before_comments = true
+include_trailing_comma = true
+use_parentheses = true
