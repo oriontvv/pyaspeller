@@ -50,8 +50,9 @@ precommit_install:
 #	python setup.py develop
 
 
-cov: flake
-	py.test tests --cov=pyaspeller --ignore=.DS_Store
+coverage-report:
+	$(VENV)/bin/pytest tests --cov=src --ignore=.DS_Store
+	$(VENV)/bin/coverage report -m
 
 #package: cov
 #	python setup.py sdist bdist_wheel
