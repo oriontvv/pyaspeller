@@ -9,7 +9,7 @@ from .speller import Speller  # noqa
 from .word import Word  # noqa
 from .yandex_speller import YandexSpeller  # noqa
 
-__version__ = "0.3.0"
+__version__ = "0.2.3"
 __all__ = ["main"]
 
 

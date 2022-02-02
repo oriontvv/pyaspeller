@@ -1,4 +1,4 @@
-# 0.2.2 (2022-02-01)
+# 0.2.3 (2022-02-01)
 * migrate to pyproject.toml
 * add python3.10 support
 * add mypy
