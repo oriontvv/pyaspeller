@@ -65,6 +65,7 @@ py3/
 py2/
 venv
 env
+.venv
 
 .idea
 .vscode

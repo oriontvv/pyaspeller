@@ -2,19 +2,18 @@
 Contains definitions of spellers.
 """
 
-import os
 import logging
+import os
 from typing import Iterable
 
 import requests
 
 from .errors import BadArgumentError
 
-
 _subs = {
-    '\r\n': '\n',  # Fix Windows
-    '\r': '\n',  # Fix MacOS
-    '\n+': '\n',  # Repeat line ends
+    "\r\n": "\n",  # Fix Windows
+    "\r": "\n",  # Fix MacOS
+    "\n+": "\n",  # Repeat line ends
 }
 
 
@@ -30,7 +29,7 @@ def _fetch_content(text: str) -> str:
 
 
 def is_url(text: str) -> bool:
-    return text.startswith(('http://', 'https://'))
+    return text.startswith(("http://", "https://"))
 
 
 def is_path(path: str) -> bool:
@@ -53,10 +52,10 @@ class Speller:
         {'code': 1, 'pos': 19, 'row': 0, 'col': 19, 'len': 6,
             'word': 'namber', 's': ['number']}
 
-        """            
+        """
         if not isinstance(text, str):
             raise BadArgumentError(f"Unsupported type for {text}")
-        
+
         if is_path(text):
             self.spell_path(text, apply=False)
             return
@@ -64,10 +63,10 @@ class Speller:
         if is_url(text):
             content = _fetch_content(text)
             yield from self._spell_text(content)
-        
+
         else:
             yield from self._spell_text(text)
-    
+
     def spelled(self, text: str) -> str:
         """
         Runs spell checking and apply suggestions.
@@ -77,7 +76,7 @@ class Speller:
         """
         if not isinstance(text, str):
             raise BadArgumentError(f"Unsupported type for {text}")
-    
+
         if is_path(text):
             self.spell_path(text, apply=True)
             return ""
@@ -86,13 +85,13 @@ class Speller:
             content = _fetch_content(text)
         else:
             content = text
-        
+
         changes = self._spell_text(content)
         return self._apply_suggestion(content, changes)
 
     def spell_path(self, path: str, apply: bool) -> None:
         """
-            Traverse through path and apply spelling
+        Traverse through path and apply spelling
         """
         if not os.path.exists(path):
             logging.warning("Path not found: '%s'", path)
@@ -108,10 +107,10 @@ class Speller:
                 fullpath = os.path.join(root, fname)
                 # iterate over changes
                 list(self._spell_file(fullpath, apply))
-            
+
     def spell_url(self, url: str) -> str:
         """
-            Run spell checking for url.
+        Run spell checking for url.
         """
         content = _fetch_content(url)
         changes = self._spell_text(content)
@@ -130,7 +129,7 @@ class Speller:
 
             if apply:
                 updated = self._apply_suggestion(content, changes)
-                with open(path, 'w') as outfile:
+                with open(path, "w") as outfile:
                     outfile.write(updated)
             else:
                 yield from changes
