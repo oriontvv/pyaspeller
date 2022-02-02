@@ -18,8 +18,7 @@ init:
 	$(VENV)/bin/python -m pip install poetry
 	$(VENV)/bin/poetry install
 
-lint: black-lint flake8 mypy 
-# pytest-lint
+lint: black-lint flake8 mypy pytest-lint
 
 black-lint:
 	$(VENV)/bin/black --check $(CODE)
@@ -34,7 +33,7 @@ mypy:
 	$(VENV)/bin/mypy --install-types --non-interactive $(CODE)
 
 pytest-lint:
-	$(VENV)/bin/pytest --dead-fixtures --dup-fixtures
+	$(VENV)/bin/pytest --dead-fixtures --dup-fixtures $(CODE)
 
 pretty: black-format \
 	$(VENV)/bin/isort $(ALL)
