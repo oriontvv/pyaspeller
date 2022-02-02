@@ -61,8 +61,6 @@ target/
 
 
 # env
-py3/
-py2/
 venv
 env
 .venv
