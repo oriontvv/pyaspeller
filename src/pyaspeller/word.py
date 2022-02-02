@@ -2,7 +2,7 @@
 Contains definitions of Word class
 """
 import warnings
-from typing import Optional, Iterable, List, Dict, Any
+from typing import Optional, List, Dict, Any
 
 from .errors import BadArgumentError
 from .yandex_speller import YandexSpeller

@@ -18,8 +18,8 @@ init:
 	$(VENV)/bin/python -m pip install poetry
 	$(VENV)/bin/poetry install
 
-lint: black-lint mypy
-# flake8  pytest-lint
+lint: black-lint flake8 mypy 
+# pytest-lint
 
 black-lint:
 	$(VENV)/bin/black --check $(CODE)

@@ -4,7 +4,7 @@ Contains specific details for Yandex speller
 
 import collections
 import logging
-from typing import Iterable, Dict, List, Any
+from typing import Iterable, Dict, List
 from urllib.parse import urlencode
 
 import requests
