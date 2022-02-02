@@ -39,7 +39,7 @@ python = "^3.6.2"
 requests = "2.27.1"
 
 [tool.poetry.dev-dependencies]
-coveralls = "3.3.1"
+coveralls = { version = "3.3.1", extras = [ "toml" ]}
 pytest = "6.2.5"
 pytest-cov = "3.0.0"
 flake8 = "4.0.1"
