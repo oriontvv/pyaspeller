@@ -48,8 +48,7 @@ precommit_install:
 test:
 	$(VENV)/bin/pytest tests --cov=src --ignore=.DS_Store
 
-
-coverage-report: test\
+coverage-report:
 	$(VENV)/bin/coverage report -m
 
 clean:

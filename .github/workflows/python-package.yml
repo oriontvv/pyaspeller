@@ -32,6 +32,7 @@ jobs:
         make lint
     - name: Test and coverage
       run: |
+        make test
         make coverage-report
     - name: Coveralls
       uses: oriontvv/coveralls-python-action@patch-pyprject-toml
