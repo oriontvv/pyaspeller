@@ -16,26 +16,41 @@ class YandexSpeller(Speller):
     """
     Yandex speller implementation.
     """
-    _supported_langs = {'en', 'ru', 'uk'}
 
-    def __init__(self, format_text=None, lang=None, config_path=None,
-                 dictionary=None, report_type=None, max_requests=2,
-                 is_debug=False, check_yo=False, ignore_urls=False,
-                 ignore_tags=False, ignore_capitalization=False,
-                 ignore_digits=False, ignore_latin=False,
-                 ignore_roman_numerals=False, ignore_uppercase=False,
-                 find_repeat_words=False, flag_latin=False, by_words=False):
+    _supported_langs = {"en", "ru", "uk"}
+
+    def __init__(
+        self,
+        format_text=None,
+        lang=None,
+        config_path=None,
+        dictionary=None,
+        report_type=None,
+        max_requests=2,
+        is_debug=False,
+        check_yo=False,
+        ignore_urls=False,
+        ignore_tags=False,
+        ignore_capitalization=False,
+        ignore_digits=False,
+        ignore_latin=False,
+        ignore_roman_numerals=False,
+        ignore_uppercase=False,
+        find_repeat_words=False,
+        flag_latin=False,
+        by_words=False,
+    ):
 
         self._lang = None
         self.lang = lang or self._supported_langs
 
-        if format_text == 'auto' or not format_text:
-            self._format = 'plain'
+        if format_text == "auto" or not format_text:
+            self._format = "plain"
         else:
             self._format = format_text
-        self._config_path = config_path or ''
+        self._config_path = config_path or ""
         self._dictionary = dictionary or {}
-        self._report_type = report_type or 'console'
+        self._report_type = report_type or "console"
 
         self._check_yo = check_yo
         self._ignore_urls = ignore_urls
@@ -52,8 +67,7 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = 'https://speller.yandex.net/services/' \
-                          'spellservice.json/checkText'
+        self._api_query = "https://speller.yandex.net/services/" "spellservice.json/checkText"
 
     @property
     def format(self):
@@ -89,7 +103,7 @@ class YandexSpeller(Speller):
     @config_path.setter
     def config_path(self, value):
         """Set config_path"""
-        self._config_path = value or ''
+        self._config_path = value or ""
         if not isinstance(self._config_path, str):
             msg = f"config_path must be a string: {self._config_path}"
             raise BadArgumentError(msg)
@@ -115,7 +129,7 @@ class YandexSpeller(Speller):
     @report_type.setter
     def report_type(self, value):
         """Set report_type"""
-        self._report_type = value or 'console'
+        self._report_type = value or "console"
 
     @property
     def check_yo(self):
@@ -248,13 +262,8 @@ class YandexSpeller(Speller):
         self._is_debug = value
 
     def _spell_text(self, text: str) -> Iterable[object]:
-        lang = ','.join(self._lang)
-        data = {
-            'text': text,
-            'options': self.api_options,
-            'lang': lang,
-            'format': self.format
-        }
+        lang = ",".join(self._lang)
+        data = {"text": text, "options": self.api_options, "lang": lang, "format": self.format}
         response = requests.post(url=self._api_query, data=data).json()
 
         args = requests.compat.urlencode(data)
@@ -264,9 +273,9 @@ class YandexSpeller(Speller):
 
     def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:
         for change in changes:
-            if change['s']:
-                word = change['word']
-                suggestion = change['s'][0]
+            if change["s"]:
+                word = change["word"]
+                suggestion = change["s"][0]
                 text = text.replace(word, suggestion)
         return text
 

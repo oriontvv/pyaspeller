@@ -1,11 +1,11 @@
 """
 Contains definitions of Word class
 """
-from typing import Optional
 import warnings
+from typing import Optional
 
-from .yandex_speller import YandexSpeller
 from .errors import BadArgumentError
+from .yandex_speller import YandexSpeller
 
 
 class Word:
@@ -15,13 +15,13 @@ class Word:
 
     def __init__(self, *args, **kwargs):
         warnings.warn("Class Word is deprecated. Use Speller().spelled(text) instead")
-        if 'text' in kwargs:
-            text = kwargs.pop('text')
+        if "text" in kwargs:
+            text = kwargs.pop("text")
         else:
             text = args[0]
 
         if len(text.split()) > 1:
-            msg = 'Bad argument. Multiple words were detected.'
+            msg = "Bad argument. Multiple words were detected."
             raise BadArgumentError(msg)
 
         self._spell_text = YandexSpeller(*args[1:], **kwargs)._spell_text
@@ -43,7 +43,7 @@ class Word:
     def variants(self) -> Optional[str]:
         if self.correct:
             return None
-        return self.answer[0]['s']
+        return self.answer[0]["s"]
 
     @property
     def spellsafe(self) -> Optional[str]:
