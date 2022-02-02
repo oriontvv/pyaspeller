@@ -1,6 +1,9 @@
-# 0.X.X (2022-XX-XX)
+# 0.2.2 (2022-02-01)
 * migrate to pyproject.toml
 * add python3.10 support
+* add mypy
+* add flake8
+* add poetry
 
 
 # 0.2.0 (2020-12-26)

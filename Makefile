@@ -65,6 +65,11 @@ clean:
 	rm -rf build
 	rm -rf cover
 
+build:
+	$(VENV)/bin/poetry build
+
+publish:
+	$(VENV)/bin/poetry publish
 
 doc:
 	make -C docs html
