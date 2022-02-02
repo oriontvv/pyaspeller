@@ -28,11 +28,11 @@ classifiers = [
     "Topic :: Text Processing :: Linguistic"
 ]
 packages = [
-    { include = "./src" },
+    { include = "pyaspeller", from = "src" }
 ]
 
 [tool.poetry.scripts]
-pyaspeller = "src.__init__:main"
+pyaspeller = "src.pyaspeller.__init__:main"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
@@ -61,12 +61,11 @@ ignore = [
     "N803",
     "E226",
 ]
+max-complexity = 10
 
 [tool.pytest]
 addopts = "--ignore=py3 --ignore=build"
 
-# [options.packages.find]
-# where = "src"
 
 [tool.black]
 line-length = 120
