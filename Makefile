@@ -13,13 +13,13 @@ JOBS ?= 4
 
 
 init:
-	python3 -m venv $(VENV)
+	test -d $(VENV) || python3 -m venv $(VENV)
 	$(VENV)/bin/python -m pip install -U pip
 	$(VENV)/bin/python -m pip install poetry
 	$(VENV)/bin/poetry install
 
-lint: black-lint
-# flake8 mypy pytest-lint
+lint: black-lint mypy
+# flake8  pytest-lint
 
 black-lint:
 	$(VENV)/bin/black --check $(CODE)
@@ -46,19 +46,12 @@ precommit_install:
 	echo '#!/bin/sh\nmake lint\n' >> .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 
-#develop:
-#	python setup.py develop
-
-
-coverage-report:
+test:
 	$(VENV)/bin/pytest tests --cov=src --ignore=.DS_Store
+
+
+coverage-report: test\
 	$(VENV)/bin/coverage report -m
-
-#package: cov
-#	python setup.py sdist bdist_wheel
-
-#publish: package
-#	python setup.py sdist bdist_wheel upload
 
 clean:
 	rm -rf `find . -name __pycache__`
@@ -74,8 +67,6 @@ clean:
 	rm -rf build
 	rm -rf cover
 
-env:
-	source $(VENV)/bin/activate
 
 doc:
 	make -C docs html

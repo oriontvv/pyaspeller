@@ -4,7 +4,7 @@ Contains definitions of spellers.
 
 import logging
 import os
-from typing import Iterable
+from typing import Iterable, List
 
 import requests
 
@@ -116,7 +116,7 @@ class Speller:
         changes = self._spell_text(content)
         return self._apply_suggestion(content, changes)
 
-    def _spell_text(self, text: str) -> Iterable[dict]:
+    def _spell_text(self, text: str) -> List[dict]:
         raise NotImplementedError()
 
     def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:

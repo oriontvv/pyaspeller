@@ -4,7 +4,8 @@ Contains specific details for Yandex speller
 
 import collections
 import logging
-from typing import Iterable
+from typing import Iterable, Dict, List, Any
+from urllib.parse import urlencode
 
 import requests
 
@@ -261,12 +262,12 @@ class YandexSpeller(Speller):
         """Set is_debug"""
         self._is_debug = value
 
-    def _spell_text(self, text: str) -> Iterable[object]:
+    def _spell_text(self, text: str) -> List[Dict]:
         lang = ",".join(self._lang)
         data = {"text": text, "options": self.api_options, "lang": lang, "format": self.format}
         response = requests.post(url=self._api_query, data=data).json()
 
-        args = requests.compat.urlencode(data)
+        args = urlencode(data)
         logging.debug("%s?%s", self._api_query, args)
         logging.debug("response: %s", response)
         return response
