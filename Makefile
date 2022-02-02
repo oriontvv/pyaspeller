@@ -1,30 +1,63 @@
-# Some simple testing tasks (sorry, UNIX only).
+CODE =\
+	src \
+	examples
 
-FLAGS=
+TESTS =\
+	tests
 
+ALL = $(CODE)\
+	$(TESTS)
 
-flake:
-#	python setup.py check -rms
-	flake8 pyaspeller tests examples
-
-develop:
-	python setup.py develop
-
-test: develop
-	py.test tests --ignore=.DS_Store
-
-vtest: develop
-	py.test tests -v --ignore=.DS_Store
+VENV ?= .venv
+JOBS ?= 4
 
 
-cov cover coverage: flake
+init:
+	python3 -m venv $(VENV)
+	$(VENV)/bin/python -m pip install -U pip
+	$(VENV)/bin/python -m pip install poetry
+	$(VENV)/bin/poetry install
+
+lint: black-lint
+# flake8 mypy pytest-lint
+
+black-lint:
+	$(VENV)/bin/black --check $(CODE)
+
+black-format:
+	$(VENV)/bin/black $(CODE)
+
+flake8:
+	$(VENV)/bin/flake8 --statistics --jobs $(JOBS) --show-source $(ALL)
+
+mypy:
+	$(VENV)/bin/mypy --install-types --non-interactive $(CODE)
+
+pytest-lint:
+	$(VENV)/bin/pytest --dead-fixtures --dup-fixtures
+
+pretty: black-format \
+	$(VENV)/bin/isort $(ALL)
+
+plint: pretty lint
+
+precommit_install:
+	@git init
+	echo '#!/bin/sh\nmake lint\n' >> .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
+
+#develop:
+#	python setup.py develop
+
+
+cov: flake
 	py.test tests --cov=pyaspeller --ignore=.DS_Store
 
-package: cov
-	python setup.py sdist bdist_wheel
+#package: cov
+#	python setup.py sdist bdist_wheel
 
-publish: package
-	python setup.py sdist bdist_wheel upload
+#publish: package
+#	python setup.py sdist bdist_wheel upload
 
 clean:
 	rm -rf `find . -name __pycache__`
@@ -39,9 +72,9 @@ clean:
 	rm -rf coverage
 	rm -rf build
 	rm -rf cover
-	make -C docs clean
-	python setup.py clean
-	rm -rf .tox
+
+env:
+	source $(VENV)/bin/activate
 
 doc:
 	make -C docs html
@@ -49,9 +82,3 @@ doc:
 
 doc-spelling:
 	make -C docs spelling
-
-env:
-	$(source ./py3/bin/activate)
-
-
-.PHONY: all build env flake test vtest cov clean doc

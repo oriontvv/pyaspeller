@@ -1,13 +1,12 @@
-[metadata]
+[tool.poetry]
 name = "pyaspeller"
 version = "0.2.0"
 description = "Search tool typos in the text, files and websites."
 authors = [
-    { name = "Vassiliy Taranov", email = "<taranov.vv@gmail.com>" },
+    "Vassiliy Taranov <taranov.vv@gmail.com>",
 ]
 license = "Apache 2"
 readme = "README.md"
-python = "^3.6"
 homepage = "https://github.com/oriontvv/pyaspeller"
 repository = "https://github.com/oriontvv/pyaspeller"
 documentation = "https://github.com/oriontvv/pyaspeller"
@@ -28,25 +27,32 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Text Processing :: Linguistic"
 ]
+packages = [
+    { include = "./src" },
+]
 
-[dependencies]
+[tool.poetry.scripts]
+pyaspeller = "src.__init__:main"
+
+[tool.poetry.dependencies]
+python = "^3.6.2"
 requests = "2.27.1"
 
-[dev-dependencies]
+[tool.poetry.dev-dependencies]
 coveralls = "3.3.1"
 pytest = "6.2.5"
 pytest-cov = "3.0.0"
 flake8 = "4.0.1"
+black = "22.1.0"
+mypy = "0.931"
+isort = "5.10.1"
 
-[scripts]
-pyaspeller = "src.__init__:main"
 
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel"
+    "poetry>=0.12",
 ]
-build-backend = "setuptools.build_meta"
+build-backend = "poetry.masonry.api"
 
 [tool.flake8]
 ignore = [
@@ -59,11 +65,11 @@ ignore = [
 [tool.pytest]
 addopts = "--ignore=py3 --ignore=build"
 
-[options.packages.find]
-where = "src"
+# [options.packages.find]
+# where = "src"
 
 [tool.black]
-line-length = 119
+line-length = 120
 exclude = '''
 /(
     \.git
