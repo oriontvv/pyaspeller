@@ -36,16 +36,16 @@ pyaspeller = "src.pyaspeller.__init__:main"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-requests = "2.27.1"
+requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
-black = "22.1.0"
-coveralls = { version = "3.3.1", extras = [ "toml" ]}
-flake8 = "4.0.1"
-isort = "5.10.1"
-mypy = "0.931"
-pytest = "6.2.5"
-pytest-cov = "3.0.0"
+black = "^22.1.0"
+coveralls = { version = "^3.3.1", extras = [ "toml" ]}
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.931"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
 pytest-deadfixtures = "^2.2.1"
 
 
