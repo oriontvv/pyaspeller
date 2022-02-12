@@ -1,4 +1,4 @@
-# 0.2.3 (2022-02-01)
+# [0.2.3](https://github.com/oriontvv/pyaspeller/releases/tag/0.2.3) (2022-02-01)
 * migrate to pyproject.toml
 * add python3.10 support
 * add mypy
@@ -6,7 +6,7 @@
 * add poetry
 
 
-# 0.2.0 (2020-12-26)
+# [0.2.0](https://github.com/oriontvv/pyaspeller/releases/tag/0.2.2) (2020-12-26)
 * added methods spelled, spell_path to Speller class
 * use default format `plain`
 * rewrite unittests to pytest
