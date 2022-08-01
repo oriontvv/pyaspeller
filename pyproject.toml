@@ -43,7 +43,7 @@ black = "^22.6.0"
 coveralls = { version = "^3.3.1", extras = [ "toml" ]}
 flake8 = "^4.0.1"
 isort = "^5.10.1"
-mypy = "^0.961"
+mypy = "^0.971"
 pytest = "^7.0.1"
 pytest-cov = "^3.0.0"
 pytest-deadfixtures = "^2.2.1"
