@@ -1,10 +1,10 @@
 """
 Contains definitions of spellers.
 """
-
+from __future__ import annotations
 import logging
 import os
-from typing import Iterable, List
+from typing import Iterable
 
 import requests
 
@@ -116,7 +116,7 @@ class Speller:
         changes = self._spell_text(content)
         return self._apply_suggestion(content, changes)
 
-    def _spell_text(self, text: str) -> List[dict]:
+    def _spell_text(self, text: str) -> list[dict]:
         raise NotImplementedError()
 
     def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:

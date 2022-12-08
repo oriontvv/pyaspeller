@@ -1,10 +1,10 @@
 """
 Contains specific details for Yandex speller
 """
-
+from __future__ import annotations
 import collections
 import logging
-from typing import Iterable, Dict, List
+from typing import Iterable
 from urllib.parse import urlencode
 
 import requests
@@ -68,7 +68,7 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = "https://speller.yandex.net/services/" "spellservice.json/checkText"
+        self._api_query = "https://speller.yandex.net/services/spellservice.json/checkText"
 
     @property
     def format(self):
@@ -262,7 +262,7 @@ class YandexSpeller(Speller):
         """Set is_debug"""
         self._is_debug = value
 
-    def _spell_text(self, text: str) -> List[Dict]:
+    def _spell_text(self, text: str) -> list[dict]:
         lang = ",".join(self._lang)
         data = {"text": text, "options": self.api_options, "lang": lang, "format": self.format}
         response = requests.post(url=self._api_query, data=data).json()
