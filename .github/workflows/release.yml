@@ -27,6 +27,10 @@ jobs:
       - name: Build project for distribution
         run: make build
 
+      - name: Extract release notes
+        id: release_notes
+        uses: ffurrer2/extract-release-notes@v1
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -34,6 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           prerelease: steps.check-version.outputs.prerelease == 'true'
+          body: ${{ steps.release_notes.outputs.release_notes }}
 
       - name: Publish to PyPI
         env:

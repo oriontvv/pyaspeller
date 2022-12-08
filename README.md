@@ -55,10 +55,4 @@ Use your favourite package manager:
 $ python3 -m pip install pyaspeller
 ```
 
-For python2 you can use outdated version:
-
-```bash
-$ pip install pyaspeller==0.1.0
-```
-
 Also there are available [rust](https://github.com/oriontvv/ryaspeller/) and [javascript](https://github.com/hcodes/yaspeller) versions of this speller.
