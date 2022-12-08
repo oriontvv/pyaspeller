@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyaspeller"
-version = "0.2.3"
+version = "1.0.0"
 description = "Search tool typos in the text, files and websites."
 authors = [
     "Vassiliy Taranov <taranov.vv@gmail.com>",

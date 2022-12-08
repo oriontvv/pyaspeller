@@ -1,49 +1,77 @@
-# [0.2.3](https://github.com/oriontvv/pyaspeller/releases/tag/0.2.3) (2022-02-01)
-* migrate to pyproject.toml
-* add python3.10 support
-* add mypy
-* add flake8
-* add poetry
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-# [0.2.0](https://github.com/oriontvv/pyaspeller/releases/tag/0.2.2) (2020-12-26)
-* added methods spelled, spell_path to Speller class
-* use default format `plain`
-* rewrite unittests to pytest
-* drop python2 support
-* updated example
+## [Unreleased]
+
+## [1.0.0] - 2022-12-08
+### Added
+- Using keep changelog format
+### Changed
+- Update and untie dependencies
+### Removed
+- Drop python3.6 from ci
 
 
-# 0.1.0 (2016-03-03)
-* add python2.7 support
-* add Word quick spell class
-* testing and coverage with pytest
-* testing with tox
-* project health by landscape.io
-* add requirements status, python versions badges in readme
-* add restrictions link in readme
-* add tests, increase coverage
+## [0.2.3] - 2022-02-01
+### Added
+- Add python3.10 support
+- Add mypy
+- Add flake8
+- Add poetry
+### Changed
+- Migrate to pyproject.toml
 
 
-# 0.0.5 (2015-10-04)
-* wheel packaging
+## [0.2.0] - 2020-12-26
+### Added
+- Added methods spelled, spell_path to Speller class
+### Changed
+- Use default format `plain`
+- Rewrite unittests to pytest
+- Updated example
+### Removed
+- Drop python2 support
 
 
-# 0.0.4 (2015-10-08)
-* system script *pyaspeller* added
-* packet classifiers updated
-* alpha status specified
-* contributors files added
+## [0.1.0] - 2016-03-03
+### Added
+- Add python2.7 support
+- Add Word quick spell class
+- Testing and coverage with pytest
+- Testing with tox
+- Project health by landscape.io
+- Add requirements status, python versions badges in readme
+- Add restrictions link in readme
+- Add tests, increase coverage
 
 
-# 0.0.3 (2015-09-31)
-* uploaded to pypi.
-* test coverage increased.
-* Pretty YandexSpeller API
-* Spell checking of strings with parameters.
+## [0.0.5] - 2015-10-04
+### Added
+- Wheel packaging
 
 
-# 0.0.2 (2015-09-23)
-* testing automated
-* coverage setup
-* basic functionality. spell checking string
+## [0.0.4] - 2015-10-08
+### Added
+- System script -pyaspeller-
+- Packet classifiers updated
+- Alpha status specified
+- Contributors files added
+
+
+## [0.0.3] - 2015-09-31
+### Added
+- Uploaded to pypi.
+- Test coverage increased.
+- Pretty YandexSpeller API
+- Spell checking of strings with parameters.
+
+
+## [0.0.2] - 2015-09-23
+### Added
+- Testing automated
+- Coverage setup
+- Basic functionality. Spell checking for strings
