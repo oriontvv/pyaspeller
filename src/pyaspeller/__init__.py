@@ -13,7 +13,7 @@ __version__ = "0.2.3"
 __all__ = ["main"]
 
 
-def _create_args_parser():
+def _create_args_parser() -> ArgumentParser:
     description = "Search tool typos in the text, files and websites."
     parser = ArgumentParser(description=description, prog="pyaspeller")
     parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
@@ -100,7 +100,7 @@ def _create_args_parser():
     return parser
 
 
-def _create_speller(args):
+def _create_speller(args) -> YandexSpeller:
     speller = YandexSpeller(
         format_text=args.format,
         lang=args.lang,

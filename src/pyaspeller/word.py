@@ -1,8 +1,8 @@
 """
 Contains definitions of Word class
 """
+from __future__ import annotations
 import warnings
-from typing import Optional, List, Dict, Any
 
 from .errors import BadArgumentError
 from .yandex_speller import YandexSpeller
@@ -30,7 +30,7 @@ class Word:
         self._answer = None
 
     @property
-    def answer(self) -> List[Dict[Any, Any]]:
+    def answer(self) -> list[dict]:
         if self._answer is None:
             self._answer = self._spell_text(self.text)
         return self._answer
@@ -40,14 +40,14 @@ class Word:
         return not self.answer
 
     @property
-    def variants(self) -> Optional[List[str]]:
+    def variants(self) -> list[str] | None:
         answer = self.answer
         if not answer:
             return None
         return answer[0]["s"]
 
     @property
-    def spellsafe(self) -> Optional[str]:
+    def spellsafe(self) -> str | None:
         variants = self.variants
         if not variants:
             return None
