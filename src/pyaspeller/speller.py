@@ -41,7 +41,12 @@ class Speller:
     Base spell class. Implements spelling logic for files.
     """
 
-    def spell(self, text: str) -> Iterable[object]:
+    def spell(
+            self,
+            text: str,
+            check_path: bool = True,
+            check_url: bool = True,
+    ) -> Iterable[object]:
         """
         Runs spell checking for text or URI and yields suggestions for changes.
 
@@ -56,18 +61,23 @@ class Speller:
         if not isinstance(text, str):
             raise BadArgumentError(f"Unsupported type for {text}")
 
-        if is_path(text):
+        if check_path and is_path(text):
             self.spell_path(text, apply=False)
             return
 
-        if is_url(text):
+        if check_url and is_url(text):
             content = _fetch_content(text)
             yield from self._spell_text(content)
 
         else:
             yield from self._spell_text(text)
 
-    def spelled(self, text: str) -> str:
+    def spelled(
+            self,
+            text: str,
+            check_path: bool = True,
+            check_url: bool = True,
+    ) -> str:
         """
         Runs spell checking and apply suggestions.
 
@@ -77,11 +87,11 @@ class Speller:
         if not isinstance(text, str):
             raise BadArgumentError(f"Unsupported type for {text}")
 
-        if is_path(text):
+        if check_path and is_path(text):
             self.spell_path(text, apply=True)
             return ""
 
-        if is_url(text):
+        if check_url and is_url(text):
             content = _fetch_content(text)
         else:
             content = text
