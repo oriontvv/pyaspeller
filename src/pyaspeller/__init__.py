@@ -9,7 +9,7 @@ from .speller import Speller  # noqa
 from .word import Word  # noqa
 from .yandex_speller import YandexSpeller  # noqa
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = ["main"]
 
 
@@ -123,7 +123,7 @@ def _create_speller(args) -> YandexSpeller:
     return speller
 
 
-def main():
+def main():  # "pragma: no cover",
     """
     Main function. Uses as cli launcher
     """

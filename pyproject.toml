@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyaspeller"
-version = "1.0.0"
+version = "1.1.0"
 description = "Search tool typos in the text, files and websites."
 authors = [
     "Vassiliy Taranov <taranov.vv@gmail.com>",
@@ -47,6 +47,7 @@ mypy = "^0.971"
 pytest = "^7.0.1"
 pytest-cov = "^4.0.0"
 pytest-deadfixtures = "^2.2.1"
+requests-mock = "^1.10.0"
 
 
 [build-system]

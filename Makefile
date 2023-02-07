@@ -49,7 +49,7 @@ test:
 	$(VENV)/bin/pytest tests --cov=src --ignore=.DS_Store
 
 coverage-report:
-	$(VENV)/bin/coverage report -m
+	$(VENV)/bin/pytest tests --cov=src --cov-report html
 
 clean:
 	rm -rf `find . -name __pycache__`

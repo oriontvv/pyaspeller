@@ -42,8 +42,8 @@ def test_param_max_requests(speller):
 
 def test_param_is_debug(speller):
     assert not speller.is_debug, "Bad default is_debug"
-    speller.max_requests = True
-    assert speller.max_requests, "Bad is_debug"
+    speller.is_debug = True
+    assert speller.is_debug, "Bad is_debug"
 
 
 def test_param_format(speller):
@@ -159,10 +159,50 @@ def test_spelled(speller):
     assert result == "test message"
 
 
+def test_spelled_text(speller):
+    result = speller.spelled_text("tesst message")
+    assert result == "test message"
+
+
+def test_spell_text(speller):
+    result = speller.spell_text("tesst message")
+    assert result == [
+        {"code": 1, "pos": 0, "row": 0, "col": 0, "len": 5, "word": "tesst", "s": ["test", "text", "this"]}
+    ]
+
+
+def test_spelled_url(speller, requests_mock):
+    url = "https://some-url.org"
+    requests_mock.post(
+        speller._api_query,
+        json=[{"code": 1, "pos": 12, "row": 0, "col": 12, "len": 6, "word": "maagic", "s": ["magic"]}],
+    )
+    requests_mock.get(url, json={"some": "maagic"})
+    result = speller.spelled(url)
+    assert result == '{"some": "magic"}'
+
+    result = speller.spell_url(url)
+    assert result == '{"some": "magic"}'
+
+
+def test_spell_url(speller, requests_mock):
+    url = "https://some-url.org"
+    data = [{"code": 1, "pos": 12, "row": 0, "col": 12, "len": 6, "word": "maagic", "s": ["magic"]}]
+    requests_mock.post(
+        speller._api_query,
+        json=data,
+    )
+    requests_mock.get(url, json={"some": "maagic"})
+    result = list(speller.spell(url))
+    assert result == data
+
+
 @pytest.mark.parametrize("bad_argument", [0, True, None, ["tesst "], {"bad": "arg"}])
 def test_spelled_list_of_strings(speller, bad_argument):
     with pytest.raises(BadArgumentError):
         speller.spelled(bad_argument)
+    with pytest.raises(BadArgumentError):
+        list(speller.spell(bad_argument))
 
 
 def test_spell_path(speller, tmpdir):
@@ -190,5 +230,14 @@ def test_spell_path_file(speller, tmpdir):
     p.write("tesst message")
 
     speller.spell_path(p, apply=True)
+
+    assert p.read() == "test message"
+
+
+def test_spelled_path_file(speller, tmpdir):
+    p = tmpdir.join("file.txt")
+    p.write("tesst message")
+
+    speller.spelled(str(p))
 
     assert p.read() == "test message"
