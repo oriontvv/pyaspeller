@@ -4,7 +4,8 @@ Contains definitions of spellers.
 from __future__ import annotations
 import logging
 import os
-from typing import Iterable
+from typing import Iterable, Union
+from pathlib import Path
 
 import requests
 
@@ -32,7 +33,7 @@ def is_url(text: str) -> bool:
     return text.startswith(("http://", "https://"))
 
 
-def is_path(path: str) -> bool:
+def is_path(path: Union[str, Path]) -> bool:
     return os.path.exists(path)
 
 
@@ -53,7 +54,7 @@ class Speller:
             'word': 'namber', 's': ['number']}
 
         """
-        if not isinstance(text, str):
+        if not isinstance(text, (str, Path)):
             raise BadArgumentError(f"Unsupported type for {text}")
 
         if is_path(text):
@@ -74,7 +75,7 @@ class Speller:
         >>> result = speller.spelled("tesst message")
         >>> assert result == 'test message'
         """
-        if not isinstance(text, str):
+        if not isinstance(text, (str, Path)):
             raise BadArgumentError(f"Unsupported type for {text}")
 
         if is_path(text):
@@ -115,6 +116,19 @@ class Speller:
         content = _fetch_content(url)
         changes = self._spell_text(content)
         return self._apply_suggestion(content, changes)
+
+    def spelled_text(self, text: str) -> str:
+        """
+        Run spell checking and apply suggestions for text.
+        """
+        changes = self._spell_text(text)
+        return self._apply_suggestion(text, changes)
+
+    def spell_text(self, text: str) -> list[dict]:
+        """
+        Run spell checking for text.
+        """
+        return self._spell_text(text)
 
     def _spell_text(self, text: str) -> list[dict]:
         raise NotImplementedError()
