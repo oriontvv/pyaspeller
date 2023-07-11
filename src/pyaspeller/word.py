@@ -4,8 +4,8 @@ Contains definitions of Word class
 from __future__ import annotations
 import warnings
 
-from .errors import BadArgumentError
-from .yandex_speller import YandexSpeller
+from pyaspeller.errors import BadArgumentError
+from pyaspeller.yandex_speller import YandexSpeller
 
 
 class Word:
@@ -13,7 +13,7 @@ class Word:
     Class for spelling of single word.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002 ANN003
         warnings.warn("Class Word is deprecated. Use Speller().spelled(text) instead")
         if "text" in kwargs:
             text = kwargs.pop("text")
@@ -33,7 +33,7 @@ class Word:
     def answer(self) -> list[dict]:
         if self._answer is None:
             self._answer = self._spell_text(self.text)
-        return self._answer
+        return self._answer  # type: ignore
 
     @property
     def correct(self) -> bool:

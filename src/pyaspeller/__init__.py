@@ -3,7 +3,7 @@ Init module of pyaspeller package
 """
 
 import logging
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 
 from .speller import Speller  # noqa
 from .word import Word  # noqa
@@ -16,7 +16,9 @@ __all__ = ["main"]
 def _create_args_parser() -> ArgumentParser:
     description = "Search tool typos in the text, files and websites."
     parser = ArgumentParser(description=description, prog="pyaspeller")
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s " + __version__
+    )
 
     parser.add_argument("text_or_path_or_url", help="text or path or url")
 
@@ -40,18 +42,35 @@ def _create_args_parser() -> ArgumentParser:
         default=logging.WARNING,
     )
 
-    parser.add_argument("-f", "--format", default="auto", choices=("plain", "html", "markdown", "auto"), help="formats")
+    parser.add_argument(
+        "-f",
+        "--format",
+        default="auto",
+        choices=("plain", "html", "markdown", "auto"),
+        help="formats",
+    )
 
     parser.add_argument(
-        "-l", "--lang", default=["en", "ru"], nargs="+", choices=("en", "ru", "uk", "kk"), help="languages"
+        "-l",
+        "--lang",
+        default=["en", "ru"],
+        nargs="+",
+        choices=("en", "ru", "uk", "kk"),
+        help="languages",
     )
 
     parser.add_argument("-c", "--config", default=None, help="config path")
 
-    parser.add_argument("-d", "--dictionary", default=None, help="path to custom json dictionary file")
+    parser.add_argument(
+        "-d", "--dictionary", default=None, help="path to custom json dictionary file"
+    )
 
     parser.add_argument(
-        "-r", "--report_type", default="console", choices=("console", "html", "markdown", "json"), help="type of report"
+        "-r",
+        "--report_type",
+        default="console",
+        choices=("console", "html", "markdown", "json"),
+        help="type of report",
     )
 
     parser.add_argument(
@@ -64,10 +83,15 @@ def _create_args_parser() -> ArgumentParser:
     parser.add_argument(
         "--find-repeat-words",
         action="store_true",
-        help="highlight repetitions of words, consecutive. " "For example, I flew to to to Cyprus",
+        help="highlight repetitions of words, consecutive. "
+        "For example, I flew to to to Cyprus",
     )
 
-    parser.add_argument("--flag-latin", action="store_true", help="celebrate words, written in Latin, as erroneous")
+    parser.add_argument(
+        "--flag-latin",
+        action="store_true",
+        help="celebrate words, written in Latin, as erroneous",
+    )
 
     parser.add_argument(
         "--ignore-tags",
@@ -80,27 +104,48 @@ def _create_args_parser() -> ArgumentParser:
     parser.add_argument(
         "--ignore_capitalization",
         action="store_true",
-        help="ignore the incorrect use of UPPERCASE/lowercase " "letters, for example, in the word moscow",
+        help="ignore the incorrect use of UPPERCASE/lowercase "
+        "letters, for example, in the word moscow",
     )
-
-    parser.add_argument("--ignore_digits", action="store_true", help="ignore words with numbers, such as avp17h4534")
-
-    parser.add_argument("--ignore-latin", action="store_true", help="ignore words, written in Latin, like 'madrid'")
-
-    parser.add_argument("--ignore-roman-numerals", action="store_true", help="ignore Roman numerals I, II, III, ...")
-
-    parser.add_argument("--ignore_uppercase", action="store_true", help="ignore words written in capital letters")
 
     parser.add_argument(
-        "--ignore_urls", action="store_true", help="ignore Internet addresses, email " "addresses and filenames"
+        "--ignore_digits",
+        action="store_true",
+        help="ignore words with numbers, such as avp17h4534",
     )
 
-    parser.add_argument("--max-requests", default=2, help="Max count of requests at a time")
+    parser.add_argument(
+        "--ignore-latin",
+        action="store_true",
+        help="ignore words, written in Latin, like 'madrid'",
+    )
+
+    parser.add_argument(
+        "--ignore-roman-numerals",
+        action="store_true",
+        help="ignore Roman numerals I, II, III, ...",
+    )
+
+    parser.add_argument(
+        "--ignore_uppercase",
+        action="store_true",
+        help="ignore words written in capital letters",
+    )
+
+    parser.add_argument(
+        "--ignore_urls",
+        action="store_true",
+        help="ignore Internet addresses, email " "addresses and filenames",
+    )
+
+    parser.add_argument(
+        "--max-requests", default=2, help="Max count of requests at a time"
+    )
 
     return parser
 
 
-def _create_speller(args) -> YandexSpeller:
+def _create_speller(args: Namespace) -> YandexSpeller:
     speller = YandexSpeller(
         format_text=args.format,
         lang=args.lang,
@@ -123,7 +168,7 @@ def _create_speller(args) -> YandexSpeller:
     return speller
 
 
-def main():  # "pragma: no cover",
+def main() -> None:  # "pragma: no cover",
     """
     Main function. Uses as cli launcher
     """

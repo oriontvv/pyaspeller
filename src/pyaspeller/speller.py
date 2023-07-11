@@ -9,7 +9,7 @@ from pathlib import Path
 
 import requests
 
-from .errors import BadArgumentError
+from pyaspeller.errors import BadArgumentError
 
 _subs = {
     "\r\n": "\n",  # Fix Windows
