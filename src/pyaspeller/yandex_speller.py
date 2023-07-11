@@ -9,8 +9,8 @@ from urllib.parse import urlencode
 
 import requests
 
-from .errors import BadArgumentError
-from .speller import Speller
+from pyaspeller.errors import BadArgumentError
+from pyaspeller.speller import Speller
 
 
 class YandexSpeller(Speller):
@@ -18,32 +18,31 @@ class YandexSpeller(Speller):
     Yandex speller implementation.
     """
 
-    _supported_langs = {"en", "ru", "uk"}
+    _supported_langs = ["en", "ru", "uk"]
 
     def __init__(
         self,
-        format_text=None,
-        lang=None,
-        config_path=None,
-        dictionary=None,
-        report_type=None,
-        max_requests=2,
-        is_debug=False,
-        check_yo=False,
-        ignore_urls=False,
-        ignore_tags=False,
-        ignore_capitalization=False,
-        ignore_digits=False,
-        ignore_latin=False,
-        ignore_roman_numerals=False,
-        ignore_uppercase=False,
-        find_repeat_words=False,
-        flag_latin=False,
-        by_words=False,
-    ):
-
-        self._lang = None
-        self.lang = lang or self._supported_langs
+        format_text: str | None = None,
+        lang: str | list[str] | None = None,
+        config_path: str | None = None,
+        dictionary: dict | None = None,
+        report_type: str | None = None,
+        max_requests: int = 2,
+        is_debug: bool = False,
+        check_yo: bool = False,
+        ignore_urls: bool = False,
+        ignore_tags: bool = False,
+        ignore_capitalization: bool = False,
+        ignore_digits: bool = False,
+        ignore_latin: bool = False,
+        ignore_roman_numerals: bool = False,
+        ignore_uppercase: bool = False,
+        find_repeat_words: bool = False,
+        flag_latin: bool = False,
+        by_words: bool = False,
+    ) -> None:
+        self._lang: list[str] = []
+        self.lang = lang or self._supported_langs  # type: ignore
 
         if format_text == "auto" or not format_text:
             self._format = "plain"
@@ -68,25 +67,27 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = "https://speller.yandex.net/services/spellservice.json/checkText"
+        self._api_query = (
+            "https://speller.yandex.net/services/spellservice.json/checkText"
+        )
 
     @property
-    def format(self):
+    def format(self) -> str:
         """Get format"""
         return self._format
 
     @format.setter
-    def format(self, value):
+    def format(self, value: str) -> None:
         """Set format"""
         self._format = value
 
     @property
-    def lang(self):
+    def lang(self) -> list[str]:
         """Get lang"""
         return self._lang
 
     @lang.setter
-    def lang(self, language):
+    def lang(self, language: str | Iterable[str]) -> None:
         """Set lang"""
         if isinstance(language, str):
             self._lang = [language]
@@ -97,12 +98,12 @@ class YandexSpeller(Speller):
             raise BadArgumentError("Unsupported language")
 
     @property
-    def config_path(self):
+    def config_path(self) -> str:
         """Get config_path"""
         return self._config_path
 
     @config_path.setter
-    def config_path(self, value):
+    def config_path(self, value: str) -> None:
         """Set config_path"""
         self._config_path = value or ""
         if not isinstance(self._config_path, str):
@@ -110,12 +111,12 @@ class YandexSpeller(Speller):
             raise BadArgumentError(msg)
 
     @property
-    def dictionary(self):
+    def dictionary(self) -> dict:
         """Get dictionary"""
         return self._dictionary
 
     @dictionary.setter
-    def dictionary(self, value):
+    def dictionary(self, value: dict) -> None:
         """Set dictionary"""
         self._dictionary = value or {}
         if not isinstance(self._dictionary, dict):
@@ -123,148 +124,153 @@ class YandexSpeller(Speller):
             raise BadArgumentError(msg)
 
     @property
-    def report_type(self):
+    def report_type(self) -> str:
         """Get report_type"""
         return self._report_type
 
     @report_type.setter
-    def report_type(self, value):
+    def report_type(self, value: str) -> None:
         """Set report_type"""
         self._report_type = value or "console"
 
     @property
-    def check_yo(self):
+    def check_yo(self) -> bool:
         """Get check_yo"""
         return self._check_yo
 
     @check_yo.setter
-    def check_yo(self, value):
+    def check_yo(self, value: bool) -> None:
         """Set check_yo"""
         self._check_yo = value
 
     @property
-    def ignore_urls(self):
+    def ignore_urls(self) -> bool:
         """Get ignore_urls"""
         return self._ignore_urls
 
     @ignore_urls.setter
-    def ignore_urls(self, value):
+    def ignore_urls(self, value: bool) -> None:
         """Set ignore_urls"""
         self._ignore_urls = value
 
     @property
-    def ignore_tags(self):
+    def ignore_tags(self) -> bool:
         """Get ignore_tags"""
         return self._ignore_tags
 
     @ignore_tags.setter
-    def ignore_tags(self, value):
+    def ignore_tags(self, value: bool) -> None:
         """Set ignore_tags"""
         self._ignore_tags = value
 
     @property
-    def ignore_capitalization(self):
+    def ignore_capitalization(self) -> bool:
         """Get ignore_capitalization"""
         return self._ignore_capitalization
 
     @ignore_capitalization.setter
-    def ignore_capitalization(self, value):
+    def ignore_capitalization(self, value: bool) -> None:
         """Set ignore_capitalization"""
         self._ignore_capitalization = value
 
     @property
-    def ignore_digits(self):
+    def ignore_digits(self) -> bool:
         """Get ignore_digits"""
         return self._ignore_digits
 
     @ignore_digits.setter
-    def ignore_digits(self, value):
+    def ignore_digits(self, value: bool) -> None:
         """Set ignore_digits"""
         self._ignore_digits = value
 
     @property
-    def ignore_latin(self):
+    def ignore_latin(self) -> bool:
         """Get ignore_latin"""
         return self._ignore_latin
 
     @ignore_latin.setter
-    def ignore_latin(self, value):
+    def ignore_latin(self, value: bool) -> None:
         """Set ignore_latin"""
         self._ignore_latin = value
 
     @property
-    def ignore_roman_numerals(self):
+    def ignore_roman_numerals(self) -> bool:
         """Get ignore_roman_numerals"""
         return self._ignore_roman_numerals
 
     @ignore_roman_numerals.setter
-    def ignore_roman_numerals(self, value):
+    def ignore_roman_numerals(self, value: bool) -> None:
         """Set ignore_roman_numerals"""
         self._ignore_roman_numerals = value
 
     @property
-    def ignore_uppercase(self):
+    def ignore_uppercase(self) -> bool:
         """Get ignore_uppercase"""
         return self._ignore_uppercase
 
     @ignore_uppercase.setter
-    def ignore_uppercase(self, value):
+    def ignore_uppercase(self, value: bool) -> None:
         """Set ignore_uppercase"""
         self._ignore_uppercase = value
 
     @property
-    def find_repeat_words(self):
+    def find_repeat_words(self) -> bool:
         """Get find_repeat_words"""
         return self._find_repeat_words
 
     @find_repeat_words.setter
-    def find_repeat_words(self, value):
+    def find_repeat_words(self, value: bool) -> None:
         """Set find_repeat_words"""
         self._find_repeat_words = value
 
     @property
-    def flag_latin(self):
+    def flag_latin(self) -> bool:
         """Get flag_latin"""
         return self._flag_latin
 
     @flag_latin.setter
-    def flag_latin(self, value):
+    def flag_latin(self, value: bool) -> None:
         """Set flag_latin"""
         self._flag_latin = value
 
     @property
-    def by_words(self):
+    def by_words(self) -> bool:
         """Get by_words"""
         return self._by_words
 
     @by_words.setter
-    def by_words(self, value):
+    def by_words(self, value: bool) -> None:
         """Set by_words"""
         self._by_words = value
 
     @property
-    def max_requests(self):
+    def max_requests(self) -> int:
         """Get max_requests"""
         return self._max_requests
 
     @max_requests.setter
-    def max_requests(self, value):
+    def max_requests(self, value: int) -> None:
         """Set max_requests"""
         self._max_requests = value
 
     @property
-    def is_debug(self):
+    def is_debug(self) -> bool:
         """Get is_debug"""
         return self._is_debug
 
     @is_debug.setter
-    def is_debug(self, value):
+    def is_debug(self, value: bool) -> None:
         """Set is_debug"""
         self._is_debug = value
 
     def _spell_text(self, text: str) -> list[dict]:
         lang = ",".join(self._lang)
-        data = {"text": text, "options": self.api_options, "lang": lang, "format": self.format}
+        data = {
+            "text": text,
+            "options": self.api_options,
+            "lang": lang,
+            "format": self.format,
+        }
         response = requests.post(url=self._api_query, data=data).json()
 
         args = urlencode(data)

@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Linting with ruff
+### Changed
+- Require python3.7+
+### Removed
+- Linting with flake8
+- Linting with black
+- Linting with isort
 
 
 ## [1.1.0] - 2023-02-07
