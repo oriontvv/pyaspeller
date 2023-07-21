@@ -14,7 +14,7 @@ class Word:
     """
 
     def __init__(self, *args, **kwargs) -> None:  # noqa: ANN002 ANN003
-        warnings.warn("Class Word is deprecated. Use Speller().spelled(text) instead")
+        warnings.warn("Class Word is deprecated. Use YandexSpeller().spelled(text) instead")
         if "text" in kwargs:
             text = kwargs.pop("text")
         else:
