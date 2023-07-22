@@ -136,14 +136,14 @@ class Speller:
     def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:
         raise NotImplementedError()
 
-    def _spell_file(self, path: str, apply: bool) -> Iterable[dict]:
-        with open(path) as infile:
+    def _spell_file(self, path: str, apply: bool, encoding: str = 'utf-8') -> Iterable[dict]:
+        with open(path, encoding=encoding) as infile:
             content = infile.read()
             changes = self._spell_text(content)
 
             if apply:
                 updated = self._apply_suggestion(content, changes)
-                with open(path, "w") as outfile:
+                with open(path, "w", encoding=encoding) as outfile:
                     outfile.write(updated)
             else:
                 yield from changes
