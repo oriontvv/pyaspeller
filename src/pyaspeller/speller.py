@@ -42,7 +42,7 @@ class Speller:
     Base spell class. Implements spelling logic for files.
     """
 
-    def spell(self, text: str) -> Iterable[object]:
+    def spell(self, text: str, encoding: str = None) -> Iterable[object]:
         """
         Runs spell checking for text or URI and yields suggestions for changes.
 
@@ -58,7 +58,7 @@ class Speller:
             raise BadArgumentError(f"Unsupported type for {text}")
 
         if is_path(text):
-            self.spell_path(text, apply=False)
+            self.spell_path(text, apply=False, encoding=encoding)
             return
 
         if is_url(text):
@@ -68,7 +68,7 @@ class Speller:
         else:
             yield from self._spell_text(text)
 
-    def spelled(self, text: str) -> str:
+    def spelled(self, text: str, encoding: str = None) -> str:
         """
         Runs spell checking and apply suggestions.
 
@@ -79,7 +79,7 @@ class Speller:
             raise BadArgumentError(f"Unsupported type for {text}")
 
         if is_path(text):
-            self.spell_path(text, apply=True)
+            self.spell_path(text, apply=True, encoding=encoding)
             return ""
 
         if is_url(text):
@@ -90,7 +90,7 @@ class Speller:
         changes = self._spell_text(content)
         return self._apply_suggestion(content, changes)
 
-    def spell_path(self, path: str, apply: bool) -> None:
+    def spell_path(self, path: str, apply: bool, encoding: str = None) -> None:
         """
         Traverse through path and apply spelling
         """
@@ -100,14 +100,14 @@ class Speller:
 
         if os.path.isfile(path):
             # iterate over changes
-            list(self._spell_file(path, apply))
+            list(self._spell_file(path, apply, encoding=encoding))
             return
 
         for root, _, fnames in os.walk(path):
             for fname in fnames:
                 fullpath = os.path.join(root, fname)
                 # iterate over changes
-                list(self._spell_file(fullpath, apply))
+                list(self._spell_file(fullpath, apply, encoding=encoding))
 
     def spell_url(self, url: str) -> str:
         """
@@ -136,7 +136,7 @@ class Speller:
     def _apply_suggestion(self, text: str, changes: Iterable[dict]) -> str:
         raise NotImplementedError()
 
-    def _spell_file(self, path: str, apply: bool, encoding: str = 'utf-8') -> Iterable[dict]:
+    def _spell_file(self, path: str, apply: bool, encoding: str = None) -> Iterable[dict]:
         with open(path, encoding=encoding) as infile:
             content = infile.read()
             changes = self._spell_text(content)
