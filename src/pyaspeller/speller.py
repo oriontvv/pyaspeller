@@ -40,7 +40,12 @@ def is_path(path: Union[str, Path]) -> bool:
 class Speller:
     """
     Base spell class. Implements spelling logic for files.
+
+    Parameters:
+        :: encoding: encoding to use for opening and saving files
     """
+
+    encoding: str = None
 
     def spell(self, text: str) -> Iterable[object]:
         """
@@ -137,13 +142,17 @@ class Speller:
         raise NotImplementedError()
 
     def _spell_file(self, path: str, apply: bool) -> Iterable[dict]:
-        with open(path) as infile:
-            content = infile.read()
+        with open(path, encoding=self.encoding) as infile:
+            try:
+                content = infile.read()
+            except UnicodeDecodeError as e:
+                raise 'Sorry, encoding of the source file differs from the one was set. Please check encoding...' from e
+
             changes = self._spell_text(content)
 
             if apply:
                 updated = self._apply_suggestion(content, changes)
-                with open(path, "w") as outfile:
+                with open(path, "w", encoding=self.encoding) as outfile:
                     outfile.write(updated)
             else:
                 yield from changes

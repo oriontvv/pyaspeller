@@ -40,6 +40,7 @@ class YandexSpeller(Speller):
         find_repeat_words: bool = False,
         flag_latin: bool = False,
         by_words: bool = False,
+        encoding: str = None
     ) -> None:
         self._lang: list[str] = []
         self.lang = lang or self._supported_langs  # type: ignore
@@ -70,6 +71,7 @@ class YandexSpeller(Speller):
         self._api_query = (
             "https://speller.yandex.net/services/spellservice.json/checkText"
         )
+        self.encoding = encoding
 
     @property
     def format(self) -> str:
