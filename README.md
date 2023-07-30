@@ -55,4 +55,4 @@ Use your favourite package manager:
 $ python3 -m pip install pyaspeller
 ```
 
-Also there are available [rust](https://github.com/oriontvv/ryaspeller/) and [javascript](https://github.com/hcodes/yaspeller) versions of this speller.
+Also, there are available [rust](https://github.com/oriontvv/ryaspeller/) and [javascript](https://github.com/hcodes/yaspeller) versions of this speller.
