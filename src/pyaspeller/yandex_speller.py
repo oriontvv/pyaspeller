@@ -40,7 +40,7 @@ class YandexSpeller(Speller):
         find_repeat_words: bool = False,
         flag_latin: bool = False,
         by_words: bool = False,
-        encoding: str = None
+        encoding: str | None = None,
     ) -> None:
         self._lang: list[str] = []
         self.lang = lang or self._supported_langs  # type: ignore

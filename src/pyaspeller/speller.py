@@ -9,7 +9,7 @@ from pathlib import Path
 
 import requests
 
-from pyaspeller.errors import BadArgumentError
+from pyaspeller.errors import BadArgumentError, EncodingError
 
 _subs = {
     "\r\n": "\n",  # Fix Windows
@@ -45,7 +45,7 @@ class Speller:
         :: encoding: encoding to use for opening and saving files
     """
 
-    encoding: str = None
+    encoding: str | None = None
 
     def spell(self, text: str) -> Iterable[object]:
         """
@@ -146,7 +146,9 @@ class Speller:
             try:
                 content = infile.read()
             except UnicodeDecodeError as e:
-                raise 'Sorry, encoding of the source file differs from the one was set. Please check encoding...' from e
+                raise EncodingError(
+                    "Encoding of the source file differs from the one was set. Please check encoding."
+                ) from e
 
             changes = self._spell_text(content)
 
