@@ -48,7 +48,7 @@ requests-mock = "^1.11.0"
 
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.277"
+ruff = ">=0.0.277,<0.0.283"
 
 [build-system]
 requires = [
