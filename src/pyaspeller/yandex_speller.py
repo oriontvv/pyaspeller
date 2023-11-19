@@ -34,12 +34,7 @@ class YandexSpeller(Speller):
         ignore_tags: bool = False,
         ignore_capitalization: bool = False,
         ignore_digits: bool = False,
-        ignore_latin: bool = False,
-        ignore_roman_numerals: bool = False,
-        ignore_uppercase: bool = False,
         find_repeat_words: bool = False,
-        flag_latin: bool = False,
-        by_words: bool = False,
         encoding: str | None = None,
     ) -> None:
         self._lang: list[str] = []
@@ -58,13 +53,7 @@ class YandexSpeller(Speller):
         self._ignore_tags = ignore_tags
         self._ignore_capitalization = ignore_capitalization
         self._ignore_digits = ignore_digits
-        self._ignore_latin = ignore_latin
-        self._ignore_roman_numerals = ignore_roman_numerals
-        self._ignore_uppercase = ignore_uppercase
         self._find_repeat_words = find_repeat_words
-        self._flag_latin = flag_latin
-        self._by_words = by_words
-
         self._max_requests = max_requests
         self._is_debug = is_debug
 
@@ -186,36 +175,6 @@ class YandexSpeller(Speller):
         self._ignore_digits = value
 
     @property
-    def ignore_latin(self) -> bool:
-        """Get ignore_latin"""
-        return self._ignore_latin
-
-    @ignore_latin.setter
-    def ignore_latin(self, value: bool) -> None:
-        """Set ignore_latin"""
-        self._ignore_latin = value
-
-    @property
-    def ignore_roman_numerals(self) -> bool:
-        """Get ignore_roman_numerals"""
-        return self._ignore_roman_numerals
-
-    @ignore_roman_numerals.setter
-    def ignore_roman_numerals(self, value: bool) -> None:
-        """Set ignore_roman_numerals"""
-        self._ignore_roman_numerals = value
-
-    @property
-    def ignore_uppercase(self) -> bool:
-        """Get ignore_uppercase"""
-        return self._ignore_uppercase
-
-    @ignore_uppercase.setter
-    def ignore_uppercase(self, value: bool) -> None:
-        """Set ignore_uppercase"""
-        self._ignore_uppercase = value
-
-    @property
     def find_repeat_words(self) -> bool:
         """Get find_repeat_words"""
         return self._find_repeat_words
@@ -224,26 +183,6 @@ class YandexSpeller(Speller):
     def find_repeat_words(self, value: bool) -> None:
         """Set find_repeat_words"""
         self._find_repeat_words = value
-
-    @property
-    def flag_latin(self) -> bool:
-        """Get flag_latin"""
-        return self._flag_latin
-
-    @flag_latin.setter
-    def flag_latin(self, value: bool) -> None:
-        """Set flag_latin"""
-        self._flag_latin = value
-
-    @property
-    def by_words(self) -> bool:
-        """Get by_words"""
-        return self._by_words
-
-    @by_words.setter
-    def by_words(self, value: bool) -> None:
-        """Set by_words"""
-        self._by_words = value
 
     @property
     def max_requests(self) -> int:
@@ -295,22 +234,12 @@ class YandexSpeller(Speller):
         :return: api options as number
         """
         options = 0
-        if self._ignore_uppercase:
-            options |= 1
         if self._ignore_digits:
             options |= 2
         if self._ignore_urls:
             options |= 4
         if self._find_repeat_words:
             options |= 8
-        if self._ignore_latin:
-            options |= 16
-        if self._flag_latin:
-            options |= 128
-        if self._by_words:
-            options |= 256
         if self._ignore_capitalization:
             options |= 512
-        if self._ignore_roman_numerals:
-            options |= 2048
         return options
