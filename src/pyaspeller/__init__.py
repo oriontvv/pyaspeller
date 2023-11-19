@@ -9,7 +9,7 @@ from .speller import Speller  # noqa
 from .word import Word  # noqa
 from .yandex_speller import YandexSpeller  # noqa
 
-__version__ = "1.2.0"
+__version__ = "2.0.0"
 __all__ = ["main"]
 
 
@@ -88,12 +88,6 @@ def _create_args_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
-        "--flag-latin",
-        action="store_true",
-        help="celebrate words, written in Latin, as erroneous",
-    )
-
-    parser.add_argument(
         "--ignore-tags",
         action="store_true",
         help="ignore HTML tags. "
@@ -115,27 +109,9 @@ def _create_args_parser() -> ArgumentParser:
     )
 
     parser.add_argument(
-        "--ignore-latin",
-        action="store_true",
-        help="ignore words, written in Latin, like 'madrid'",
-    )
-
-    parser.add_argument(
-        "--ignore-roman-numerals",
-        action="store_true",
-        help="ignore Roman numerals I, II, III, ...",
-    )
-
-    parser.add_argument(
-        "--ignore_uppercase",
-        action="store_true",
-        help="ignore words written in capital letters",
-    )
-
-    parser.add_argument(
         "--ignore_urls",
         action="store_true",
-        help="ignore Internet addresses, email " "addresses and filenames",
+        help="ignore Internet addresses, email addresses and filenames",
     )
 
     parser.add_argument(
@@ -158,11 +134,7 @@ def _create_speller(args: Namespace) -> YandexSpeller:
         ignore_tags=args.ignore_tags,
         ignore_capitalization=args.ignore_capitalization,
         ignore_digits=args.ignore_digits,
-        ignore_latin=args.ignore_latin,
-        ignore_roman_numerals=args.ignore_roman_numerals,
-        ignore_uppercase=args.ignore_uppercase,
         find_repeat_words=args.find_repeat_words,
-        flag_latin=args.flag_latin,
     )
 
     return speller

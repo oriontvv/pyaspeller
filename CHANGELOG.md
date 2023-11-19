@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.0.0] - 2023-11-19
+### Removed
+- [Breaking change] Remove deprecated options `flag_latin`, `ignore_latin`, `by_words`, `ignore_roman_numerals` and `ignore_uppercase`
+### Changed
+- Updated ruff linter version
+
+
 ## [1.2.0] - 2023-07-31
 ### Added
 - Linting with ruff

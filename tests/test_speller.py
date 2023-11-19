@@ -105,13 +105,6 @@ def test_param_ignore_tags(speller: YandexSpeller) -> None:
     assert speller.ignore_tags, "Bad ignore_tags: " + str(speller.ignore_tags)
 
 
-def test_param_ignore_uppercase(speller: YandexSpeller) -> None:
-    assert not speller.api_options & 1, "Bad ignore_uppercase option"
-    assert not speller.ignore_uppercase, "Bad default ignore_uppercase"
-    speller.ignore_uppercase = True
-    assert speller.api_options & 1, "Bad ignore_uppercase option"
-
-
 def test_param_ignore_digits(speller: YandexSpeller) -> None:
     assert not speller.api_options & 2, "Bad ignore_digits option"
     assert not speller.ignore_digits, "Bad default ignore_digits"
@@ -133,39 +126,11 @@ def test_param_find_repeat_words(speller: YandexSpeller) -> None:
     assert speller.api_options & 8, "Bad find_repeat_words option"
 
 
-def test_param_ignore_latin(speller: YandexSpeller) -> None:
-    assert not speller.api_options & 16, "Bad ignore_latin option"
-    assert not speller.ignore_latin, "Bad default ignore_latin"
-    speller.ignore_latin = True
-    assert speller.api_options & 16, "Bad ignore_latin option"
-
-
-def test_param_flag_latin(speller: YandexSpeller) -> None:
-    assert not speller.api_options & 128, "Bad flag_latin option"
-    assert not speller.flag_latin, "Bad default flag_latin"
-    speller.flag_latin = True
-    assert speller.api_options & 128, "Bad flag_latin option"
-
-
-def test_param_by_words(speller: YandexSpeller) -> None:
-    assert not speller.api_options & 256, "Bad by_words option"
-    assert not speller.by_words, "Bad default by_words"
-    speller.by_words = True
-    assert speller.api_options & 256, "Bad by_words option"
-
-
 def test_param_ignore_capitalization(speller: YandexSpeller) -> None:
     assert not speller.api_options & 512, "Bad ignore_capitalization option"
     assert not speller.ignore_capitalization, "Bad default ignore_capitalization"
     speller.ignore_capitalization = True
     assert speller.api_options & 512, "Bad ignore_capitalization option"
-
-
-def test_param_ignore_roman_numerals(speller: YandexSpeller) -> None:
-    assert not speller.api_options & 2048, "Bad ignore_roman_numerals option"
-    assert not speller.ignore_roman_numerals, "Bad default ignore_capitalization"
-    speller.ignore_roman_numerals = True
-    assert speller.api_options & 2048, "Bad ignore_roman_numerals option"
 
 
 def test_spelled(speller: YandexSpeller) -> None:
