@@ -8,30 +8,26 @@ TESTS =\
 ALL = $(CODE)\
 	$(TESTS)
 
-VENV ?= .venv
 JOBS ?= 4
 
 
 init:
-	test -d $(VENV) || python3 -m venv $(VENV)
-	$(VENV)/bin/python -m pip install -U pip
-	$(VENV)/bin/python -m pip install poetry
-	$(VENV)/bin/poetry install
+	uv sync
 
 lint: ruff mypy
 
 ruff:
-	$(VENV)/bin/ruff .
+	uv run ruff check $(CODE)
 
 mypy:
-	$(VENV)/bin/mypy --install-types --non-interactive \
+	uv run mypy --install-types --non-interactive \
 	--explicit-package-bases --namespace-packages --check-untyped-defs $(CODE)
 
 pytest-lint:
-	$(VENV)/bin/pytest --dead-fixtures --dup-fixtures $(CODE)
+	uv run pytest --dead-fixtures --dup-fixtures $(CODE)
 
 pretty:
-	$(VENV)/bin/ruff --silent --exit-zero --fix .
+	uv run ruff format $(CODE)
 
 plint: pretty lint
 
@@ -41,10 +37,10 @@ precommit_install:
 	chmod +x .git/hooks/pre-commit
 
 test:
-	$(VENV)/bin/python -m pytest tests --cov=src --ignore=.DS_Store
+	uv run pytest $(TESTS) --cov=src --ignore=.DS_Store
 
 coverage-report:
-	$(VENV)/bin/coverage report -m
+	uv run coverage report -m
 
 clean:
 	rm -rf `find . -name __pycache__`
@@ -61,10 +57,10 @@ clean:
 	rm -rf cover
 
 build:
-	$(VENV)/bin/poetry build
+	uv build
 
 publish:
-	$(VENV)/bin/poetry publish
+	uv publish
 
 doc:
 	make -C docs html

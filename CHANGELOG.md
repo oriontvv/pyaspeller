@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Add python 3.11, 3.12, 3.13 to ci
+- Add python 3.11, 3.12, 3.13 to ci, drop support until 3.9
+- Migrate from poetry to uv
 
 
 ## [2.0.0] - 2023-11-19

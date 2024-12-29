@@ -1,7 +1,7 @@
 """
 Init module of pyaspeller package
 """
-
+import importlib.metadata
 import logging
 from argparse import ArgumentParser, Namespace
 
@@ -9,16 +9,14 @@ from .speller import Speller  # noqa
 from .word import Word  # noqa
 from .yandex_speller import YandexSpeller  # noqa
 
-__version__ = "2.0.0"
+__version__ = importlib.metadata.version("pyaspeller")
 __all__ = ["main"]
 
 
 def _create_args_parser() -> ArgumentParser:
     description = "Search tool typos in the text, files and websites."
     parser = ArgumentParser(description=description, prog="pyaspeller")
-    parser.add_argument(
-        "-v", "--version", action="version", version="%(prog)s " + __version__
-    )
+    parser.add_argument("-v", "--version", action="version", version="%(prog)s " + __version__)
 
     parser.add_argument("text_or_path_or_url", help="text or path or url")
 
@@ -61,9 +59,7 @@ def _create_args_parser() -> ArgumentParser:
 
     parser.add_argument("-c", "--config", default=None, help="config path")
 
-    parser.add_argument(
-        "-d", "--dictionary", default=None, help="path to custom json dictionary file"
-    )
+    parser.add_argument("-d", "--dictionary", default=None, help="path to custom json dictionary file")
 
     parser.add_argument(
         "-r",
@@ -83,8 +79,7 @@ def _create_args_parser() -> ArgumentParser:
     parser.add_argument(
         "--find-repeat-words",
         action="store_true",
-        help="highlight repetitions of words, consecutive. "
-        "For example, I flew to to to Cyprus",
+        help="highlight repetitions of words, consecutive. " "For example, I flew to to to Cyprus",
     )
 
     parser.add_argument(
@@ -98,8 +93,7 @@ def _create_args_parser() -> ArgumentParser:
     parser.add_argument(
         "--ignore_capitalization",
         action="store_true",
-        help="ignore the incorrect use of UPPERCASE/lowercase "
-        "letters, for example, in the word moscow",
+        help="ignore the incorrect use of UPPERCASE/lowercase " "letters, for example, in the word moscow",
     )
 
     parser.add_argument(
@@ -114,9 +108,7 @@ def _create_args_parser() -> ArgumentParser:
         help="ignore Internet addresses, email addresses and filenames",
     )
 
-    parser.add_argument(
-        "--max-requests", default=2, help="Max count of requests at a time"
-    )
+    parser.add_argument("--max-requests", default=2, help="Max count of requests at a time")
 
     return parser
 

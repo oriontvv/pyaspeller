@@ -7,6 +7,10 @@
 
 Spell checking uses [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/concepts/About-docpage/). ([restrictions](<https://yandex.ru/legal/speller_api/>))
 
+## Installation
+
+* Highly recommend to use latest [uv](https://docs.astral.sh/uv/getting-started/installation/)
+* `uv add pyaspeller` (for library mode)
 
 ## Features
 
@@ -15,9 +19,9 @@ Spell checking uses [Yandex.Speller API](https://tech.yandex.ru/speller/doc/dg/c
 You can correct your local files or web pages
 
 ```bash 
-$ pyaspeller ./doc
-$ pyaspeller https://team-tricky.github.io
-$ pyaspeller "в суббботу утромъ"
+$ uvx pyaspeller ./doc
+$ uvx pyaspeller https://team-tricky.github.io
+$ uvx pyaspeller "в суббботу утромъ"
 в субботу утром
 ```
 
@@ -44,15 +48,6 @@ False
 [u'test']
 >>> check.spellsafe
 u'test'
-```
-
-
-## Installation
-
-Use your favourite package manager:
-
-```bash
-$ python3 -m pip install pyaspeller
 ```
 
 Also, there are available [rust](https://github.com/oriontvv/ryaspeller/) and [javascript](https://github.com/hcodes/yaspeller) versions of this speller.

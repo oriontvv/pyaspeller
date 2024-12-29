@@ -1,6 +1,7 @@
 """
 Contains specific details for Yandex speller
 """
+
 from __future__ import annotations
 import collections
 import logging
@@ -57,9 +58,7 @@ class YandexSpeller(Speller):
         self._max_requests = max_requests
         self._is_debug = is_debug
 
-        self._api_query = (
-            "https://speller.yandex.net/services/spellservice.json/checkText"
-        )
+        self._api_query = "https://speller.yandex.net/services/spellservice.json/checkText"
         self.encoding = encoding
 
     @property
