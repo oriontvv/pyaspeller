@@ -40,6 +40,10 @@ Documentation = "https://github.com/oriontvv/pyaspeller"
 [project.scripts]
 pyaspeller = "src:pyaspeller:main"
 
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
 [dependency-groups]
 dev = [
     "coveralls>=4.0.1",

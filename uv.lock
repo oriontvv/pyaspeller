@@ -283,7 +283,7 @@ wheels = [
 [[package]]
 name = "pyaspeller"
 version = "2.0.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "requests" },
 ]
