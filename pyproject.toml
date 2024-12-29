@@ -1,15 +1,15 @@
-[tool.poetry]
+[project]
 name = "pyaspeller"
 version = "2.0.0"
 description = "Search tool typos in the text, files and websites."
 authors = [
-    "Vasiliy Taranov <taranov.vv@gmail.com>",
+    { name = "Vasiliy Taranov", email = "taranov.vv@gmail.com" },
 ]
-license = "Apache 2"
+maintainers = [
+    { name = "Vasiliy Taranov", email = "taranov.vv@gmail.com" },
+]
+license = { file = "LICENSE" }
 readme = "README.md"
-homepage = "https://github.com/oriontvv/pyaspeller"
-repository = "https://github.com/oriontvv/pyaspeller"
-documentation = "https://github.com/oriontvv/pyaspeller"
 keywords = [
     "spell",
     "spelling",
@@ -27,34 +27,30 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Text Processing :: Linguistic"
 ]
-packages = [
-    { include = "pyaspeller", from = "src" }
+requires-python = ">=3.9"
+dependencies = [
+    "requests>=2.32.3",
 ]
 
-[tool.poetry.scripts]
-pyaspeller = "src.pyaspeller.__init__:main"
+[project.urls]
+Homepage = "https://github.com/oriontvv/pyaspeller"
+Source = "https://github.com/oriontvv/pyaspeller"
+Documentation = "https://github.com/oriontvv/pyaspeller"
 
-[tool.poetry.dependencies]
-python = "^3.7"
-requests = "^2.27.1"
+[project.scripts]
+pyaspeller = "src:pyaspeller:main"
 
-[tool.poetry.dev-dependencies]
-coveralls = { version = "^3.3.1", extras = [ "toml" ]}
-mypy = "^1.4"
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-pytest-deadfixtures = "^2.2.1"
-requests-mock = "^1.11.0"
-
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.1.6"
-
-[build-system]
-requires = [
-    "poetry>=0.12",
+[dependency-groups]
+dev = [
+    "coveralls>=4.0.1",
+    "mypy>=1.14.0",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-deadfixtures>=2.2.1",
+    "requests-mock>=1.12.1",
+    "ruff>=0.8.4",
+    "types-requests>=2.32.0.20241016",
 ]
-build-backend = "poetry.masonry.api"
 
 [tool.coverage.run]
 relative_files = true
@@ -72,13 +68,14 @@ exclude_lines = [
 ]
 
 [tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
 ignore = [
-    "ANN101",
     "N801",
     "N802",
     "N803",
 ]
-line-length = 120
 select = [
     "ANN",
     "E",
@@ -90,13 +87,13 @@ select = [
     "W",
 ]
 
-[tool.ruff.flake8-annotations]
+[tool.ruff.lint.flake8-annotations]
 mypy-init-return = true
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "double"
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
 [tool.mypy]
