@@ -8,7 +8,7 @@ authors = [
 maintainers = [
     { name = "Vasiliy Taranov", email = "taranov.vv@gmail.com" },
 ]
-metadata-version = "2.4"
+license = { file = "LICENSE" }
 readme = "README.md"
 keywords = [
     "spell",
@@ -35,14 +35,14 @@ dependencies = [
 [project.urls]
 homepage = "https://github.com/oriontvv/pyaspeller"
 repository = "https://github.com/oriontvv/pyaspeller"
-documentation = "https://github.com/oriontvv/pyaspeller"
+changelog = "https://github.com/oriontvv/pyaspeller/blob/master/CHANGELOG.md"
 
 [project.scripts]
 pyaspeller = "src:pyaspeller"
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ['hatchling', 'hatch-fancy-pypi-readme>=22.5.0']
+build-backend = 'hatchling.build'
 
 [dependency-groups]
 dev = [
