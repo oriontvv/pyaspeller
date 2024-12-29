@@ -8,7 +8,7 @@ authors = [
 maintainers = [
     { name = "Vasiliy Taranov", email = "taranov.vv@gmail.com" },
 ]
-license = { file = "LICENSE" }
+license = "Apache-2.0"
 readme = "README.md"
 keywords = [
     "spell",
