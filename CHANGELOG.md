@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.0.2] - 2025-01-02
+- Fix cli
+
+
 ## [2.0.1] - 2024-12-29
 ### Added
 - Add python 3.11, 3.12, 3.13 to ci, drop support until 3.9

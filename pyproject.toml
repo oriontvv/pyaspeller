@@ -38,7 +38,7 @@ repository = "https://github.com/oriontvv/pyaspeller"
 changelog = "https://github.com/oriontvv/pyaspeller/blob/master/CHANGELOG.md"
 
 [project.scripts]
-pyaspeller = "src:pyaspeller"
+pyaspeller = "pyaspeller:main"
 
 [build-system]
 requires = ['hatchling', 'hatch-fancy-pypi-readme>=22.5.0']
