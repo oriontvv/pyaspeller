@@ -1,6 +1,6 @@
 [project]
 name = "pyaspeller"
-version = "2.0.1"
+version = "2.0.2"
 description = "Search tool typos in the text, files and websites."
 authors = [
     { name = "Vasiliy Taranov", email = "taranov.vv@gmail.com" },
